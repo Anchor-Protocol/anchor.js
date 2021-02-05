@@ -1,0 +1,28 @@
+{
+  "name": "@anchor-protocol/anchor.js",
+  "version": "0.1.0",
+  "author": "Anchor Protocol",
+  "license": "MIT",
+  "repository": "github:Anchor-Protocol/anchorcli",
+  "bugs": "https://github.com/Anchor-Protocol/anchorcli/issues",
+  "homepage": "https://github.com/Anchor-Protocol/anchorcli/tree/master/anchor.js",
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "prepublishOnly": "tsc"
+  },
+  "main": "../dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@terra-money/terra.js": "^1.3.6",
+    "yaml": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/yaml": "^1.9.7"
+  }
+}
