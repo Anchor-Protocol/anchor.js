@@ -1,0 +1,15 @@
+export const contractAddresses = {
+    bLunaHub: 'terra1kzx23xs8v9yggf6lqpwgerg455e8xzsv0s0glf',
+    bAssetToken: 'terra12kz7ehjh9m2aexmyumlt29qjuc9j5mjcdp0d5k',
+    bAssetReward: 'terra1pjpzktukkd20amfwc0d8mahjg5na2pgu3swdu4',
+    mmInterest: 'terra16f3lv77yu4ga4w8m7jl0xg2xkavqe347dz30v9',
+    mmOracle: 'terra1enud48d754pau5rce79xsdx9gfschw2eelwcuj',
+    mmMarket: 'terra1r8vmgf3mf5m5gcp09fnj2ewsyaqppr6ke50mf2',
+    mmOverseer: 'terra1t6zjqmqjvsfrszr65cppug4gd4xkqm33vugwl2',
+    mmCustody: 'terra1usycpap7j0mz4ynrgmtv7jc7uwqka345ushknz',
+    mmLiquidation: 'terra14pdcpx6szzfvhz4g6dfddkx82f5ssf8llmzpw4',
+    anchorToken: 'terra10c0q6qyk2634tfx2nw9v4gxqlm7a0luk9huhy8',
+    terraswapFactory: 'terra1mtvsarza55hehpmyjgw7edqwvxpq5qquvttz9n',
+    blunaBurnPair: 'terra1w6qcjvcwe8ljafp2859kmmcfern35ap9sngm3q',
+    blunaBurnuluna: 'terra12y3emkv22ug94wnq5zpmhws6fgtr929rtaq6je',
+};
