@@ -27,7 +27,7 @@ export const queryOverseerBorrowLimit = ({
     {
       borrow_limit: {
         borrower: borrower,
-        block_time: +blockTime,
+        block_time: blockTime || undefined,
       },
     },
   );

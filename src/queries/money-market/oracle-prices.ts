@@ -19,7 +19,7 @@ export const queryOraclePrices = ({ lcd, startAfter, limit }: Option) => async (
     {
       prices: {
         start_after: startAfter,
-        limit: +limit,
+        limit: limit,
       },
     },
   );

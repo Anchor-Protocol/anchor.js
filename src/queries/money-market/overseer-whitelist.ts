@@ -28,7 +28,7 @@ export const queryOverseerWhitelist = ({
       whitelist: {
         collateral_token: collateralToken,
         start_after: startAfter,
-        limit: +limit,
+        limit:limit,
       },
     },
   );

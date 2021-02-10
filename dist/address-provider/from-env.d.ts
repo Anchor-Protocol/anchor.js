@@ -1,4 +1,4 @@
-import { AddressProvider } from './provider';
+import { AddressProvider } from "./provider";
 export declare class AddressProviderFromEnvVar implements AddressProvider {
     bAssetReward(): string;
     bAssetHub(): string;

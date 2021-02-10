@@ -1,16 +1,21 @@
 {
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "/node_modules/",
+    "./src/**/*.spec.ts"
+  ],
   "compilerOptions": {
-    "allowSyntheticDefaultImports": false,
-    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
+    "baseUrl": "./",
     "declaration": true,
     "esModuleInterop": true,
     "lib": [
       "es2015",
-      "scripthost",
-      "es2015.promise",
-      "es2015.generator",
-      "es2015.iterable",
+      "es2016",
+      "es2017",
       "dom"
     ],
     "module": "commonjs",
@@ -19,21 +24,20 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "resolveJsonModule": true,
     "noUnusedLocals": false,
     "noUnusedParameters": true,
-    "outDir": "./dist",
+    "outDir": "dist",
     "rootDir": "src",
-    "sourceMap": false,
-    "strict": false,
-    "target": "esnext",
-    "baseUrl": "./src"
-  },
-  "include": [
-    "./src"
-  ],
-  "exclude": [
-    "*.test.ts",
-    "*.spec.ts"
-  ]
+    "sourceMap": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "target": "es5",
+    "paths": {
+      "*": [
+        "src/*"
+      ]
+    }
+  }
 }

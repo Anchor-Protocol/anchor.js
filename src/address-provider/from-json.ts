@@ -1,4 +1,4 @@
-import { AddressProvider } from './provider';
+import { AddressProvider } from "./provider";
 
 interface JsonData {
   bLunaHub: string;

@@ -26,7 +26,7 @@ export const queryLiquidationBidsByCollateral = ({
       bids_by_collateral: {
         collateral_token: collateralToken,
         start_after: startAfter,
-        limit: +limit,
+        limit: limit,
       },
     },
   );

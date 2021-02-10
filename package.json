@@ -1,28 +1,41 @@
 {
   "name": "@anchor-protocol/anchor.js",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "author": "Anchor Protocol",
   "license": "MIT",
   "repository": "github:Anchor-Protocol/anchorcli",
   "bugs": "https://github.com/Anchor-Protocol/anchorcli/issues",
   "homepage": "https://github.com/Anchor-Protocol/anchorcli/tree/master/anchor.js",
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc --watch",
-    "prepublishOnly": "tsc"
+    "build": "tsc --module commonjs",
+    "test": "jest",
+    "format": "prettier --write ./src/**/*.ts",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "doc": "typedoc",
+    "prepublishOnly": "npm run build",
+    "integration-test": "ts-node ./integration-test/index.ts"
   },
   "main": "../dist/index.js",
+  "types": "dist/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
     "@terra-money/terra.js": "^1.3.6",
+    "typescript": "^4.1.4",
     "yaml": "^1.10.0"
   },
   "devDependencies": {
-    "@types/yaml": "^1.9.7"
+    "@types/yaml": "^1.9.7",
+    "@terra-money/terra.js": "^1.3.6",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.22",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "ts-node": "^9.1.1",
+    "prettier": "^2.2.1"
   }
 }

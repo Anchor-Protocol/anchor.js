@@ -25,7 +25,7 @@ export const queryMarketLiabilities = ({
     {
       liabilities: {
         start_after: startAfter,
-        limit: +limit,
+        limit: limit,
       },
     },
   );

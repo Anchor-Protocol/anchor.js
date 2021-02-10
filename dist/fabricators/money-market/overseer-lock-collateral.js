@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fabricateOverseerLockCollateral = void 0;
-const terra_js_1 = require("@terra-money/terra.js");
-const validate_input_1 = require("../../utils/validate-input");
-const address_1 = require("../../utils/validation/address");
-const number_1 = require("../../utils/validation/number");
+var terra_js_1 = require("@terra-money/terra.js");
+var validate_input_1 = require("../../utils/validate-input");
+var address_1 = require("../../utils/validation/address");
+var number_1 = require("../../utils/validation/number");
 /**
  *
  * @param address Client’s Terra address.
@@ -14,19 +14,23 @@ const number_1 = require("../../utils/validation/number");
  * @param symbol Symbol of collateral to deposit.
  * @param amount Amount of collateral to deposit.
  */
-const fabricateOverseerLockCollateral = ({ address, market, amount, }) => (addressProvider) => {
-    validate_input_1.validateInput([address_1.validateAddress(address), number_1.validateIsGreaterThanZero(amount)]);
-    const mmOverseerContract = addressProvider.overseer(market.toLowerCase());
-    return [
-        // lock_collateral call
-        new terra_js_1.MsgExecuteContract(address, mmOverseerContract, {
-            // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L75
-            lock_collateral: {
-                collaterals: [
-                    [address, new terra_js_1.Int(new terra_js_1.Dec(amount).mul(1000000)).toString()],
-                ],
-            },
-        }),
-    ];
+var fabricateOverseerLockCollateral = function (_a) {
+    var address = _a.address, market = _a.market, amount = _a.amount;
+    return function (addressProvider) {
+        validate_input_1.validateInput([address_1.validateAddress(address), number_1.validateIsGreaterThanZero(amount)]);
+        var mmOverseerContract = addressProvider.overseer(market.toLowerCase());
+        return [
+            // lock_collateral call
+            new terra_js_1.MsgExecuteContract(address, mmOverseerContract, {
+                // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L75
+                lock_collateral: {
+                    collaterals: [
+                        [address, new terra_js_1.Int(new terra_js_1.Dec(amount).mul(1000000)).toString()],
+                    ],
+                },
+            }),
+        ];
+    };
 };
 exports.fabricateOverseerLockCollateral = fabricateOverseerLockCollateral;
+//# sourceMappingURL=overseer-lock-collateral.js.map

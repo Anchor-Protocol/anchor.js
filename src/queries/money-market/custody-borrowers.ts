@@ -25,7 +25,7 @@ export const queryCustodyBorrowers = ({
     {
       borrowers: {
         start_after: startAfter,
-        limit: +limit,
+        limit: limit,
       },
     },
   );

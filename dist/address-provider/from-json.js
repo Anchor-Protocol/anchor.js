@@ -1,48 +1,50 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddressProviderFromJson = void 0;
-class AddressProviderFromJson {
-    constructor(data) {
+var AddressProviderFromJson = /** @class */ (function () {
+    function AddressProviderFromJson(data) {
         this.data = data;
     }
-    bAssetReward() {
+    AddressProviderFromJson.prototype.bAssetReward = function () {
         return this.data.bAssetReward;
-    }
-    bAssetHub() {
+    };
+    AddressProviderFromJson.prototype.bAssetHub = function () {
         return this.data.bLunaHub;
-    }
-    bAssetToken() {
+    };
+    AddressProviderFromJson.prototype.bAssetToken = function () {
         return this.data.bAssetToken;
-    }
-    market() {
+    };
+    AddressProviderFromJson.prototype.market = function () {
         return this.data.mmMarket;
-    }
-    custody() {
+    };
+    AddressProviderFromJson.prototype.custody = function () {
         return this.data.mmCustody;
-    }
-    overseer() {
+    };
+    AddressProviderFromJson.prototype.overseer = function () {
         return this.data.mmOverseer;
-    }
-    aToken() {
+    };
+    AddressProviderFromJson.prototype.aToken = function () {
         return this.data.anchorToken;
-    }
-    oracle() {
+    };
+    AddressProviderFromJson.prototype.oracle = function () {
         return this.data.mmOracle;
-    }
-    interest() {
+    };
+    AddressProviderFromJson.prototype.interest = function () {
         return this.data.mmInterest;
-    }
-    liquidation() {
+    };
+    AddressProviderFromJson.prototype.liquidation = function () {
         return this.data.mmLiquidation;
-    }
-    terraswapFactory() {
+    };
+    AddressProviderFromJson.prototype.terraswapFactory = function () {
         return this.data.terraswapFactory;
-    }
-    blunaBurnPair() {
+    };
+    AddressProviderFromJson.prototype.blunaBurnPair = function () {
         return this.data.blunaBurnPair;
-    }
-    blunaBurn() {
+    };
+    AddressProviderFromJson.prototype.blunaBurn = function () {
         return this.data.blunaBurnuluna;
-    }
-}
+    };
+    return AddressProviderFromJson;
+}());
 exports.AddressProviderFromJson = AddressProviderFromJson;
+//# sourceMappingURL=from-json.js.map

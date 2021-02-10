@@ -26,7 +26,7 @@ interface Option {
 export const fabricateCustodyWithdrawCollateral = ({
   address,
   market,
-  amount = null,
+  amount = undefined,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),

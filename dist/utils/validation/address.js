@@ -1,13 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateValAddress = exports.validateAddress = void 0;
-const validateAddress = (address) => [
-    () => true,
-    `invalid address ${address}.`,
-];
+var validateAddress = function (address) { return [
+    function () { return true; },
+    "invalid address " + address + ".",
+]; };
 exports.validateAddress = validateAddress;
-const validateValAddress = (valAddress) => [
-    () => true,
-    `invalid validator address ${valAddress}.`,
-];
+var validateValAddress = function (valAddress) { return [
+    function () { return true; },
+    "invalid validator address " + valAddress + ".",
+]; };
 exports.validateValAddress = validateValAddress;
+//# sourceMappingURL=address.js.map

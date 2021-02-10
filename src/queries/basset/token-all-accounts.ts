@@ -25,8 +25,8 @@ export const queryTokenAllAccounts = ({
     bAssetContractAddress,
     {
       all_accounts: {
-        start_after: startAfter,
-        limit: +lim,
+        start_after: startAfter || undefined,
+        limit: lim || undefined,
       },
     },
   );

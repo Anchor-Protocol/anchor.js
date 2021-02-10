@@ -25,7 +25,7 @@ export const queryOverseerAllCollaterals = ({
     {
       all_collaterals: {
         start_after: startAfter,
-        limit: +limit,
+        limit: limit,
       },
     },
   );

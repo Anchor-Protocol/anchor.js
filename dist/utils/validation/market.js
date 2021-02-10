@@ -5,9 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateWhitelistedMarket = void 0;
 // @ts-ignore
-const market_json_1 = __importDefault(require("../../constants/market.json"));
-const validateWhitelistedMarket = (market) => [
-    () => !!market_json_1.default.ust && market === 'ust',
-    `unknown market ${market}.`,
-];
+var market_json_1 = __importDefault(require("../../constants/market.json"));
+var validateWhitelistedMarket = function (market) { return [
+    function () { return !!market_json_1.default.ust && market === 'ust'; },
+    "unknown market " + market + ".",
+]; };
 exports.validateWhitelistedMarket = validateWhitelistedMarket;
+//# sourceMappingURL=market.js.map

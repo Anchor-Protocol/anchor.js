@@ -4,6 +4,20 @@ Anchor.js is a client SDK for building applications that can interact with Ancho
 
 You can find a reference of the Anchor.js API [here](https://github.com/Anchor-Protocol/anchor.js).
 
+## Getting Anchor.js
+
+Anchor.js is available as a package on NPM and is intended to be used alongside Terra.js.
+
+Add both:
+
+- `@terra-money/terra.js`
+- `@anchor-protocol/anchor.js`
+
+To your JavaScript project's `package.json` as dependencies using your preferred package manager:
+
+```sh
+$ npm install -S @terra-money/terra.js @anchor-protocol/anchor.js
+```
 
 ## Usage
 
@@ -20,7 +34,7 @@ To Use the message fabricators:
 
 ```ts
 import {fabricateRedeemStable, fabricateDepositStableCoin} from '@anchor-protocol/anchor.js';
-import {contractAddresses} from ".@anchor-protocol/anchor.js/address-provider";
+import {contractAddresses, AddressProviderFromJSON} from ".@anchor-protocol/anchor.js";
 
 // default -- uses tequila core contract addresses
 const addressProvider = new AddressProviderFromJSON(contractaddresses);
@@ -62,3 +76,9 @@ async function main() {
 
 main().catch(console.error);
 ```
+
+## License
+
+This software is licensed under the Apache 2.0 license. Read more about it [here](./LICENSE).
+
+© 2021 Anchor Protocol

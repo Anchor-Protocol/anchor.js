@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fabricateCustodyWithdrawCollateral = void 0;
-const terra_js_1 = require("@terra-money/terra.js");
-const address_1 = require("../../utils/validation/address");
-const validate_input_1 = require("../../utils/validate-input");
-const true_1 = require("../../utils/validation/true");
-const number_1 = require("../../utils/validation/number");
-const amount_1 = require("../../utils/validation/amount");
+var terra_js_1 = require("@terra-money/terra.js");
+var address_1 = require("../../utils/validation/address");
+var validate_input_1 = require("../../utils/validate-input");
+var true_1 = require("../../utils/validation/true");
+var number_1 = require("../../utils/validation/number");
+var amount_1 = require("../../utils/validation/amount");
 /**
  *
  * @param address Client’s Terra address.
@@ -16,23 +16,27 @@ const amount_1 = require("../../utils/validation/amount");
  * @param amount (optional) Amount of collateral to redeem. Set this to null if redeem_all is true.
  * @param withdraw_to (optional) Terra address to withdraw redeemed collateral. If null, withdraws to address.
  */
-const fabricateCustodyWithdrawCollateral = ({ address, market, amount = null, }) => (addressProvider) => {
-    validate_input_1.validateInput([
-        address_1.validateAddress(address),
-        amount ? number_1.validateIsGreaterThanZero(amount) : true_1.validateTrue,
-    ]);
-    const custodyContract = addressProvider.custody(market.toLocaleLowerCase());
-    return [
-        // withdraw from custody
-        // withdraw from custody
-        new terra_js_1.MsgExecuteContract(address, custodyContract, {
-            // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/custody/src/msg.rs#L69
-            withdraw_collateral: {
-                amount: amount_1.isAmountSet(amount)
-                    ? new terra_js_1.Int(new terra_js_1.Dec(amount).mul(1000000)).toString()
-                    : undefined,
-            },
-        }),
-    ];
+var fabricateCustodyWithdrawCollateral = function (_a) {
+    var address = _a.address, market = _a.market, _b = _a.amount, amount = _b === void 0 ? undefined : _b;
+    return function (addressProvider) {
+        validate_input_1.validateInput([
+            address_1.validateAddress(address),
+            amount ? number_1.validateIsGreaterThanZero(amount) : true_1.validateTrue,
+        ]);
+        var custodyContract = addressProvider.custody(market.toLocaleLowerCase());
+        return [
+            // withdraw from custody
+            // withdraw from custody
+            new terra_js_1.MsgExecuteContract(address, custodyContract, {
+                // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/custody/src/msg.rs#L69
+                withdraw_collateral: {
+                    amount: amount_1.isAmountSet(amount)
+                        ? new terra_js_1.Int(new terra_js_1.Dec(amount).mul(1000000)).toString()
+                        : undefined,
+                },
+            }),
+        ];
+    };
 };
 exports.fabricateCustodyWithdrawCollateral = fabricateCustodyWithdrawCollateral;
+//# sourceMappingURL=custody-withdraw-collateral.js.map

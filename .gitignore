@@ -1,25 +1,16 @@
-# config
-.envrc
-
-# tools
-/.idea
-
-# node
 node_modules/
+yarn-error.log
+keystore.db
 
-# macos
+# IDEs
+*.iml
+.idea
 .DS_Store
 
-# generated files
-*.tgz
-lerna-debug.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# artifacts
+dist
+out
 
 # output
 coverage/
-out/
 test/storage/
-.eslintcache
-storybook-static/

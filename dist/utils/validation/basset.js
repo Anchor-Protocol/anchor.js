@@ -5,9 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateWhitelistedBAsset = void 0;
 // @ts-ignore
-const basset_json_1 = __importDefault(require("../../constants/basset.json"));
-const validateWhitelistedBAsset = (symbol) => [
-    () => basset_json_1.default.bluna && symbol.toLocaleLowerCase() === 'bluna',
-    `unknown bAsset symbol ${symbol}.`,
-];
+var basset_json_1 = __importDefault(require("../../constants/basset.json"));
+var validateWhitelistedBAsset = function (symbol) { return [
+    function () { return basset_json_1.default.bluna && symbol.toLocaleLowerCase() === 'bluna'; },
+    "unknown bAsset symbol " + symbol + ".",
+]; };
 exports.validateWhitelistedBAsset = validateWhitelistedBAsset;
+//# sourceMappingURL=basset.js.map

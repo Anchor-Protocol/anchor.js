@@ -25,8 +25,8 @@ export const queryHubHistory = ({
     bAssetContractAddress,
     {
       all_history: {
-        start_from: +startFrom,
-        limit: +lim,
+        start_from: startFrom || undefined,
+        limit: lim || undefined,
       },
     },
   );
