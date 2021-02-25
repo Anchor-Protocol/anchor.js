@@ -13,7 +13,7 @@ export const fabricatebCheckSlashing = ({ address, bAsset }: Option) => (
 ): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const bAssetHubAddress = addressProvider.bAssetHub(bAsset);
+  const bAssetHubAddress = addressProvider.blunaHub(bAsset);
 
   return [
     new MsgExecuteContract(address, bAssetHubAddress, {

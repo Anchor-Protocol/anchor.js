@@ -19,14 +19,14 @@ export const querySimulation = ({
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<SimulationResponse> => {
-  const pairContractAddress = addressProvider.blunaUlunaPair();
+  const pairContractAddress = addressProvider.terraswapblunaLunaPair();
   let reponse: SimulationResponse = await lcd.wasm.contractQuery(
     pairContractAddress,
     {
       simulation: {
         offer_asset: {
           info: {
-            token: {
+            ANC: {
               contract_addr: contractAddr,
             },
           },

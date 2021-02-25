@@ -18,7 +18,7 @@ export const queryRewardHolders = ({
   startAfter,
   lim,
 }: Option) => async (addressProvider: AddressProvider): Promise<Holders> => {
-  const bAssetContractAddress = addressProvider.bAssetReward(bAsset);
+  const bAssetContractAddress = addressProvider.blunaReward(bAsset);
   let reponse: Holders = await lcd.wasm.contractQuery(bAssetContractAddress, {
     holders: {
       start_after: startAfter,

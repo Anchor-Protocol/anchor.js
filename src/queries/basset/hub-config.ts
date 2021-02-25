@@ -14,7 +14,7 @@ interface ConfigResponse {
 export const queryHubConfig = ({ lcd, bAsset }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ConfigResponse> => {
-  const bAssetContractAddress = addressProvider.bAssetHub(bAsset);
+  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
   let reponse: ConfigResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

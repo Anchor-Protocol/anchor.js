@@ -19,14 +19,14 @@ export const queryReverseTokenSimulation = ({
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<SimulationResponse> => {
-  const pairContractAddress = addressProvider.blunaUlunaPair();
+  const pairContractAddress = addressProvider.terraswapblunaLunaPair();
   let reponse: SimulationResponse = await lcd.wasm.contractQuery(
     pairContractAddress,
     {
       reverse_simulation: {
         ask_asset: {
           info: {
-            token: {
+            ANC: {
               contract_addr: contractAddr,
             },
           },

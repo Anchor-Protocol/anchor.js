@@ -13,7 +13,7 @@ interface Balance {
 export const queryTokenBalance = ({ lcd, bAsset, address }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<Balance> => {
-  const bAssetContractAddress = addressProvider.bAssetToken(bAsset);
+  const bAssetContractAddress = addressProvider.blunaToken(bAsset);
   let reponse: Balance = await lcd.wasm.contractQuery(bAssetContractAddress, {
     balance: {
       address: address,

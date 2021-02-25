@@ -23,8 +23,8 @@ export const fabricatebAssetBurn = ({ address, amount, bAsset }: Option) => (
     validateIsGreaterThanZero(+amount),
   ]);
 
-  const bAssetTokenAddress = addressProvider.bAssetToken(bAsset);
-  const bAssetHubAddress = addressProvider.bAssetHub(bAsset);
+  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
+  const bAssetHubAddress = addressProvider.blunaHub(bAsset);
 
   return [
     new MsgExecuteContract(address, bAssetTokenAddress, {

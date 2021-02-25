@@ -28,7 +28,7 @@ export const fabricateGovCreatePoll = ({
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const anchorToken = addressProvider.anchorToken();
+  const anchorToken = addressProvider.ANC();
 
   return [
     new MsgExecuteContract(address, anchorToken, {

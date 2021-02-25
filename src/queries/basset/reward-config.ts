@@ -13,7 +13,7 @@ interface ConfigResponse {
 export const queryRewardConfig = ({ lcd, bAsset }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ConfigResponse> => {
-  const bAssetContractAddress = addressProvider.bAssetReward(bAsset);
+  const bAssetContractAddress = addressProvider.blunaReward(bAsset);
   let reponse: ConfigResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

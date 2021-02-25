@@ -14,7 +14,7 @@ interface MinterResponse {
 export const queryTokenMinter = ({ lcd, bAsset }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<MinterResponse> => {
-  const bAssetContractAddress = addressProvider.bAssetToken(bAsset);
+  const bAssetContractAddress = addressProvider.blunaToken(bAsset);
   let reponse: MinterResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

@@ -6,7 +6,7 @@ interface Option {
   address: string;
 }
 
-export type VoteOption = 'yes' | 'no';
+type VoteOption = 'yes' | 'no';
 
 export interface VoterInfo {
   vote: VoteOption;

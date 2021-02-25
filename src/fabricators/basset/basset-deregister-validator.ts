@@ -17,7 +17,7 @@ export const fabricateDeRegisterValidator = ({
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([validateValAddress(validatorAddress)]);
 
-  const bAssetHubAddress = addressProvider.bAssetHub('bluna');
+  const bAssetHubAddress = addressProvider.blunaHub('bluna');
 
   return [
     new MsgExecuteContract(address, bAssetHubAddress, {

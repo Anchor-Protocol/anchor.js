@@ -1,15 +1,15 @@
 import { AddressProvider } from "./provider";
 
 export class AddressProviderFromMantle implements AddressProvider {
-  bAssetReward(): string {
+  blunaReward(): string {
     throw new Error("Method not implemented.");
   }
 
-  bAssetHub(): string {
+  blunaHub(): string {
     throw new Error("Method not implemented.");
   }
 
-  bAssetToken(): string {
+  blunaToken(): string {
     throw new Error("Method not implemented.");
   }
 
@@ -29,7 +29,7 @@ export class AddressProviderFromMantle implements AddressProvider {
     throw new Error("Method not implemented.");
   }
 
-  aToken(): string {
+  aTerra(): string {
     throw new Error("Method not implemented.");
   }
 
@@ -49,11 +49,11 @@ export class AddressProviderFromMantle implements AddressProvider {
     throw new Error("Method not implemented.");
   }
 
-  blunaUlunaPair(): string {
+  terraswapblunaLunaPair(): string {
     throw new Error("Method not implemented.");
   }
 
-  blunaUlunaToken(): string {
+  terraswapblunaLunaLPToken(): string {
     throw new Error("Method not implemented.");
   }
 
@@ -61,11 +61,11 @@ export class AddressProviderFromMantle implements AddressProvider {
     throw new Error("Method not implemented.");
   }
 
-  anchorUusdPair(): string {
+  terraswapAncUstPair(): string {
     throw new Error("Method not implemented.");
   }
 
-  anchorUusdToken(): string {
+  terraswapAncUstLPToken(): string {
     throw new Error("Method not implemented.");
   }
 
@@ -85,7 +85,7 @@ export class AddressProviderFromMantle implements AddressProvider {
     throw new Error("Method not implemented.");
   }
 
-  anchorToken(): string {
+  ANC(): string {
     throw new Error("Method not implemented.");
   }
 }

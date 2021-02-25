@@ -34,7 +34,7 @@ export const fabricatebAssetParams = ({
   ]);
 
   // const nativeTokenDenom = bAssetToNative.bluna[bAsset.toLowerCase()]
-  const bAssetContractAddress = addressProvider.bAssetHub(bAsset);
+  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
 
   return [
     new MsgExecuteContract(address, bAssetContractAddress, {

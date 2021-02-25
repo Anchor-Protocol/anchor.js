@@ -20,7 +20,7 @@ export const queryHubWithdrawable = ({
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<WithdrableResponse> => {
-  const bAssetContractAddress = addressProvider.bAssetHub(bAsset);
+  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
   let reponse: WithdrableResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

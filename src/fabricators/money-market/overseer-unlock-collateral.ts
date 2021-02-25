@@ -35,7 +35,7 @@ export const fabricateOverseerUnlockCollateral = ({
   ]);
 
   const mmOverseerContract = addressProvider.overseer(market.toLowerCase());
-  const bAssetTokenContract = addressProvider.bAssetToken('ubluna');
+  const bAssetTokenContract = addressProvider.blunaToken('ubluna');
 
   return [
     // unlock collateral

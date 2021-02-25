@@ -13,7 +13,7 @@ interface AccruedReward {
 export const queryRewardAccrued = ({ lcd, bAsset, address }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<AccruedReward> => {
-  const bAssetContractAddress = addressProvider.bAssetReward(bAsset);
+  const bAssetContractAddress = addressProvider.blunaReward(bAsset);
   let reponse: AccruedReward = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

@@ -32,7 +32,7 @@ export const fabricatebAssetdDecreaseAllowance = ({
     //TODO: validate the expiration
   ]);
 
-  const bAssetTokenAddress = addressProvider.bAssetToken(bAsset);
+  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
 
   return [
     new MsgExecuteContract(address, bAssetTokenAddress, {

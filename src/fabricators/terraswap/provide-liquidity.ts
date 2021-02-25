@@ -33,8 +33,8 @@ export const fabricateTerraSwapProvideLiquidity = ({
     validateIsGreaterThanZero(nativeAmount),
   ]);
 
-  const pairAddress = addressProvider.blunaUlunaPair();
-  const tokenAddress = addressProvider.bAssetToken(bAsset);
+  const pairAddress = addressProvider.terraswapblunaLunaPair();
+  const tokenAddress = addressProvider.blunaToken(bAsset);
 
   const coins = new Coins([
     new Coin(quote, new Int(new Dec(nativeAmount).mul(1000000)).toString()),
@@ -48,7 +48,7 @@ export const fabricateTerraSwapProvideLiquidity = ({
           assets: [
             {
               info: {
-                token: {
+                ANC: {
                   contract_addr: tokenAddress,
                 },
               },

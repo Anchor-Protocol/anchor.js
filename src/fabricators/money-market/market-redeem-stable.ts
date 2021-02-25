@@ -22,7 +22,7 @@ export const fabricateRedeemStable = ({ address, symbol, amount }: Option) => (
   validateInput([validateAddress(address), validateIsGreaterThanZero(amount)]);
 
   const marketAddress = addressProvider.market(symbol);
-  const aTokenAddress = addressProvider.aToken(symbol);
+  const aTokenAddress = addressProvider.aTerra(symbol);
 
   return [
     new MsgExecuteContract(address, aTokenAddress, {

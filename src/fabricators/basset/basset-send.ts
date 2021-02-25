@@ -29,7 +29,7 @@ export const fabricatebAssetSend = ({
     validateAddress(contract),
   ]);
 
-  const bAssetTokenAddress = addressProvider.bAssetToken(bAsset);
+  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
   let message = undefined;
   if (msg) {
     message = Buffer.from(JSON.stringify(msg)).toString('base64');

@@ -14,7 +14,7 @@ export const fabricatebAssetWithdrawUnbonded = ({
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const bAssetHubAddress = addressProvider.bAssetHub(bAsset);
+  const bAssetHubAddress = addressProvider.blunaHub(bAsset);
 
   return [
     new MsgExecuteContract(address, bAssetHubAddress, {

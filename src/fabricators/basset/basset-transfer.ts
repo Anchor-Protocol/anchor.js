@@ -27,7 +27,7 @@ export const fabricatebAssetTransfer = ({
     validateAddress(recipient),
   ]);
 
-  const bAssetTokenAddress = addressProvider.bAssetToken(bAsset);
+  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
 
   return [
     new MsgExecuteContract(address, bAssetTokenAddress, {

@@ -18,7 +18,7 @@ interface ParamsResponse {
 export const queryHubParams = ({ lcd, bAsset }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ParamsResponse> => {
-  const bAssetContractAddress = addressProvider.bAssetHub(bAsset);
+  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
   let reponse: ParamsResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

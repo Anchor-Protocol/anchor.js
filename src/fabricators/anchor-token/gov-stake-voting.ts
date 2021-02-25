@@ -14,7 +14,7 @@ export const fabricateGovStakeVoting = ({ address, amount }: Option) => (
 ): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const anchorToken = addressProvider.anchorToken();
+  const anchorToken = addressProvider.ANC();
 
   return [
     new MsgExecuteContract(address, anchorToken, {

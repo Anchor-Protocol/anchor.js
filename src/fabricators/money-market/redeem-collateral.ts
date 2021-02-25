@@ -35,7 +35,7 @@ export const fabricateRedeemCollateral = ({
   ]);
 
   const mmOverseerContract = addressProvider.overseer(market.toLowerCase());
-  const bAssetTokenContract = addressProvider.bAssetToken('ubluna'); // fixed to ubluna for now
+  const bAssetTokenContract = addressProvider.blunaToken('ubluna'); // fixed to ubluna for now
   const custodyContract = addressProvider.custody(market.toLocaleLowerCase());
 
   return [

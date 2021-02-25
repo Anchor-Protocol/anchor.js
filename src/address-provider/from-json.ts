@@ -2,44 +2,44 @@ import { AddressProvider } from "./provider";
 
 interface JsonData {
   bLunaHub: string;
-  bAssetToken: string;
-  bAssetReward: string;
-  bAssetAirdrop: string;
-  mmInterest: string;
+  blunaToken: string;
+  blunaReward: string;
+  blunaAirdrop: string;
+  mmInterestModel: string;
   mmOracle: string;
   mmMarket: string;
   mmOverseer: string;
   mmCustody: string;
   mmLiquidation: string;
-  mmdistribution: string;
-  anchorToken: string;
+  mmdistributionModel: string;
+  aTerra: string;
   terraswapFactory: string;
-  blunaUlunaPair: string;
-  blunaUlunaToken: string;
-  anchorUusdPair: string;
-  anchorUusdToken: string;
+  terraswapblunaLunaPair: string;
+  terraswapblunaLunaLPToken: string;
+  terraswapAncUstPair: string;
+  terraswapAncUstLPToken: string;
   gov: string;
   faucet: string;
   collector: string;
   community: string;
   staking: string;
-  token: string;
+  ANC: string;
   airdrop: string;
 }
 
 export class AddressProviderFromJson implements AddressProvider {
   constructor(private data: JsonData) {}
 
-  bAssetReward(): string {
-    return this.data.bAssetReward;
+  blunaReward(): string {
+    return this.data.blunaReward;
   }
 
-  bAssetHub(): string {
+  blunaHub(): string {
     return this.data.bLunaHub;
   }
 
-  bAssetToken(): string {
-    return this.data.bAssetToken;
+  blunaToken(): string {
+    return this.data.blunaToken;
   }
 
   market(): string {
@@ -54,8 +54,8 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.mmOverseer;
   }
 
-  aToken(): string {
-    return this.data.anchorToken;
+  aTerra(): string {
+    return this.data.aTerra;
   }
 
   oracle(): string {
@@ -63,7 +63,7 @@ export class AddressProviderFromJson implements AddressProvider {
   }
 
   interest(): string {
-    return this.data.mmInterest;
+    return this.data.mmInterestModel;
   }
 
   liquidation(): string {
@@ -74,24 +74,24 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.terraswapFactory;
   }
 
-  blunaUlunaPair(): string {
-    return this.data.blunaUlunaPair;
+  terraswapblunaLunaPair(): string {
+    return this.data.terraswapblunaLunaPair;
   }
 
-  blunaUlunaToken(): string {
-    return this.data.blunaUlunaToken;
+  terraswapblunaLunaLPToken(): string {
+    return this.data.terraswapblunaLunaLPToken;
   }
 
   gov(): string {
     return this.data.gov;
   }
 
-  anchorUusdPair(): string {
-    throw this.data.anchorUusdPair;
+  terraswapAncUstPair(): string {
+    throw this.data.terraswapAncUstPair;
   }
 
-  anchorUusdToken(): string {
-    return this.data.anchorUusdToken;
+  terraswapAncUstLPToken(): string {
+    return this.data.terraswapAncUstLPToken;
   }
 
   collector(): string {
@@ -110,7 +110,7 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.faucet;
   }
 
-  anchorToken(): string {
-    return this.data.token;
+  ANC(): string {
+    return this.data.ANC;
   }
 }

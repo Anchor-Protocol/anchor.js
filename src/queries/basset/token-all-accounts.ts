@@ -20,7 +20,7 @@ export const queryTokenAllAccounts = ({
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<AllAccounts> => {
-  const bAssetContractAddress = addressProvider.bAssetToken(bAsset);
+  const bAssetContractAddress = addressProvider.blunaToken(bAsset);
   let reponse: AllAccounts = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

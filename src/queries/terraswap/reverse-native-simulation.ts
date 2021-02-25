@@ -19,7 +19,7 @@ export const queryReverseNativeSimulation = ({
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<SimulationResponse> => {
-  const pairContractAddress = addressProvider.blunaUlunaPair();
+  const pairContractAddress = addressProvider.terraswapblunaLunaPair();
   let reponse: SimulationResponse = await lcd.wasm.contractQuery(
     pairContractAddress,
     {

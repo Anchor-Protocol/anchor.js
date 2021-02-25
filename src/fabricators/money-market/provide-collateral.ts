@@ -38,7 +38,7 @@ export const fabricateProvideCollateral = ({
     validateIsGreaterThanZero(amount),
   ]);
 
-  const bAssetTokenContract = addressProvider.bAssetToken(symbol.toLowerCase());
+  const bAssetTokenContract = addressProvider.blunaToken(symbol.toLowerCase());
   const mmOverseerContract = addressProvider.overseer(market.toLowerCase());
   const custodyContract = addressProvider.custody(market.toLocaleLowerCase());
 

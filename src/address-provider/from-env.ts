@@ -1,18 +1,16 @@
 import { reactifyEnv } from "./react-app-prefix";
 import { AddressProvider } from "./provider";
 
-//console.log(process.env);
-
 export class AddressProviderFromEnvVar implements AddressProvider {
-  bAssetReward(): string {
+  blunaReward(): string {
     return getFromEnv("bAssetReward");
   }
 
-  bAssetHub(): string {
+  blunaHub(): string {
     return getFromEnv("bLuna");
   }
 
-  bAssetToken(): string {
+  blunaToken(): string {
     return getFromEnv("bAssetToken");
   }
 
@@ -32,7 +30,7 @@ export class AddressProviderFromEnvVar implements AddressProvider {
     return getFromEnv("mmOverseer");
   }
 
-  aToken(): string {
+  aTerra(): string {
     return getFromEnv("aUST");
   }
 
@@ -52,11 +50,11 @@ export class AddressProviderFromEnvVar implements AddressProvider {
     return getFromEnv("terraswapFactory");
   }
 
-  blunaUlunaPair(): string {
+  terraswapblunaLunaPair(): string {
     return getFromEnv("bLunaBurnPair");
   }
 
-  blunaUlunaToken(nativeDenom: string): string {
+  terraswapblunaLunaLPToken(nativeDenom: string): string {
     return getFromEnv(`blunaUlunaToken${nativeDenom}`);
   }
 
@@ -64,11 +62,11 @@ export class AddressProviderFromEnvVar implements AddressProvider {
     return getFromEnv(`gov`);
   }
 
-  anchorUusdPair(): string {
+  terraswapAncUstPair(): string {
     return getFromEnv(`anchorUusdPair`);
   }
 
-  anchorUusdToken(): string {
+  terraswapAncUstLPToken(): string {
     return getFromEnv(`anchorUusdPair`);
   }
 
@@ -88,7 +86,7 @@ export class AddressProviderFromEnvVar implements AddressProvider {
     return getFromEnv(`faucet`);
   }
 
-  anchorToken(): string {
+  ANC(): string {
     return getFromEnv(`token`);
   }
 }

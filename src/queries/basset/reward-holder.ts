@@ -16,7 +16,7 @@ interface Holder {
 export const queryRewardHolder = ({ lcd, bAsset, address }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<Holder> => {
-  const bAssetContractAddress = addressProvider.bAssetReward(bAsset);
+  const bAssetContractAddress = addressProvider.blunaReward(bAsset);
   let reponse: Holder = await lcd.wasm.contractQuery(bAssetContractAddress, {
     holder: {
       address: address,

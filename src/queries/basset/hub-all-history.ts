@@ -20,7 +20,7 @@ export const queryHubHistory = ({
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<HistoryResponse> => {
-  const bAssetContractAddress = addressProvider.bAssetHub(bAsset);
+  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
   let reponse: HistoryResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

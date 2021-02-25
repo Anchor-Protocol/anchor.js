@@ -16,14 +16,14 @@ export const fabricatebTerraSwapCreatePair = ({
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const bAssetTokenAddress = addressProvider.bAssetToken(bAsset);
+  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
   const terrawswapFactory = addressProvider.terraswapFactory();
   return [
     new MsgExecuteContract(address, terrawswapFactory, {
       create_pair: {
         asset_infos: [
           {
-            token: {
+            ANC: {
               contract_addr: bAssetTokenAddress,
             },
           },

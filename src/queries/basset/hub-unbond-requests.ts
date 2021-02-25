@@ -14,7 +14,7 @@ interface UnbondResponse {
 export const queryHubUnbond = ({ lcd, bAsset, address }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<UnbondResponse> => {
-  const bAssetContractAddress = addressProvider.bAssetHub(bAsset);
+  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
   let reponse: UnbondResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

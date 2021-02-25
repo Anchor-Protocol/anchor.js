@@ -16,7 +16,7 @@ export const fabricatebAssetClaim = ({
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const bAssetRewardAddress = addressProvider.bAssetReward(bAsset);
+  const bAssetRewardAddress = addressProvider.blunaReward(bAsset);
 
   return [
     new MsgExecuteContract(address, bAssetRewardAddress, {

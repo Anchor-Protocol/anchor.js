@@ -16,7 +16,7 @@ interface TokenInfoResponse {
 export const queryTokenInfo = ({ lcd, bAsset }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<TokenInfoResponse> => {
-  const bAssetContractAddress = addressProvider.bAssetToken(bAsset);
+  const bAssetContractAddress = addressProvider.blunaToken(bAsset);
   let reponse: TokenInfoResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

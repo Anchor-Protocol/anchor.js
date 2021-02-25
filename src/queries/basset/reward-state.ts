@@ -15,7 +15,7 @@ interface StateResponse {
 export const queryRewardState = ({ lcd, bAsset }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<StateResponse> => {
-  const bAssetContractAddress = addressProvider.bAssetReward(bAsset);
+  const bAssetContractAddress = addressProvider.blunaReward(bAsset);
   let reponse: StateResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

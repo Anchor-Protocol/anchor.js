@@ -13,7 +13,7 @@ interface PairInfo {
 export const queryPair = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<PairInfo> => {
-  const pairContractAddress = addressProvider.blunaUlunaPair();
+  const pairContractAddress = addressProvider.terraswapblunaLunaPair();
   let reponse: PairInfo = await lcd.wasm.contractQuery(pairContractAddress, {
     pair: {},
   });

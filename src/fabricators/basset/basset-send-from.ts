@@ -32,7 +32,7 @@ export const fabricatebAssetSendFrom = ({
     validateAddress(contract),
   ]);
 
-  const bAssetTokenAddress = addressProvider.bAssetToken(bAsset);
+  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
 
   let message = undefined;
   if (msg) {

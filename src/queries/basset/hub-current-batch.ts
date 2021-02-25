@@ -14,7 +14,7 @@ interface CurrentBatchResponse {
 export const queryHubCurrentBatch = ({ lcd, bAsset }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<CurrentBatchResponse> => {
-  const bAssetContractAddress = addressProvider.bAssetHub(bAsset);
+  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
   let reponse: CurrentBatchResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

@@ -1,9 +1,9 @@
 export interface AddressProvider {
-  bAssetReward(denom: string): string;
+  blunaReward(denom: string): string;
 
-  bAssetHub(denom: string): string;
+  blunaHub(denom: string): string;
 
-  bAssetToken(denom: string): string;
+  blunaToken(denom: string): string;
 
   // https://github.com/Anchor-Protocol/money-market-contracts/tree/master/artifacts
   // moneymarket_market.wasm
@@ -13,7 +13,7 @@ export interface AddressProvider {
 
   overseer(denom: string): string;
 
-  aToken(denom: string): string;
+  aTerra(denom: string): string;
 
   oracle(): string;
 
@@ -23,17 +23,17 @@ export interface AddressProvider {
 
   terraswapFactory(): string;
 
-  blunaUlunaPair(): string;
+  terraswapblunaLunaPair(): string;
 
-  blunaUlunaToken(quote: string): string;
+  terraswapblunaLunaLPToken(quote: string): string;
 
   gov(): string;
 
-  anchorUusdPair(): string;
+  terraswapAncUstPair(): string;
 
-  anchorUusdToken(): string;
+  terraswapAncUstLPToken(): string;
 
-  anchorToken(): string;
+  ANC(): string;
 
   collector(): string;
 

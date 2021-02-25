@@ -12,7 +12,7 @@ interface WhitelistedValResponse {
 export const queryHubWhiteVals = ({ lcd, bAsset }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<WhitelistedValResponse> => {
-  const bAssetContractAddress = addressProvider.bAssetHub(bAsset);
+  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
   let reponse: WhitelistedValResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {

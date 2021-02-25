@@ -31,8 +31,8 @@ export const fabricatebSwapbLuna = ({
     validateIsGreaterThanZero(+amount),
   ]);
 
-  const bAssetTokenAddress = addressProvider.bAssetToken(bAsset);
-  const pairAddress = addressProvider.blunaUlunaPair();
+  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
+  const pairAddress = addressProvider.terraswapblunaLunaPair();
 
   return [
     new MsgExecuteContract(address, bAssetTokenAddress, {
