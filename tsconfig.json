@@ -8,6 +8,7 @@
   ],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "alwaysStrict": true,
     "baseUrl": "./",
     "declaration": true,
@@ -33,7 +34,7 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "target": "es5",
+    "target": "esnext",
     "paths": {
       "*": [
         "src/*"
