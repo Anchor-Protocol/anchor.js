@@ -15,7 +15,7 @@ var fabricatebSwapbLuna = function (_a) {
             number_1.validateIsGreaterThanZero(+amount),
         ]);
         var bAssetTokenAddress = addressProvider.bAssetToken(bAsset);
-        var pairAddress = addressProvider.blunaBurnPair();
+        var pairAddress = addressProvider.blunaUlunaPair();
         return [
             new terra_js_1.MsgExecuteContract(address, bAssetTokenAddress, {
                 send: {

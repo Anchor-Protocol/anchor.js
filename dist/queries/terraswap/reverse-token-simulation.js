@@ -45,7 +45,7 @@ var queryReverseTokenSimulation = function (_a) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    pairContractAddress = addressProvider.blunaBurnPair();
+                    pairContractAddress = addressProvider.blunaUlunaPair();
                     return [4 /*yield*/, lcd.wasm.contractQuery(pairContractAddress, {
                             reverse_simulation: {
                                 ask_asset: {

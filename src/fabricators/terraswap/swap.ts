@@ -32,7 +32,7 @@ export const fabricatebSwapbLuna = ({
   ]);
 
   const bAssetTokenAddress = addressProvider.bAssetToken(bAsset);
-  const pairAddress = addressProvider.blunaBurnPair();
+  const pairAddress = addressProvider.blunaUlunaPair();
 
   return [
     new MsgExecuteContract(address, bAssetTokenAddress, {

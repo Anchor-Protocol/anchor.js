@@ -49,11 +49,43 @@ export class AddressProviderFromMantle implements AddressProvider {
     throw new Error("Method not implemented.");
   }
 
-  blunaBurnPair(): string {
+  blunaUlunaPair(): string {
     throw new Error("Method not implemented.");
   }
 
-  blunaBurn(): string {
+  blunaUlunaToken(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  gov(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  anchorUusdPair(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  anchorUusdToken(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  collector(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  staking(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  community(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  faucet(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  anchorToken(): string {
     throw new Error("Method not implemented.");
   }
 }

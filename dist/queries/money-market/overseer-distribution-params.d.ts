@@ -7,7 +7,7 @@ interface Option {
 interface DistributionParamsResponse {
     depositRate: string;
     targetDepositRate: string;
-    distributionThreshold: string;
+    distributionThresholdRate: string;
 }
 export declare const queryOverseerDistributionParams: ({ lcd, overseer, }: Option) => (addressProvider: AddressProvider) => Promise<DistributionParamsResponse>;
 export {};

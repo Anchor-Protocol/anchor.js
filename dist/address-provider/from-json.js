@@ -38,11 +38,35 @@ var AddressProviderFromJson = /** @class */ (function () {
     AddressProviderFromJson.prototype.terraswapFactory = function () {
         return this.data.terraswapFactory;
     };
-    AddressProviderFromJson.prototype.blunaBurnPair = function () {
-        return this.data.blunaBurnPair;
+    AddressProviderFromJson.prototype.blunaUlunaPair = function () {
+        return this.data.blunaUlunaPair;
     };
-    AddressProviderFromJson.prototype.blunaBurn = function () {
-        return this.data.blunaBurnuluna;
+    AddressProviderFromJson.prototype.blunaUlunaToken = function () {
+        return this.data.blunaUlunaToken;
+    };
+    AddressProviderFromJson.prototype.gov = function () {
+        return this.data.gov;
+    };
+    AddressProviderFromJson.prototype.anchorUusdPair = function () {
+        throw this.data.anchorUusdPair;
+    };
+    AddressProviderFromJson.prototype.anchorUusdToken = function () {
+        return this.data.anchorUusdToken;
+    };
+    AddressProviderFromJson.prototype.collector = function () {
+        return this.data.collector;
+    };
+    AddressProviderFromJson.prototype.staking = function () {
+        return this.data.staking;
+    };
+    AddressProviderFromJson.prototype.community = function () {
+        return this.data.community;
+    };
+    AddressProviderFromJson.prototype.faucet = function () {
+        return this.data.faucet;
+    };
+    AddressProviderFromJson.prototype.anchorToken = function () {
+        return this.data.token;
     };
     return AddressProviderFromJson;
 }());

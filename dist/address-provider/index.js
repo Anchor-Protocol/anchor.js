@@ -14,5 +14,4 @@ __exportStar(require("./from-json"), exports);
 __exportStar(require("./from-env"), exports);
 __exportStar(require("./from-mantle"), exports);
 __exportStar(require("./provider"), exports);
-__exportStar(require("./defualt-addresses"), exports);
 //# sourceMappingURL=index.js.map

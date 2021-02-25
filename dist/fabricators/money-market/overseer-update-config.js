@@ -7,7 +7,7 @@ var address_1 = require("../../utils/validation/address");
 var true_1 = require("../../utils/validation/true");
 var number_1 = require("../../utils/validation/number");
 var fabricatebOverseerConfig = function (_a) {
-    var address = _a.address, overseer = _a.overseer, owner_addr = _a.owner_addr, oracle_contract = _a.oracle_contract, liquidation_contract = _a.liquidation_contract, distribution_threshold = _a.distribution_threshold, target_deposit_rate = _a.target_deposit_rate, buffer_distribution_rate = _a.buffer_distribution_rate, epoch_period = _a.epoch_period, price_timeframe = _a.price_timeframe;
+    var address = _a.address, overseer = _a.overseer, owner_addr = _a.owner_addr, oracle_contract = _a.oracle_contract, liquidation_contract = _a.liquidation_contract, threshold_deposit_rate = _a.threshold_deposit_rate, target_deposit_rate = _a.target_deposit_rate, buffer_distribution_factor = _a.buffer_distribution_factor, epoch_period = _a.epoch_period, price_timeframe = _a.price_timeframe;
     return function (addressProvider) {
         validate_input_1.validateInput([
             address_1.validateAddress(address),
@@ -24,9 +24,9 @@ var fabricatebOverseerConfig = function (_a) {
                     owner_addr: owner_addr,
                     oracle_contract: oracle_contract,
                     liquidation_contract: liquidation_contract,
-                    distribution_threshold: distribution_threshold,
+                    threshold_deposit_rate: threshold_deposit_rate,
                     target_deposit_rate: target_deposit_rate,
-                    buffer_distribution_rate: buffer_distribution_rate,
+                    buffer_distribution_factor: buffer_distribution_factor,
                     epoch_period: epoch_period,
                     price_timeframe: price_timeframe,
                 },

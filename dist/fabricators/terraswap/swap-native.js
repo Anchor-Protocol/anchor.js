@@ -16,7 +16,7 @@ var fabricatebSwapLuna = function (_a) {
         var coins = new terra_js_1.Coins([
             new terra_js_1.Coin(denom, new terra_js_1.Int(new terra_js_1.Dec(amount).mul(1000000)).toString()),
         ]);
-        var pairAddress = addressProvider.blunaBurnPair();
+        var pairAddress = addressProvider.blunaUlunaPair();
         return [
             new terra_js_1.MsgExecuteContract(address, pairAddress, {
                 swap: {

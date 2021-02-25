@@ -6,11 +6,11 @@ interface Option {
     owner_addr?: string;
     oracle_contract?: string;
     liquidation_contract?: string;
-    distribution_threshold?: Dec;
+    threshold_deposit_rate?: Dec;
     target_deposit_rate?: Dec;
-    buffer_distribution_rate?: Dec;
+    buffer_distribution_factor?: Dec;
     epoch_period?: number;
     price_timeframe?: number;
 }
-export declare const fabricatebOverseerConfig: ({ address, overseer, owner_addr, oracle_contract, liquidation_contract, distribution_threshold, target_deposit_rate, buffer_distribution_rate, epoch_period, price_timeframe, }: Option) => (addressProvider: AddressProvider) => MsgExecuteContract[];
+export declare const fabricatebOverseerConfig: ({ address, overseer, owner_addr, oracle_contract, liquidation_contract, threshold_deposit_rate, target_deposit_rate, buffer_distribution_factor, epoch_period, price_timeframe, }: Option) => (addressProvider: AddressProvider) => MsgExecuteContract[];
 export {};

@@ -4,16 +4,27 @@ interface JsonData {
   bLunaHub: string;
   bAssetToken: string;
   bAssetReward: string;
+  bAssetAirdrop: string;
   mmInterest: string;
   mmOracle: string;
   mmMarket: string;
   mmOverseer: string;
   mmCustody: string;
   mmLiquidation: string;
+  mmdistribution: string;
   anchorToken: string;
   terraswapFactory: string;
-  blunaBurnPair: string;
-  blunaBurnuluna: string;
+  blunaUlunaPair: string;
+  blunaUlunaToken: string;
+  anchorUusdPair: string;
+  anchorUusdToken: string;
+  gov: string;
+  faucet: string;
+  collector: string;
+  community: string;
+  staking: string;
+  token: string;
+  airdrop: string;
 }
 
 export class AddressProviderFromJson implements AddressProvider {
@@ -63,11 +74,43 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.terraswapFactory;
   }
 
-  blunaBurnPair(): string {
-    return this.data.blunaBurnPair;
+  blunaUlunaPair(): string {
+    return this.data.blunaUlunaPair;
   }
 
-  blunaBurn(): string {
-    return this.data.blunaBurnuluna;
+  blunaUlunaToken(): string {
+    return this.data.blunaUlunaToken;
+  }
+
+  gov(): string {
+    return this.data.gov;
+  }
+
+  anchorUusdPair(): string {
+    throw this.data.anchorUusdPair;
+  }
+
+  anchorUusdToken(): string {
+    return this.data.anchorUusdToken;
+  }
+
+  collector(): string {
+    return this.data.collector;
+  }
+
+  staking(): string {
+    return this.data.staking;
+  }
+
+  community(): string {
+    return this.data.community;
+  }
+
+  faucet(): string {
+    return this.data.faucet;
+  }
+
+  anchorToken(): string {
+    return this.data.token;
   }
 }

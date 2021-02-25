@@ -10,6 +10,14 @@ export interface AddressProvider {
     interest(): string;
     liquidation(): string;
     terraswapFactory(): string;
-    blunaBurnPair(): string;
-    blunaBurn(quote: string): string;
+    blunaUlunaPair(): string;
+    blunaUlunaToken(quote: string): string;
+    gov(): string;
+    anchorUusdPair(): string;
+    anchorUusdToken(): string;
+    anchorToken(): string;
+    collector(): string;
+    staking(): string;
+    community(): string;
+    faucet(): string;
 }

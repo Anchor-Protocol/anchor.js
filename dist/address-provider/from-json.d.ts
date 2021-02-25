@@ -3,16 +3,27 @@ interface JsonData {
     bLunaHub: string;
     bAssetToken: string;
     bAssetReward: string;
+    bAssetAirdrop: string;
     mmInterest: string;
     mmOracle: string;
     mmMarket: string;
     mmOverseer: string;
     mmCustody: string;
     mmLiquidation: string;
+    mmdistribution: string;
     anchorToken: string;
     terraswapFactory: string;
-    blunaBurnPair: string;
-    blunaBurnuluna: string;
+    blunaUlunaPair: string;
+    blunaUlunaToken: string;
+    anchorUusdPair: string;
+    anchorUusdToken: string;
+    gov: string;
+    faucet: string;
+    collector: string;
+    community: string;
+    staking: string;
+    token: string;
+    airdrop: string;
 }
 export declare class AddressProviderFromJson implements AddressProvider {
     private data;
@@ -28,7 +39,15 @@ export declare class AddressProviderFromJson implements AddressProvider {
     interest(): string;
     liquidation(): string;
     terraswapFactory(): string;
-    blunaBurnPair(): string;
-    blunaBurn(): string;
+    blunaUlunaPair(): string;
+    blunaUlunaToken(): string;
+    gov(): string;
+    anchorUusdPair(): string;
+    anchorUusdToken(): string;
+    collector(): string;
+    staking(): string;
+    community(): string;
+    faucet(): string;
+    anchorToken(): string;
 }
 export {};

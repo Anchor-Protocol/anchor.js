@@ -13,7 +13,7 @@ var fabricateTerraSwapProvideLiquidity = function (_a) {
             number_1.validateIsGreaterThanZero(tokenAmount),
             number_1.validateIsGreaterThanZero(nativeAmount),
         ]);
-        var pairAddress = addressProvider.blunaBurnPair();
+        var pairAddress = addressProvider.blunaUlunaPair();
         var tokenAddress = addressProvider.bAssetToken(bAsset);
         var coins = new terra_js_1.Coins([
             new terra_js_1.Coin(quote, new terra_js_1.Int(new terra_js_1.Dec(nativeAmount).mul(1000000)).toString()),
@@ -39,7 +39,7 @@ var fabricateTerraSwapProvideLiquidity = function (_a) {
                             amount: new terra_js_1.Int(new terra_js_1.Dec(nativeAmount).mul(1000000)).toString(),
                         },
                     ],
-                    slippage_tolerance: slippageTolerance,
+                    slippage_tolerance: slippageTolerance ? slippageTolerance : undefined,
                 },
             }, coins),
         ];

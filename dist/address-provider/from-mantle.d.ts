@@ -12,6 +12,14 @@ export declare class AddressProviderFromMantle implements AddressProvider {
     interest(): string;
     liquidation(): string;
     terraswapFactory(): string;
-    blunaBurnPair(): string;
-    blunaBurn(): string;
+    blunaUlunaPair(): string;
+    blunaUlunaToken(): string;
+    gov(): string;
+    anchorUusdPair(): string;
+    anchorUusdToken(): string;
+    collector(): string;
+    staking(): string;
+    community(): string;
+    faucet(): string;
+    anchorToken(): string;
 }

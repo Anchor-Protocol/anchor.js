@@ -42,11 +42,35 @@ var AddressProviderFromEnvVar = /** @class */ (function () {
     AddressProviderFromEnvVar.prototype.terraswapFactory = function () {
         return getFromEnv("terraswapFactory");
     };
-    AddressProviderFromEnvVar.prototype.blunaBurnPair = function () {
+    AddressProviderFromEnvVar.prototype.blunaUlunaPair = function () {
         return getFromEnv("bLunaBurnPair");
     };
-    AddressProviderFromEnvVar.prototype.blunaBurn = function (nativeDenom) {
-        return getFromEnv("bLunaBurn" + nativeDenom);
+    AddressProviderFromEnvVar.prototype.blunaUlunaToken = function (nativeDenom) {
+        return getFromEnv("blunaUlunaToken" + nativeDenom);
+    };
+    AddressProviderFromEnvVar.prototype.gov = function () {
+        return getFromEnv("gov");
+    };
+    AddressProviderFromEnvVar.prototype.anchorUusdPair = function () {
+        return getFromEnv("anchorUusdPair");
+    };
+    AddressProviderFromEnvVar.prototype.anchorUusdToken = function () {
+        return getFromEnv("anchorUusdPair");
+    };
+    AddressProviderFromEnvVar.prototype.collector = function () {
+        return getFromEnv("collector");
+    };
+    AddressProviderFromEnvVar.prototype.staking = function () {
+        return getFromEnv("staking");
+    };
+    AddressProviderFromEnvVar.prototype.community = function () {
+        return getFromEnv("community");
+    };
+    AddressProviderFromEnvVar.prototype.faucet = function () {
+        return getFromEnv("faucet");
+    };
+    AddressProviderFromEnvVar.prototype.anchorToken = function () {
+        return getFromEnv("token");
     };
     return AddressProviderFromEnvVar;
 }());

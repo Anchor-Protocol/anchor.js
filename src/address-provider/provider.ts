@@ -23,7 +23,23 @@ export interface AddressProvider {
 
   terraswapFactory(): string;
 
-  blunaBurnPair(): string;
+  blunaUlunaPair(): string;
 
-  blunaBurn(quote: string): string;
+  blunaUlunaToken(quote: string): string;
+
+  gov(): string;
+
+  anchorUusdPair(): string;
+
+  anchorUusdToken(): string;
+
+  anchorToken(): string;
+
+  collector(): string;
+
+  staking(): string;
+
+  community(): string;
+
+  faucet(): string;
 }

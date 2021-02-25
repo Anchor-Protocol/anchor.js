@@ -15,7 +15,7 @@ interface SimulationResponse {
 export const queryNativeSimulation = ({ lcd, denom, amount }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<SimulationResponse> => {
-  const pairContractAddress = addressProvider.blunaBurnPair();
+  const pairContractAddress = addressProvider.blunaUlunaPair();
   let reponse: SimulationResponse = await lcd.wasm.contractQuery(
     pairContractAddress,
     {

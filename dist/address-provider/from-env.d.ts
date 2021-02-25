@@ -12,6 +12,14 @@ export declare class AddressProviderFromEnvVar implements AddressProvider {
     interest(): string;
     liquidation(): string;
     terraswapFactory(): string;
-    blunaBurnPair(): string;
-    blunaBurn(nativeDenom: string): string;
+    blunaUlunaPair(): string;
+    blunaUlunaToken(nativeDenom: string): string;
+    gov(): string;
+    anchorUusdPair(): string;
+    anchorUusdToken(): string;
+    collector(): string;
+    staking(): string;
+    community(): string;
+    faucet(): string;
+    anchorToken(): string;
 }

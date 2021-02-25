@@ -4,13 +4,20 @@ interface Option {
     lcd: LCDClient;
     market: string;
 }
+interface BAssetInfo {
+    name: string;
+    symbol: string;
+    decimals: number;
+}
 interface ConfigResponse {
-    ownerAddr: string;
-    anchorToken: string;
-    interestModel: string;
+    owner: string;
+    collateralToken: string;
     overseerContract: string;
+    marketContract: string;
+    rewardContract: string;
+    liquidationContract: string;
     stableDenom: string;
-    reserveFactor: string;
+    bassetInfo: BAssetInfo;
 }
 export declare const queryMarketConfig: ({ lcd, market }: Option) => (addressProvider: AddressProvider) => Promise<ConfigResponse>;
 export {};

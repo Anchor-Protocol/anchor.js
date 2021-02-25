@@ -12,7 +12,7 @@ interface PoolResponse {
 export const queryPool = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<PoolResponse> => {
-  const pairContractAddress = addressProvider.blunaBurnPair();
+  const pairContractAddress = addressProvider.blunaUlunaPair();
   let reponse: PoolResponse = await lcd.wasm.contractQuery(
     pairContractAddress,
     {

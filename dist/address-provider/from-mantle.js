@@ -40,10 +40,34 @@ var AddressProviderFromMantle = /** @class */ (function () {
     AddressProviderFromMantle.prototype.terraswapFactory = function () {
         throw new Error("Method not implemented.");
     };
-    AddressProviderFromMantle.prototype.blunaBurnPair = function () {
+    AddressProviderFromMantle.prototype.blunaUlunaPair = function () {
         throw new Error("Method not implemented.");
     };
-    AddressProviderFromMantle.prototype.blunaBurn = function () {
+    AddressProviderFromMantle.prototype.blunaUlunaToken = function () {
+        throw new Error("Method not implemented.");
+    };
+    AddressProviderFromMantle.prototype.gov = function () {
+        throw new Error("Method not implemented.");
+    };
+    AddressProviderFromMantle.prototype.anchorUusdPair = function () {
+        throw new Error("Method not implemented.");
+    };
+    AddressProviderFromMantle.prototype.anchorUusdToken = function () {
+        throw new Error("Method not implemented.");
+    };
+    AddressProviderFromMantle.prototype.collector = function () {
+        throw new Error("Method not implemented.");
+    };
+    AddressProviderFromMantle.prototype.staking = function () {
+        throw new Error("Method not implemented.");
+    };
+    AddressProviderFromMantle.prototype.community = function () {
+        throw new Error("Method not implemented.");
+    };
+    AddressProviderFromMantle.prototype.faucet = function () {
+        throw new Error("Method not implemented.");
+    };
+    AddressProviderFromMantle.prototype.anchorToken = function () {
         throw new Error("Method not implemented.");
     };
     return AddressProviderFromMantle;

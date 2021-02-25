@@ -9,14 +9,18 @@ interface Option {
   market: string;
   owner_addr?: string;
   interest_model?: string;
-  reserve_factor?: Dec;
+  distribution_model?: string;
+  reserve_factor?: string;
+  max_borrow_factor?: string;
 }
 
 export const fabricatebMarketConfig = ({
   address,
   owner_addr,
   interest_model,
+  distribution_model,
   reserve_factor,
+  max_borrow_factor,
   market,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
@@ -30,9 +34,11 @@ export const fabricatebMarketConfig = ({
   return [
     new MsgExecuteContract(address, mmMarket, {
       update_config: {
-        owner_addr: owner_addr,
-        interest_model: interest_model,
-        reserve_factor: reserve_factor,
+        owner_addr,
+        interest_model,
+        distribution_model,
+        reserve_factor,
+        max_borrow_factor,
       },
     }),
   ];

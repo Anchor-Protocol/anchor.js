@@ -9,9 +9,9 @@ interface ConfigResponse {
     oracleContract: string;
     marketContract: string;
     liquidationContract: string;
-    distributionThreshold: string;
+    distributionThresholdRate: string;
     targetDepositRate: string;
-    bufferDistributionRate: string;
+    bufferDistributionFactor: string;
     stableDenom: string;
     epochPeriod: number;
     priceTimeframe: number;

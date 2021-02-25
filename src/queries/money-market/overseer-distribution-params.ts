@@ -8,7 +8,7 @@ interface Option {
 interface DistributionParamsResponse {
   depositRate: string;
   targetDepositRate: string;
-  distributionThreshold: string;
+  distributionThresholdRate: string;
 }
 
 export const queryOverseerDistributionParams = ({

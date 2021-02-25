@@ -52,12 +52,44 @@ export class AddressProviderFromEnvVar implements AddressProvider {
     return getFromEnv("terraswapFactory");
   }
 
-  blunaBurnPair(): string {
+  blunaUlunaPair(): string {
     return getFromEnv("bLunaBurnPair");
   }
 
-  blunaBurn(nativeDenom: string): string {
-    return getFromEnv(`bLunaBurn${nativeDenom}`);
+  blunaUlunaToken(nativeDenom: string): string {
+    return getFromEnv(`blunaUlunaToken${nativeDenom}`);
+  }
+
+  gov(): string {
+    return getFromEnv(`gov`);
+  }
+
+  anchorUusdPair(): string {
+    return getFromEnv(`anchorUusdPair`);
+  }
+
+  anchorUusdToken(): string {
+    return getFromEnv(`anchorUusdPair`);
+  }
+
+  collector(): string {
+    return getFromEnv(`collector`);
+  }
+
+  staking(): string {
+    return getFromEnv(`staking`);
+  }
+
+  community(): string {
+    return getFromEnv(`community`);
+  }
+
+  faucet(): string {
+    return getFromEnv(`faucet`);
+  }
+
+  anchorToken(): string {
+    return getFromEnv(`token`);
   }
 }
 

@@ -7,7 +7,7 @@ interface Option {
 }
 interface EpochStateResponse {
   depositRate: string;
-  prevATokenSupply: string;
+  prevATerraSupply: string;
   prevExchangeRate: string;
   lastExecutedHeight: number;
 }

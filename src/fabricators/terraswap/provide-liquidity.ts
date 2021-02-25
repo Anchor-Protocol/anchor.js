@@ -33,7 +33,7 @@ export const fabricateTerraSwapProvideLiquidity = ({
     validateIsGreaterThanZero(nativeAmount),
   ]);
 
-  const pairAddress = addressProvider.blunaBurnPair();
+  const pairAddress = addressProvider.blunaUlunaPair();
   const tokenAddress = addressProvider.bAssetToken(bAsset);
 
   const coins = new Coins([
@@ -63,7 +63,7 @@ export const fabricateTerraSwapProvideLiquidity = ({
               amount: new Int(new Dec(nativeAmount).mul(1000000)).toString(),
             },
           ],
-          slippage_tolerance: slippageTolerance,
+          slippage_tolerance: slippageTolerance ? slippageTolerance : undefined,
         },
       },
       coins,

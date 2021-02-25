@@ -7,23 +7,23 @@ interface Option {
   startAfter?: string;
   limit?: number;
 }
-interface LiabilitiesResponse {
-  liabilities: object[];
+interface BorrowerInfosResponse {
+  borrower_infos: object[];
 }
 
-export const queryMarketLiabilities = ({
+export const queryMarketBorrowerInfos = ({
   lcd,
   market,
   startAfter,
   limit,
 }: Option) => async (
   addressProvider: AddressProvider,
-): Promise<LiabilitiesResponse> => {
+): Promise<BorrowerInfosResponse> => {
   const marketContractAddress = addressProvider.market(market);
-  let response: LiabilitiesResponse = await lcd.wasm.contractQuery(
+  let response: BorrowerInfosResponse = await lcd.wasm.contractQuery(
     marketContractAddress,
     {
-      liabilities: {
+      borrower_infos: {
         start_after: startAfter,
         limit: limit,
       },
