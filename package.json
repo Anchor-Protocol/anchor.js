@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "author": "Anchor Protocol",
   "license": "MIT",
-  "repository": "github:Anchor-Protocol/anchorcli",
-  "bugs": "https://github.com/Anchor-Protocol/anchorcli/issues",
-  "homepage": "https://github.com/Anchor-Protocol/anchorcli/tree/master/anchor.js",
+  "repository": "github:Anchor-Protocol/anchor.js",
+  "bugs": "https://github.com/Anchor-Protocol/anchor.js/issues",
+  "homepage": "https://github.com/Anchor-Protocol/anchor.js",
   "engines": {
     "node": ">=12"
   },
