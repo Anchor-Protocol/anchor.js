@@ -1,6 +1,6 @@
 {
   "name": "@anchor-protocol/anchor.js",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "author": "Anchor Protocol",
   "license": "MIT",
   "repository": "github:Anchor-Protocol/anchor.js",
@@ -9,6 +9,9 @@
   "engines": {
     "node": ">=12"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc --module commonjs",
     "test": "jest",

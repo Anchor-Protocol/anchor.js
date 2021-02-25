@@ -87,7 +87,7 @@ export class AddressProviderFromJson implements AddressProvider {
   }
 
   terraswapAncUstPair(): string {
-    throw this.data.terraswapAncUstPair;
+    return this.data.terraswapAncUstPair;
   }
 
   terraswapAncUstLPToken(): string {
