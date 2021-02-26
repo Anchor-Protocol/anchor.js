@@ -11,9 +11,9 @@ interface JsonData {
   mmOverseer: string;
   mmCustody: string;
   mmLiquidation: string;
-  mmdistributionModel: string;
-  aTerra: string;
+  mmDistributionModel: string;
   terraswapFactory: string;
+  aTerra: string;
   terraswapblunaLunaPair: string;
   terraswapblunaLunaLPToken: string;
   terraswapAncUstPair: string;
@@ -87,7 +87,7 @@ export class AddressProviderFromJson implements AddressProvider {
   }
 
   terraswapAncUstPair(): string {
-    throw this.data.terraswapAncUstPair;
+    return this.data.terraswapAncUstPair;
   }
 
   terraswapAncUstLPToken(): string {
