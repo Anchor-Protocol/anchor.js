@@ -18,7 +18,7 @@ interface Option {
   nativeAmount: string;
   quote: string;
   slippageTolerance?: string;
-  expires: Expire;
+  expires?: Expire;
 }
 
 export const fabricateTerraSwapProvideLiquidityANC = ({
@@ -46,7 +46,7 @@ export const fabricateTerraSwapProvideLiquidityANC = ({
       increase_allowance: {
         spender: pairAddress,
         amount: new Int(new Dec(tokenAmount).mul(1000000)).toString(),
-        expires: expires,
+        expires: expires || { never: {} },
       },
     }),
     new MsgExecuteContract(
