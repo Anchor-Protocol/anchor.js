@@ -16,7 +16,7 @@ interface Option {
   title: string;
   description: string;
   link?: string;
-  execute_msg?: ExecuteMsg[];
+  execute_msgs?: ExecuteMsg[];
 }
 
 export const fabricateGovCreatePoll = ({
@@ -25,7 +25,7 @@ export const fabricateGovCreatePoll = ({
   title,
   description,
   link,
-  execute_msg,
+  execute_msgs,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
@@ -41,7 +41,7 @@ export const fabricateGovCreatePoll = ({
             title,
             description,
             link,
-            execute_msg,
+            execute_msgs,
           },
         }),
       },
