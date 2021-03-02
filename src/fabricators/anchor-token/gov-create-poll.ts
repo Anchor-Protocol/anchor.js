@@ -5,6 +5,7 @@ import { AddressProvider } from '../../address-provider/provider';
 import { createHookMsg } from '../../utils/cw20/create-hook-msg';
 
 export interface ExecuteMsg {
+  order: number;
   contract: string;
   msg: string;
 }
@@ -15,7 +16,7 @@ interface Option {
   title: string;
   description: string;
   link?: string;
-  execute_msg?: ExecuteMsg;
+  execute_msg?: ExecuteMsg[];
 }
 
 export const fabricateGovCreatePoll = ({
