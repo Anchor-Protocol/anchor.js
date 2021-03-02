@@ -22,7 +22,7 @@ export const fabricatebWithdrawLiquiditybLuna = ({
   validateInput([
     validateAddress(address),
     validateIsNumber(amount),
-    validateIsGreaterThanZero(+amount),
+    validateIsGreaterThanZero(amount),
   ]);
 
   const lpToken = addressProvider.terraswapblunaLunaLPToken(bAsset);

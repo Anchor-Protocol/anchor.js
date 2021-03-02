@@ -19,7 +19,7 @@ export const fabricatebWithdrawLiquidityANC = ({ address, amount }: Option) => (
   validateInput([
     validateAddress(address),
     validateIsNumber(amount),
-    validateIsGreaterThanZero(+amount),
+    validateIsGreaterThanZero(amount),
   ]);
 
   const lpToken = addressProvider.terraswapAncUstLPToken();

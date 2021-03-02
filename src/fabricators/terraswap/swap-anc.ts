@@ -26,7 +26,7 @@ export const fabricatebSwapANC = ({
   validateInput([
     validateAddress(address),
     validateIsNumber(amount),
-    validateIsGreaterThanZero(+amount),
+    validateIsGreaterThanZero(amount),
   ]);
 
   const ancTokenAddress = addressProvider.ANC();

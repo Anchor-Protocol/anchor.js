@@ -33,7 +33,7 @@ export const fabricatebSwapUSTANC = ({
   validateInput([
     validateAddress(address),
     validateIsNumber(amount),
-    validateIsGreaterThanZero(+amount),
+    validateIsGreaterThanZero(amount),
   ]);
   const coins = new Coins([
     new Coin(denom, new Int(new Dec(amount).mul(1000000)).toString()),

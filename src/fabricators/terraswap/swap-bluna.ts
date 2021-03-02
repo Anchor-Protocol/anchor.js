@@ -28,7 +28,7 @@ export const fabricatebSwapbLuna = ({
   validateInput([
     validateAddress(address),
     validateIsNumber(amount),
-    validateIsGreaterThanZero(+amount),
+    validateIsGreaterThanZero(amount),
   ]);
 
   const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
