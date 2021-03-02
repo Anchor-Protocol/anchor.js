@@ -14,10 +14,10 @@ export const fabricateStakingBond = ({ address, amount }: Option) => (
 ): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const anchorToken = addressProvider.ANC();
+  const lpToken = addressProvider.terraswapAncUstLPToken();
 
   return [
-    new MsgExecuteContract(address, anchorToken, {
+    new MsgExecuteContract(address, lpToken, {
       send: {
         contract: addressProvider.staking(),
         amount: new Int(new Dec(amount).mul(1000000)).toString(),
