@@ -10,12 +10,15 @@ import { validateAddress } from "../../utils/validation/address";
 import { AddressProvider } from "../../address-provider/provider";
 import { validateIsGreaterThanZero } from "../../utils/validation/number";
 
+type Expire = { at_height: number } | { at_time: number } | { never: {} };
+
 interface Option {
   address: string;
   tokenAmount: string;
   nativeAmount: string;
   quote: string;
   slippageTolerance?: string;
+  expires: Expire;
 }
 
 export const fabricateTerraSwapProvideLiquidityANC = ({
@@ -24,6 +27,7 @@ export const fabricateTerraSwapProvideLiquidityANC = ({
   tokenAmount,
   nativeAmount,
   quote,
+  expires,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),
@@ -38,6 +42,13 @@ export const fabricateTerraSwapProvideLiquidityANC = ({
     new Coin(quote, new Int(new Dec(nativeAmount).mul(1000000)).toString()),
   ]);
   return [
+    new MsgExecuteContract(address, tokenAddress, {
+      increase_allowance: {
+        spender: pairAddress,
+        amount: new Int(new Dec(tokenAmount).mul(1000000)).toString(),
+        expires: expires,
+      },
+    }),
     new MsgExecuteContract(
       address,
       pairAddress,
@@ -46,7 +57,7 @@ export const fabricateTerraSwapProvideLiquidityANC = ({
           assets: [
             {
               info: {
-                ANC: {
+                token: {
                   contract_addr: tokenAddress,
                 },
               },
