@@ -4,25 +4,23 @@ import {
   Coins,
   Int,
   MsgExecuteContract,
-} from '@terra-money/terra.js';
-import { validateInput } from '../../utils/validate-input';
-import { validateAddress } from '../../utils/validation/address';
-import { AddressProvider } from '../../address-provider/provider';
-import { validateIsGreaterThanZero } from '../../utils/validation/number';
+} from "@terra-money/terra.js";
+import { validateInput } from "../../utils/validate-input";
+import { validateAddress } from "../../utils/validation/address";
+import { AddressProvider } from "../../address-provider/provider";
+import { validateIsGreaterThanZero } from "../../utils/validation/number";
 
 interface Option {
   address: string;
-  bAsset: string;
   tokenAmount: string;
   nativeAmount: string;
   quote: string;
   slippageTolerance?: string;
 }
 
-export const fabricateTerraSwapProvideLiquidity = ({
+export const fabricateTerraSwapProvideLiquidityANC = ({
   address,
   slippageTolerance,
-  bAsset,
   tokenAmount,
   nativeAmount,
   quote,
@@ -33,8 +31,8 @@ export const fabricateTerraSwapProvideLiquidity = ({
     validateIsGreaterThanZero(nativeAmount),
   ]);
 
-  const pairAddress = addressProvider.terraswapblunaLunaPair();
-  const tokenAddress = addressProvider.blunaToken(bAsset);
+  const pairAddress = addressProvider.terraswapAncUstPair();
+  const tokenAddress = addressProvider.ANC();
 
   const coins = new Coins([
     new Coin(quote, new Int(new Dec(nativeAmount).mul(1000000)).toString()),
@@ -66,7 +64,7 @@ export const fabricateTerraSwapProvideLiquidity = ({
           slippage_tolerance: slippageTolerance ? slippageTolerance : undefined,
         },
       },
-      coins,
+      coins
     ),
   ];
 };

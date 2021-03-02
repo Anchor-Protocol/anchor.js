@@ -4,14 +4,14 @@ import {
   Dec,
   Int,
   MsgExecuteContract,
-} from '@terra-money/terra.js';
-import { validateInput } from '../../utils/validate-input';
-import { validateAddress } from '../../utils/validation/address';
+} from "@terra-money/terra.js";
+import { validateInput } from "../../utils/validate-input";
+import { validateAddress } from "../../utils/validation/address";
 import {
   validateIsGreaterThanZero,
   validateIsNumber,
-} from '../../utils/validation/number';
-import { AddressProvider } from '../../address-provider/provider';
+} from "../../utils/validation/number";
+import { AddressProvider } from "../../address-provider/provider";
 
 interface Option {
   address: string;
@@ -58,7 +58,7 @@ export const fabricatebSwapLuna = ({
           to: to,
         },
       },
-      coins,
+      coins
     ),
   ];
 };

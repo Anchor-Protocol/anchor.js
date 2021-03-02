@@ -1,26 +1,24 @@
-import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
-import { validateInput } from '../../utils/validate-input';
-import { validateAddress } from '../../utils/validation/address';
+import { Dec, Int, MsgExecuteContract } from "@terra-money/terra.js";
+import { validateInput } from "../../utils/validate-input";
+import { validateAddress } from "../../utils/validation/address";
 import {
   validateIsGreaterThanZero,
   validateIsNumber,
-} from '../../utils/validation/number';
-import { createHookMsg } from '../../utils/cw20/create-hook-msg';
-import { AddressProvider } from '../../address-provider/provider';
+} from "../../utils/validation/number";
+import { createHookMsg } from "../../utils/cw20/create-hook-msg";
+import { AddressProvider } from "../../address-provider/provider";
 
 interface Option {
   address: string;
   amount: string;
-  bAsset: string;
   to?: string;
   beliefPrice?: string;
   maxSpread?: string;
 }
 
-export const fabricatebSwapbLuna = ({
+export const fabricatebSwapANC = ({
   address,
   amount,
-  bAsset,
   to,
   beliefPrice,
   maxSpread,
@@ -31,11 +29,11 @@ export const fabricatebSwapbLuna = ({
     validateIsGreaterThanZero(+amount),
   ]);
 
-  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
-  const pairAddress = addressProvider.terraswapblunaLunaPair();
+  const ancTokenAddress = addressProvider.ANC();
+  const pairAddress = addressProvider.terraswapAncUstPair();
 
   return [
-    new MsgExecuteContract(address, bAssetTokenAddress, {
+    new MsgExecuteContract(address, ancTokenAddress, {
       send: {
         contract: pairAddress,
         amount: new Int(new Dec(amount).mul(1000000)).toString(),
