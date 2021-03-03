@@ -22,6 +22,7 @@ export * from "./money-market/custody-update-config";
 export * from "./money-market/custody-withdraw-collateral";
 export * from "./money-market/market-update-config";
 export * from "./money-market/market-register-overseer";
+export * from "./money-market/market-claim-rewards";
 export * from "./money-market/overseer-update-config";
 export * from "./money-market/overseer-update-whitelist";
 export * from "./money-market/overseer-whitelist";
