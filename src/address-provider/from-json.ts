@@ -1,6 +1,6 @@
 import { AddressProvider } from "./provider";
 
-interface JsonData {
+export interface AddressMap {
   bLunaHub: string;
   blunaToken: string;
   blunaReward: string;
@@ -27,8 +27,10 @@ interface JsonData {
   airdrop: string;
 }
 
+export type AllowedAddressKeys = keyof AddressMap
+
 export class AddressProviderFromJson implements AddressProvider {
-  constructor(private data: JsonData) {}
+  constructor(private data: AddressMap) {}
 
   blunaReward(): string {
     return this.data.blunaReward;
