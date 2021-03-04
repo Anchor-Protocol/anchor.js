@@ -2,15 +2,18 @@ import { reactifyEnv } from "./react-app-prefix";
 import { AddressProvider } from "./provider";
 
 export class AddressProviderFromEnvVar implements AddressProvider {
-  blunaReward(): string {
+  // @ts-ignore
+  blunaReward(denom: string): string {
     return getFromEnv("bAssetReward");
   }
 
-  blunaHub(): string {
+  // @ts-ignore
+  blunaHub(denom: string): string {
     return getFromEnv("bLuna");
   }
 
-  blunaToken(): string {
+  // @ts-ignore
+  blunaToken(denom: string): string {
     return getFromEnv("bAssetToken");
   }
 
@@ -18,19 +21,23 @@ export class AddressProviderFromEnvVar implements AddressProvider {
     return getFromEnv("bAsset");
   }
 
-  market(): string {
+  // @ts-ignore
+  market(denom: string): string {
     return getFromEnv("mmMarket");
   }
 
-  custody(): string {
+  // @ts-ignore
+  custody(denom: string): string {
     return getFromEnv("mmCustody");
   }
 
-  overseer(): string {
+  // @ts-ignore
+  overseer(denom: string): string {
     return getFromEnv("mmOverseer");
   }
 
-  aTerra(): string {
+  // @ts-ignore
+  aTerra(denom: string): string {
     return getFromEnv("aUST");
   }
 

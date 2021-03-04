@@ -32,27 +32,33 @@ export type AllowedAddressKeys = keyof AddressMap
 export class AddressProviderFromJson implements AddressProvider {
   constructor(private data: AddressMap) {}
 
-  blunaReward(): string {
+  // @ts-ignore
+  blunaReward(denom: string): string {
     return this.data.blunaReward;
   }
 
-  blunaHub(): string {
+  // @ts-ignore
+  blunaHub(denom: string): string {
     return this.data.bLunaHub;
   }
 
-  blunaToken(): string {
+  // @ts-ignore
+  blunaToken(denom: string): string {
     return this.data.blunaToken;
   }
 
-  market(): string {
+  // @ts-ignore
+  market(denom: string): string {
     return this.data.mmMarket;
   }
 
-  custody(): string {
+  // @ts-ignore
+  custody(denom: string): string {
     return this.data.mmCustody;
   }
 
-  overseer(): string {
+  // @ts-ignore
+  overseer(denom: string): string {
     return this.data.mmOverseer;
   }
 
@@ -80,7 +86,8 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.terraswapblunaLunaPair;
   }
 
-  terraswapblunaLunaLPToken(): string {
+  // @ts-ignore
+  terraswapblunaLunaLPToken(quote: string): string {
     return this.data.terraswapblunaLunaLPToken;
   }
 
