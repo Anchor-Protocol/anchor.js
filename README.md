@@ -40,13 +40,13 @@ import {contractAddresses, AddressProviderFromJSON} from ".@anchor-protocol/anch
 const addressProvider = new AddressProviderFromJSON(contractaddresses);
     const redeemMsg = fabricateRedeemStable({
       address: 'terra123...',
-      symbol: 'usd',
+      symbol: 'uusd',
       amount: '10000',
     })(addressProvider);
 
     const depositMsg = fabricateDepositStableCoin({
       address: 'terra123...',
-      symbol: 'usd',
+      symbol: 'uusd',
       amount: '10',
     })(addressProvider);
 ```
