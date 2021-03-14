@@ -8,15 +8,15 @@ interface Option {
   spend_limit?: string;
 }
 
-export const fabricateFaucetConfig = ({ address, spend_limit }: Option) => (
+export const fabricateDistributorConfig = ({ address, spend_limit }: Option) => (
   addressProvider: AddressProvider,
 ): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const faucet = addressProvider.faucet();
+  const distributor = addressProvider.distributor();
 
   return [
-    new MsgExecuteContract(address, faucet, {
+    new MsgExecuteContract(address, distributor, {
       update_config: {
         spend_limit,
       },

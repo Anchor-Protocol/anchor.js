@@ -9,17 +9,17 @@ interface Option {
   amount: string;
 }
 
-export const fabricateFaucetSpend = ({
+export const fabricateDistributorSpend = ({
   address,
   recipient,
   amount,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const faucet = addressProvider.faucet();
+  const distributor = addressProvider.distributor();
 
   return [
-    new MsgExecuteContract(address, faucet, {
+    new MsgExecuteContract(address, distributor, {
       spend: {
         recipient,
         amount: new Int(new Dec(amount).mul(1000000)).toString(),

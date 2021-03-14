@@ -1,4 +1,4 @@
-import { LCDClient, MsgExecuteContract } from '@terra-money/terra.js';
+import { LCDClient } from '@terra-money/terra.js';
 import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
@@ -12,11 +12,11 @@ interface ConfigResponse {
   spend_limit: string;
 }
 
-export const queryFaucetConfig = ({ lcd }: Option) => async (
+export const queryDistributortConfig = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ConfigResponse> => {
-  const faucet = addressProvider.faucet();
-  let response: ConfigResponse = await lcd.wasm.contractQuery(faucet, {
+  const distributor = addressProvider.distributor();
+  const response: ConfigResponse = await lcd.wasm.contractQuery(distributor, {
     config: {},
   });
   return response;

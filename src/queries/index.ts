@@ -53,4 +53,4 @@ export * from "./anchor-token/staking-config";
 export * from "./anchor-token/staking-pool-info";
 export * from "./anchor-token/staking-reward-info";
 export * from "./anchor-token/community-config";
-export * from "./anchor-token/faucet-config";
+export * from "./anchor-token/distributor-config";

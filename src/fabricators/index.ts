@@ -59,7 +59,7 @@ export * from "./anchor-token/staking-unbond";
 export * from "./anchor-token/staking-withdraw";
 export * from "./anchor-token/community-spend";
 export * from "./anchor-token/community-update-config";
-export * from "./anchor-token/faucet-spend";
+export * from "./anchor-token/distributor-spend";
 export * from "./cw20-token/increase-allowance";
 export * from "./cw20-token/transfer-from";
 export * from "./cw20-token/transfer";
