@@ -1,7 +1,6 @@
 {
   "name": "@anchor-protocol/anchor.js",
   "version": "0.1.15",
-  "private": true,
   "author": "Anchor Protocol",
   "license": "MIT",
   "repository": "github:Anchor-Protocol/anchor.js",
