@@ -18,7 +18,7 @@ export const fabricateAirdropRegisterMerkleRoot = ({
 
   return [
     new MsgExecuteContract(address, airdrop, {
-      register_mrkle_root: {
+      register_merkle_root: {
         merkle_root,
       },
     }),
