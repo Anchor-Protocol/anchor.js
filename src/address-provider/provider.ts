@@ -41,5 +41,11 @@ export interface AddressProvider {
 
   community(): string;
 
-  faucet(): string;
+  distributor(): string;
+
+  airdrop(): string;
+
+  investorVesting(): string;
+
+  teamVesting(): string;
 }

@@ -19,12 +19,14 @@ export interface AddressMap {
   terraswapAncUstPair: string;
   terraswapAncUstLPToken: string;
   gov: string;
-  faucet: string;
+  distributor: string;
   collector: string;
   community: string;
   staking: string;
   ANC: string;
   airdrop: string;
+  vesting: string;
+  team: string;
 }
 
 export type AllowedAddressKeys = keyof AddressMap
@@ -108,11 +110,23 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.community;
   }
 
-  faucet(): string {
-    return this.data.faucet;
+  distributor(): string {
+    return this.data.distributor;
   }
 
   ANC(): string {
     return this.data.ANC;
+  }
+
+  airdrop(): string {
+    return this.data.airdrop;
+  }
+
+  investorVesting(): string {
+    return this.data.vesting;
+  }
+
+  teamVesting(): string {
+    return this.data.team;
   }
 }

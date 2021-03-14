@@ -81,11 +81,23 @@ export class AddressProviderFromMantle implements AddressProvider {
     throw new Error("Method not implemented.");
   }
 
-  faucet(): string {
+  distributor(): string {
     throw new Error("Method not implemented.");
   }
 
   ANC(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  airdrop(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  investorVesting(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  teamVesting(): string {
     throw new Error("Method not implemented.");
   }
 }

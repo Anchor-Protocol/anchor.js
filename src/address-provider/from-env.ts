@@ -82,12 +82,24 @@ export class AddressProviderFromEnvVar implements AddressProvider {
     return getFromEnv(`community`);
   }
 
-  faucet(): string {
-    return getFromEnv(`faucet`);
+  distributor(): string {
+    return getFromEnv(`distributor`);
   }
 
   ANC(): string {
     return getFromEnv(`token`);
+  }
+
+  airdrop(): string {
+    return getFromEnv(`airdrop`)
+  }
+
+  investorVesting(): string {
+    return getFromEnv(`vesting`)
+  }
+
+  teamVesting(): string {
+    return getFromEnv(`team`)
   }
 }
 
