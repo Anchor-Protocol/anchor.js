@@ -1,8 +1,8 @@
-import { MsgExecuteContract, Int, Dec } from "@terra-money/terra.js";
+import { MsgExecuteContract } from "@terra-money/terra.js";
 import { validateInput } from "../../utils/validate-input";
 import { validateAddress } from "../../utils/validation/address";
 import { AddressProvider } from "../../address-provider/provider";
-import { validateTrue } from "utils/validation/true";
+import { validateTrue } from "../../utils/validation/true";
 
 interface Option {
   address: string;
