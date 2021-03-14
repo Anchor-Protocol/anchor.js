@@ -45,7 +45,7 @@ export interface AddressProvider {
 
   airdrop(): string;
 
-  investorVesting(): string;
+  investorLock(): string;
 
-  teamVesting(): string;
+  teamLock(): string;
 }

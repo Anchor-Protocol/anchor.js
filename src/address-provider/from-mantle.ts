@@ -93,11 +93,11 @@ export class AddressProviderFromMantle implements AddressProvider {
     throw new Error("Method not implemented.");
   }
 
-  investorVesting(): string {
+  investorLock(): string {
     throw new Error("Method not implemented.");
   }
 
-  teamVesting(): string {
+  teamLock(): string {
     throw new Error("Method not implemented.");
   }
 }

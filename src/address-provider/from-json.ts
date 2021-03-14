@@ -122,11 +122,11 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.airdrop;
   }
 
-  investorVesting(): string {
+  investorLock(): string {
     return this.data.vesting;
   }
 
-  teamVesting(): string {
+  teamLock(): string {
     return this.data.team;
   }
 }

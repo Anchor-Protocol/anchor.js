@@ -94,11 +94,11 @@ export class AddressProviderFromEnvVar implements AddressProvider {
     return getFromEnv(`airdrop`)
   }
 
-  investorVesting(): string {
+  investorLock(): string {
     return getFromEnv(`vesting`)
   }
 
-  teamVesting(): string {
+  teamLock(): string {
     return getFromEnv(`team`)
   }
 }
