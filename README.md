@@ -34,11 +34,11 @@ To Use the message fabricators:
 
 ```ts
 import {fabricateRedeemStable, fabricateDepositStableCoin} from '@anchor-protocol/anchor.js';
-import {AddressProviderFromJSON} from ".@anchor-protocol/anchor.js";
+import {AddressProviderFromJson} from ".@anchor-protocol/anchor.js";
 
 // default -- uses tequila core contract addresses
 const addressMap = somehowGetAddresses()
-const addressProvider = new AddressProviderFromJSON(addressMap);
+const addressProvider = new AddressProviderFromJson(addressMap);
     const redeemMsg = fabricateRedeemStable({
       address: 'terra123...',
       symbol: 'uusd',
