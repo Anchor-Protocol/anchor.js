@@ -1,7 +1,6 @@
 # Anchor.js
 
-> 🚧 
->Please be noted that we are undergoing a major refactoring of the API's. Changes will be reflected back when we reach v1.x.
+> 🚧 Please be noted that we are undergoing a major refactoring of the API. Changes will be reflected back when we reach v1.x.
 
 Anchor.js is a client SDK for building applications that can interact with Anchor Protocol from within JavaScript runtimes, such as web browsers, server backends, and on mobile through React Native.
 
@@ -33,24 +32,25 @@ Anchor.js provides facilities for 2 main use cases:
 
 Both of these functions are accessible through the [`Message Fabricators`](https://github.com/Anchor-Protocol/anchor.js/tree/master/src/fabricators).
 
-To Use the message fabricators:
+To Use the message fabricators: 
 
+**Note**: Please note that `symbol` is a different variable from the coin denom. The denomination for the coins in the example is set to be `uusd`.
 ```ts
 import {fabricateRedeemStable, fabricateDepositStableCoin} from '@anchor-protocol/anchor.js';
-import {AddressProviderFromJSON} from ".@anchor-protocol/anchor.js";
+import {AddressProviderFromJson} from ".@anchor-protocol/anchor.js"; 
 
 // default -- uses tequila core contract addresses
-const addressMap = somehowGetAddresses()
-const addressProvider = new AddressProviderFromJSON(addressMap);
+const addressMap = somehowGetAddresses();
+const addressProvider = new AddressProviderFromJson(addressMap);
     const redeemMsg = fabricateRedeemStable({
       address: 'terra123...',
-      symbol: 'uusd',
+      symbol: 'usd',
       amount: '10000',
     })(addressProvider);
 
     const depositMsg = fabricateDepositStableCoin({
       address: 'terra123...',
-      symbol: 'uusd',
+      symbol: 'usd',
       amount: '10',
     })(addressProvider);
 ```
@@ -69,16 +69,20 @@ const wallet = new Wallet(anchor, owner);
 async function depositStable() {
     const tx = await wallet.createAndSignTx({
         msgs: depositMsg,
-        fee: new StdFee(200_000, { uluna: 20_000_000 })
+        fee: new StdFee(2_000_000, { uluna: 2_000_000 })
     });
     return await anchor.tx.broadcast(tx);
 }
 
 async function main() {
-    await depositStable();
+  await depositStable()
+    .then((result) => {
+      console.log(result);
+    })
+    .catch(console.error);
 }
 
-main().catch(console.error);
+main();
 ```
 
 ## List of contract addresses deployed to networks
