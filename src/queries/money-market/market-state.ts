@@ -4,22 +4,32 @@ import { AddressProvider } from '../../address-provider/provider';
 interface Option {
   lcd: LCDClient;
   market: string;
+  block_height: number;
 }
 interface StateResponse {
-  totalLiabilites: string;
-  totalReserves: string;
-  lastInterestUpdated: number;
-  globalInterestIndex: string;
+  total_liabilites: string;
+  total_reserves: string;
+  last_interest_updated: number;
+  last_reward_updated: string;
+  global_interest_index: string;
+  global_reward_index: string;
+  anc_emission_rate: string;
 }
 
-export const queryMarketState = ({ lcd, market }: Option) => async (
+export const queryMarketState = ({
+  lcd,
+  market,
+  block_height,
+}: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<StateResponse> => {
   const marketContractAddress = addressProvider.market(market);
-  let response: StateResponse = await lcd.wasm.contractQuery(
+  const response: StateResponse = await lcd.wasm.contractQuery(
     marketContractAddress,
     {
-      state: {},
+      state: {
+        block_height: block_height,
+      },
     },
   );
   return response;

@@ -5,20 +5,20 @@ import {
   validateIsGreaterThanZero,
   validateIsNumber,
 } from '../../utils/validation/number';
-import { AddressProvider } from '../../address-provider/provider';
 
+/* eslint-disable */
 interface Option {
   address: string;
-  contractAddress: string;
+  contract_address: string;
   amount: string;
   owner: string;
   contract: string;
-  msg?: string;
+  msg?: object;
 }
 
 export const fabricateCw20SendFrom = ({
   address,
-  contractAddress,
+  contract_address,
   amount,
   contract,
   owner,
@@ -38,7 +38,7 @@ export const fabricateCw20SendFrom = ({
   }
 
   return [
-    new MsgExecuteContract(address, contractAddress, {
+    new MsgExecuteContract(address, contract_address, {
       send_from: {
         owner: owner,
         contract: contract,

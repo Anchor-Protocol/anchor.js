@@ -10,7 +10,6 @@ import { AddressProvider } from '../../address-provider/provider';
 interface Option {
   address: string;
   amount: string;
-  bAsset: string;
   owner: string;
   recipient: string;
 }
@@ -18,7 +17,6 @@ interface Option {
 export const fabricatebAssetTransferFrom = ({
   address,
   amount,
-  bAsset,
   owner,
   recipient,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
@@ -30,7 +28,7 @@ export const fabricatebAssetTransferFrom = ({
     validateAddress(recipient),
   ]);
 
-  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
+  const bAssetTokenAddress = addressProvider.bLunaToken();
 
   return [
     new MsgExecuteContract(address, bAssetTokenAddress, {

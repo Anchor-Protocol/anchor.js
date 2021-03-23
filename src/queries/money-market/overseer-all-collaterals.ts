@@ -4,27 +4,32 @@ import { AddressProvider } from '../../address-provider/provider';
 interface Option {
   lcd: LCDClient;
   overseer: string;
-  startAfter?: string;
+  start_after?: string;
   limit?: number;
 }
 interface AllCollateralsResponse {
-  allCollaterals: object[];
+  all_collaterals: CollateralsResponse[];
+}
+
+interface CollateralsResponse {
+  borrower: string;
+  collaterals: Array<[string, string]>;
 }
 
 export const queryOverseerAllCollaterals = ({
   lcd,
   overseer,
-  startAfter,
+  start_after,
   limit,
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<AllCollateralsResponse> => {
   const overseerContractAddress = addressProvider.overseer(overseer);
-  let response: AllCollateralsResponse = await lcd.wasm.contractQuery(
+  const response: AllCollateralsResponse = await lcd.wasm.contractQuery(
     overseerContractAddress,
     {
       all_collaterals: {
-        start_after: startAfter,
+        start_after: start_after,
         limit: limit,
       },
     },

@@ -1,9 +1,9 @@
 export interface AddressProvider {
-  blunaReward(denom: string): string;
+  bLunaReward(): string;
 
-  blunaHub(denom: string): string;
+  bLunaHub(): string;
 
-  blunaToken(denom: string): string;
+  bLunaToken(): string;
 
   // https://github.com/Anchor-Protocol/money-market-contracts/tree/master/artifacts
   // moneymarket_market.wasm
@@ -25,7 +25,7 @@ export interface AddressProvider {
 
   terraswapblunaLunaPair(): string;
 
-  terraswapblunaLunaLPToken(quote: string): string;
+  terraswapblunaLunaLPToken(): string;
 
   gov(): string;
 
@@ -49,3 +49,13 @@ export interface AddressProvider {
 
   teamLock(): string;
 }
+
+export enum MARKET_DENOMS {
+  'uusd' = 'uusd',
+  'ukrw' = 'ukrw'
+}
+
+export enum CUSTODY_DENOMS {
+  'ubluna' = 'ubluna',
+}
+

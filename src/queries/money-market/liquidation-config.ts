@@ -6,20 +6,20 @@ interface Option {
 }
 interface ConfigResponse {
   owner: string;
-  oracleContract: string;
-  stableDenom: string;
-  safeRatio: string;
-  bidFee: string;
-  maxPremiumRate: string;
-  liquidationThreshold: string;
-  priceTimeframe: number;
+  oracle_contract: string;
+  stable_denom: string;
+  safe_ratio: string;
+  bid_fee: string;
+  max_premium_rate: string;
+  liquidation_threshold: string;
+  price_timeframe: number;
 }
 
 export const queryLiquidationConfig = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ConfigResponse> => {
   const liquidationContractAddress = addressProvider.liquidation();
-  let response: ConfigResponse = await lcd.wasm.contractQuery(
+  const response: ConfigResponse = await lcd.wasm.contractQuery(
     liquidationContractAddress,
     {
       config: {},

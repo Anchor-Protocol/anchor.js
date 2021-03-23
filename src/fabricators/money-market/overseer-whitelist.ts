@@ -1,22 +1,29 @@
-import { Dec, MsgExecuteContract } from '@terra-money/terra.js';
+import { MsgExecuteContract } from '@terra-money/terra.js';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  MARKET_DENOMS,
+} from '../../address-provider/provider';
 
 interface Option {
   address: string;
-  overseer: string;
+  overseer: MARKET_DENOMS;
+  name: string;
+  symbol: string;
   collateral_token: string;
   custody_contract: string;
-  ltv?: Dec;
+  max_ltv?: string;
 }
 
-export const fabricatebOverseerWhiteList = ({
+export const fabricateOverseerWhitelist = ({
   address,
   overseer,
+  name,
+  symbol,
   collateral_token,
   custody_contract,
-  ltv,
+  max_ltv,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),
@@ -29,9 +36,11 @@ export const fabricatebOverseerWhiteList = ({
   return [
     new MsgExecuteContract(address, mmOverseer, {
       whitelist: {
+        name: name,
+        symbol: symbol,
         collateral_token: collateral_token,
         custody_contract: custody_contract,
-        ltv: ltv,
+        max_ltv: max_ltv,
       },
     }),
   ];

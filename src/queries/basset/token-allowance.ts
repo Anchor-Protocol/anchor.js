@@ -1,5 +1,6 @@
 import { LCDClient } from '@terra-money/terra.js';
 import { AddressProvider } from '../../address-provider/provider';
+import { Expire } from 'fabricators';
 
 interface Option {
   lcd: LCDClient;
@@ -9,21 +10,21 @@ interface Option {
 }
 interface Allowance {
   allowance: string;
-  expires: object;
+  expires: Expire;
 }
 
-export const queryTokenAllowance = ({
-  lcd,
-  bAsset,
-  owner,
-  spender,
-}: Option) => async (addressProvider: AddressProvider): Promise<Allowance> => {
-  const bAssetContractAddress = addressProvider.blunaToken(bAsset);
-  let reponse: Allowance = await lcd.wasm.contractQuery(bAssetContractAddress, {
-    allowance: {
-      owner: owner,
-      spender: spender,
+export const queryTokenAllowance = ({ lcd, owner, spender }: Option) => async (
+  addressProvider: AddressProvider,
+): Promise<Allowance> => {
+  const bAssetContractAddress = addressProvider.bLunaToken();
+  const response: Allowance = await lcd.wasm.contractQuery(
+    bAssetContractAddress,
+    {
+      allowance: {
+        owner: owner,
+        spender: spender,
+      },
     },
-  });
-  return reponse;
+  );
+  return response;
 };

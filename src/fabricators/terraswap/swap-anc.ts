@@ -1,27 +1,27 @@
-import { Dec, Int, MsgExecuteContract } from "@terra-money/terra.js";
-import { validateInput } from "../../utils/validate-input";
-import { validateAddress } from "../../utils/validation/address";
+import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
+import { validateInput } from '../../utils/validate-input';
+import { validateAddress } from '../../utils/validation/address';
 import {
   validateIsGreaterThanZero,
   validateIsNumber,
-} from "../../utils/validation/number";
-import { createHookMsg } from "../../utils/cw20/create-hook-msg";
-import { AddressProvider } from "../../address-provider/provider";
+} from '../../utils/validation/number';
+import { createHookMsg } from '../../utils/cw20/create-hook-msg';
+import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   address: string;
   amount: string;
   to?: string;
-  beliefPrice?: string;
-  maxSpread?: string;
+  belief_price?: string;
+  max_spread?: string;
 }
 
-export const fabricatebSwapANC = ({
+export const fabricateTerraswapSwapANC = ({
   address,
   amount,
   to,
-  beliefPrice,
-  maxSpread,
+  belief_price,
+  max_spread,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),
@@ -39,8 +39,8 @@ export const fabricatebSwapANC = ({
         amount: new Int(new Dec(amount).mul(1000000)).toString(),
         msg: createHookMsg({
           swap: {
-            belief_price: beliefPrice,
-            max_spread: maxSpread,
+            belief_price: belief_price,
+            max_spread: max_spread,
             to: to,
           },
         }),

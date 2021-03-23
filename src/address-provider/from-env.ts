@@ -1,61 +1,61 @@
-import { reactifyEnv } from "./react-app-prefix";
-import { AddressProvider } from "./provider";
+import { reactifyEnv } from './react-app-prefix';
+import { AddressProvider } from './provider';
 
 export class AddressProviderFromEnvVar implements AddressProvider {
-  blunaReward(): string {
-    return getFromEnv("bAssetReward");
+  bLunaReward(): string {
+    return getFromEnv('bAssetReward');
   }
 
-  blunaHub(): string {
-    return getFromEnv("bLuna");
+  bLunaHub(): string {
+    return getFromEnv('bLuna');
   }
 
-  blunaToken(): string {
-    return getFromEnv("bAssetToken");
+  bLunaToken(): string {
+    return getFromEnv('bAssetToken');
   }
 
   bAsset(): string {
-    return getFromEnv("bAsset");
+    return getFromEnv('bAsset');
   }
 
   market(): string {
-    return getFromEnv("mmMarket");
+    return getFromEnv('mmMarket');
   }
 
   custody(): string {
-    return getFromEnv("mmCustody");
+    return getFromEnv('mmCustody');
   }
 
   overseer(): string {
-    return getFromEnv("mmOverseer");
+    return getFromEnv('mmOverseer');
   }
 
   aTerra(): string {
-    return getFromEnv("aUST");
+    return getFromEnv('aUST');
   }
 
   oracle(): string {
-    return getFromEnv("mmOracle");
+    return getFromEnv('mmOracle');
   }
 
   interest(): string {
-    return getFromEnv("mmInterest");
+    return getFromEnv('mmInterest');
   }
 
   liquidation(): string {
-    return getFromEnv("mmLiquidation");
+    return getFromEnv('mmLiquidation');
   }
 
   terraswapFactory(): string {
-    return getFromEnv("terraswapFactory");
+    return getFromEnv('terraswapFactory');
   }
 
   terraswapblunaLunaPair(): string {
-    return getFromEnv("bLunaBurnPair");
+    return getFromEnv('bLunaBurnPair');
   }
 
-  terraswapblunaLunaLPToken(nativeDenom: string): string {
-    return getFromEnv(`blunaUlunaToken${nativeDenom}`);
+  terraswapblunaLunaLPToken(): string {
+    return getFromEnv(`terraswapblunaLunaLPToken`);
   }
 
   gov(): string {
@@ -91,21 +91,21 @@ export class AddressProviderFromEnvVar implements AddressProvider {
   }
 
   airdrop(): string {
-    return getFromEnv(`airdrop`)
+    return getFromEnv(`airdrop`);
   }
 
   investorLock(): string {
-    return getFromEnv(`vesting`)
+    return getFromEnv(`vesting`);
   }
 
   teamLock(): string {
-    return getFromEnv(`team`)
+    return getFromEnv(`team`);
   }
 }
 
 function getFromEnv(key: string): string {
   const val = process.env[reactifyEnv(key)];
-  if (typeof val === "undefined") {
+  if (typeof val === 'undefined') {
     throw new Error(`address provider could not resolve key ${key}`);
   }
   return val;

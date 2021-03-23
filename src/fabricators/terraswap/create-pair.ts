@@ -1,22 +1,20 @@
-import { MsgExecuteContract } from "@terra-money/terra.js";
-import { validateInput } from "../../utils/validate-input";
-import { validateAddress } from "../../utils/validation/address";
-import { AddressProvider } from "../../address-provider/provider";
+import { MsgExecuteContract } from '@terra-money/terra.js';
+import { validateInput } from '../../utils/validate-input';
+import { validateAddress } from '../../utils/validation/address';
+import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   address: string;
-  bAsset: string;
-  nativeToken: string;
+  native_token: string;
 }
 
-export const fabricatebTerraSwapCreatePair = ({
+export const fabricateTerraswapCreatePair = ({
   address,
-  bAsset,
-  nativeToken,
+  native_token,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
+  const bAssetTokenAddress = addressProvider.bLunaToken();
   const terrawswapFactory = addressProvider.terraswapFactory();
   return [
     new MsgExecuteContract(address, terrawswapFactory, {
@@ -29,7 +27,7 @@ export const fabricatebTerraSwapCreatePair = ({
           },
           {
             native_token: {
-              denom: nativeToken,
+              denom: native_token,
             },
           },
         ],

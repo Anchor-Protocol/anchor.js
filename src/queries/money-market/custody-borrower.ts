@@ -6,7 +6,7 @@ interface Option {
   custody: string;
   address: string;
 }
-interface BorrowerResponse {
+export interface BorrowerResponse {
   borrower: string;
   balance: string;
   spendable: string;
@@ -20,7 +20,7 @@ export const queryCustodyBorrower = ({
   addressProvider: AddressProvider,
 ): Promise<BorrowerResponse> => {
   const custodyContractAddress = addressProvider.custody(custody);
-  let response: BorrowerResponse = await lcd.wasm.contractQuery(
+  const response: BorrowerResponse = await lcd.wasm.contractQuery(
     custodyContractAddress,
     {
       borrower: {

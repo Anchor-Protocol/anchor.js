@@ -6,15 +6,15 @@ interface Option {
 }
 interface ConfigResponse {
   owner: string;
-  baseRate: string;
-  interestMultiplier: string;
+  base_rate: string;
+  interest_multiplier: string;
 }
 
 export const queryInterestModelConfig = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ConfigResponse> => {
   const interestModelContractAddress = addressProvider.interest();
-  let response: ConfigResponse = await lcd.wasm.contractQuery(
+  const response: ConfigResponse = await lcd.wasm.contractQuery(
     interestModelContractAddress,
     {
       config: {},

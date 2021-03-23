@@ -5,15 +5,14 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   address: string;
-  bAsset: string;
 }
 
-export const fabricatebCheckSlashing = ({ address, bAsset }: Option) => (
+export const fabricatebAssetCheckSlashing = ({ address }: Option) => (
   addressProvider: AddressProvider,
 ): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const bAssetHubAddress = addressProvider.blunaHub(bAsset);
+  const bAssetHubAddress = addressProvider.bLunaHub();
 
   return [
     new MsgExecuteContract(address, bAssetHubAddress, {

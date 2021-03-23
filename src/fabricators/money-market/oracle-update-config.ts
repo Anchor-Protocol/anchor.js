@@ -9,7 +9,7 @@ interface Option {
   owner?: string;
 }
 
-export const fabricatebOracleConfig = ({ address, owner }: Option) => (
+export const fabricateOracleUpdateConfig = ({ address, owner }: Option) => (
   addressProvider: AddressProvider,
 ): MsgExecuteContract[] => {
   validateInput([

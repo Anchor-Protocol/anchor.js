@@ -8,15 +8,15 @@ interface Option {
 }
 interface PriceResponse {
   rate: string;
-  lastUpdatedBase: number;
-  lastUpdatedQuote: number;
+  last_updated_base: number;
+  last_updated_quote: number;
 }
 
 export const queryOraclePrice = ({ lcd, base, quote }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<PriceResponse> => {
   const oracleContractAddress = addressProvider.oracle();
-  let response: PriceResponse = await lcd.wasm.contractQuery(
+  const response: PriceResponse = await lcd.wasm.contractQuery(
     oracleContractAddress,
     {
       price: {

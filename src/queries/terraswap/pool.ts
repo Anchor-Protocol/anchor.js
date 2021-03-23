@@ -1,23 +1,28 @@
-import { Dec, Int, LCDClient } from '@terra-money/terra.js';
-import { AddressProvider } from '../../address-provider/provider';
+import { LCDClient } from '@terra-money/terra.js';
 
 interface Option {
   lcd: LCDClient;
+  pair_contract_address: string;
 }
 interface PoolResponse {
-  assets: object[];
+  assets: Asset[];
   total_share: string;
 }
 
-export const queryPool = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<PoolResponse> => {
-  const pairContractAddress = addressProvider.terraswapblunaLunaPair();
-  let reponse: PoolResponse = await lcd.wasm.contractQuery(
-    pairContractAddress,
+interface Asset {
+  info: string;
+  amount: string;
+}
+
+export const queryTerraswapPool = async ({
+  lcd,
+  pair_contract_address,
+}: Option): Promise<PoolResponse> => {
+  const response: PoolResponse = await lcd.wasm.contractQuery(
+    pair_contract_address,
     {
       pool: {},
     },
   );
-  return reponse;
+  return response;
 };

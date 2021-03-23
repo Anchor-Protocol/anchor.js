@@ -1,4 +1,4 @@
-import { LCDClient, MsgExecuteContract } from '@terra-money/terra.js';
+import { LCDClient } from '@terra-money/terra.js';
 import { AddressProvider } from '../../address-provider/provider';
 
 interface ExecuteMsg {
@@ -25,13 +25,15 @@ export interface PollResponse {
   execute_data?: ExecuteMsg;
   yes_votes: string;
   no_votes: string;
+  staked_amount?: string;
+  total_balance_at_end_poll?: string;
 }
 
 export const queryGovPoll = ({ lcd, poll_id }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<PollResponse> => {
   const gov = addressProvider.gov();
-  let response: PollResponse = await lcd.wasm.contractQuery(gov, {
+  const response: PollResponse = await lcd.wasm.contractQuery(gov, {
     poll: {
       poll_id: +poll_id,
     },

@@ -3,12 +3,12 @@ import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
 
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
-import { validateWhitelistedStable } from '../../utils/validation/stable';
 import { AddressProvider } from '../../address-provider/provider';
+import { MARKET_DENOMS } from 'address-provider';
 
 interface Option {
   address: string;
-  symbol: string;
+  market: MARKET_DENOMS;
   amount: string;
 }
 
@@ -18,19 +18,14 @@ interface Option {
  * @param symbol Symbol of a stablecoin to deposit.
  * @param amount Amount of a stablecoin to deposit.
  */
-export const fabricateDepositStableCoin = ({
+export const fabricateMarketDepositStableCoin = ({
   address,
-  symbol,
+  market,
   amount,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateWhitelistedStable(symbol),
-    validateIsGreaterThanZero(amount),
-  ]);
+  validateInput([validateAddress(address), validateIsGreaterThanZero(amount)]);
 
-  const nativeTokenDenom = symbol;
-  const mmContractAddress = addressProvider.market(symbol);
+  const mmContractAddress = addressProvider.market(market);
 
   return [
     new MsgExecuteContract(
@@ -43,9 +38,7 @@ export const fabricateDepositStableCoin = ({
 
       // coins
       {
-        [`u${nativeTokenDenom}`]: new Int(
-          new Dec(amount).mul(1000000),
-        ).toString(),
+        [`${market}`]: new Int(new Dec(amount).mul(1000000)).toString(),
       },
     ),
   ];

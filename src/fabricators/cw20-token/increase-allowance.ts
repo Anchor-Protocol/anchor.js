@@ -5,22 +5,22 @@ import {
   validateIsGreaterThanZero,
   validateIsNumber,
 } from '../../utils/validation/number';
-import { AddressProvider } from '../../address-provider/provider';
 
+/* eslint-disable */
 type Expire = { at_height: number } | { at_time: number } | { never: {} };
 
 interface Option {
   address: string;
   amount: string;
-  contractAddress: string;
+  contract_address: string;
   spender: string;
   expires?: Expire;
 }
 
-export const fabricatebCw20IncreaseAllowance = ({
+export const fabricateCw20IncreaseAllowance = ({
   address,
   amount,
-  contractAddress,
+  contract_address,
   spender,
   expires,
 }: Option): MsgExecuteContract[] => {
@@ -32,7 +32,7 @@ export const fabricatebCw20IncreaseAllowance = ({
   ]);
 
   return [
-    new MsgExecuteContract(address, contractAddress, {
+    new MsgExecuteContract(address, contract_address, {
       // @see https://github.com/Anchor-Protocol/anchor-bAsset-contracts/blob/cce41e707c67ee2852c4929e17fb1472dbd2aa35/contracts/anchor_basset_token/src/contract.rs#L57
       increase_allowance: {
         spender: spender,

@@ -6,14 +6,14 @@ interface Option {
 }
 interface ConfigResponse {
   owner: string;
-  baseAsset: string;
+  base_asset: string;
 }
 
 export const queryOracleConfig = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ConfigResponse> => {
   const oracleContractAddress = addressProvider.oracle();
-  let response: ConfigResponse = await lcd.wasm.contractQuery(
+  const response: ConfigResponse = await lcd.wasm.contractQuery(
     oracleContractAddress,
     {
       config: {},

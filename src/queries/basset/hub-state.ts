@@ -16,15 +16,15 @@ interface StateResponse {
   last_processed_batch: number;
 }
 
-export const queryHubState = ({ lcd, bAsset }: Option) => async (
+export const queryHubState = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<StateResponse> => {
-  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
-  let reponse: StateResponse = await lcd.wasm.contractQuery(
+  const bAssetContractAddress = addressProvider.bLunaHub();
+  const response: StateResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {
       state: {},
     },
   );
-  return reponse;
+  return response;
 };

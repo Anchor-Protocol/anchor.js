@@ -1,10 +1,10 @@
 import { Dec, Int, LCDClient } from '@terra-money/terra.js';
-import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
   denom: string;
   amount: string;
+  pair_contract_address: string;
 }
 interface SimulationResponse {
   return_amount: string;
@@ -12,12 +12,14 @@ interface SimulationResponse {
   commission_amount: string;
 }
 
-export const queryNativeSimulation = ({ lcd, denom, amount }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<SimulationResponse> => {
-  const pairContractAddress = addressProvider.terraswapblunaLunaPair();
-  let reponse: SimulationResponse = await lcd.wasm.contractQuery(
-    pairContractAddress,
+export const queryTerraswapNativeSimulation = async ({
+  lcd,
+  denom,
+  amount,
+  pair_contract_address,
+}: Option): Promise<SimulationResponse> => {
+  const response: SimulationResponse = await lcd.wasm.contractQuery(
+    pair_contract_address,
     {
       simulation: {
         offer_asset: {
@@ -31,5 +33,5 @@ export const queryNativeSimulation = ({ lcd, denom, amount }: Option) => async (
       },
     },
   );
-  return reponse;
+  return response;
 };

@@ -11,10 +11,9 @@ import { AddressProvider } from '../../address-provider/provider';
 interface Option {
   address: string;
   amount: string;
-  bAsset: string;
 }
 
-export const fabricatebAssetBurn = ({ address, amount, bAsset }: Option) => (
+export const fabricatebAssetUnbond = ({ address, amount }: Option) => (
   addressProvider: AddressProvider,
 ): MsgExecuteContract[] => {
   validateInput([
@@ -23,8 +22,8 @@ export const fabricatebAssetBurn = ({ address, amount, bAsset }: Option) => (
     validateIsGreaterThanZero(+amount),
   ]);
 
-  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
-  const bAssetHubAddress = addressProvider.blunaHub(bAsset);
+  const bAssetTokenAddress = addressProvider.bLunaToken();
+  const bAssetHubAddress = addressProvider.bLunaHub();
 
   return [
     new MsgExecuteContract(address, bAssetTokenAddress, {
@@ -39,11 +38,3 @@ export const fabricatebAssetBurn = ({ address, amount, bAsset }: Option) => (
     }),
   ];
 };
-
-// new MsgExecuteContract(
-//   address,
-//   bAssetGovAddress,
-//   {
-//     finish_burn: {}
-//   }
-// )

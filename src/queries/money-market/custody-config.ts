@@ -6,19 +6,27 @@ interface Option {
   custody: string;
 }
 interface ConfigResponse {
-  collateralToken: string;
-  overseerContract: string;
-  marketContract: string;
-  rewardContract: string;
-  liquidationContract: string;
-  stableDenom: string;
+  owner: string;
+  collateral_token: string;
+  overseer_contract: string;
+  market_contract: string;
+  reward_contract: string;
+  liquidation_contract: string;
+  stable_denom: string;
+  basset_info: BAssetInfo;
+}
+
+interface BAssetInfo {
+  name: string;
+  symbol: string;
+  decimals: string;
 }
 
 export const queryCustodyConfig = ({ lcd, custody }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ConfigResponse> => {
   const custodyContractAddress = addressProvider.custody(custody);
-  let response: ConfigResponse = await lcd.wasm.contractQuery(
+  const response: ConfigResponse = await lcd.wasm.contractQuery(
     custodyContractAddress,
     {
       config: {},

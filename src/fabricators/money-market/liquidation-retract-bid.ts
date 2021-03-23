@@ -12,7 +12,7 @@ interface Option {
   amount: string | undefined;
 }
 
-export const fabricateRetractBid = ({
+export const fabricateLiquidationRetractBid = ({
   address,
   collateral_token,
   amount,

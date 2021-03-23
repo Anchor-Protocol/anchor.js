@@ -3,33 +3,33 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  borrowAmount: string;
-  borrowLimit: string;
-  collaterals: object;
-  collateralPrices: object[];
+  borrow_amount: string;
+  borrow_limit: string;
+  collaterals: Array<[string, string]>;
+  collateral_prices: string[];
 }
 interface LiquidationAmountResponse {
-  collaterals: object[];
+  collaterals: Array<[string, string]>;
 }
 
 export const queryLiquidationLiquidationAmount = ({
   lcd,
-  borrowAmount,
-  borrowLimit,
+  borrow_amount,
+  borrow_limit,
   collaterals,
-  collateralPrices,
+  collateral_prices,
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<LiquidationAmountResponse> => {
   const liquidationContractAddress = addressProvider.liquidation();
-  let response: LiquidationAmountResponse = await lcd.wasm.contractQuery(
+  const response: LiquidationAmountResponse = await lcd.wasm.contractQuery(
     liquidationContractAddress,
     {
       liquidation_amount: {
-        borrow_amount: borrowAmount,
-        borrow_limit: borrowLimit,
+        borrow_amount: borrow_amount,
+        borrow_limit: borrow_limit,
         collaterals: collaterals,
-        collateral_prices: collateralPrices,
+        collateral_prices: collateral_prices,
       },
     },
   );

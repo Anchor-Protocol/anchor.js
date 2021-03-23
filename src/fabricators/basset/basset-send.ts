@@ -7,10 +7,10 @@ import {
 } from '../../utils/validation/number';
 import { AddressProvider } from '../../address-provider/provider';
 
+/* eslint-disable */
 interface Option {
   address: string;
   amount: string;
-  bAsset: string;
   contract: string;
   msg?: object;
 }
@@ -18,7 +18,6 @@ interface Option {
 export const fabricatebAssetSend = ({
   address,
   amount,
-  bAsset,
   contract,
   msg,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
@@ -29,7 +28,7 @@ export const fabricatebAssetSend = ({
     validateAddress(contract),
   ]);
 
-  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
+  const bAssetTokenAddress = addressProvider.bLunaToken();
   let message = undefined;
   if (msg) {
     message = Buffer.from(JSON.stringify(msg)).toString('base64');

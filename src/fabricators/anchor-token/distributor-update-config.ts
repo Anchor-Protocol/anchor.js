@@ -8,9 +8,10 @@ interface Option {
   spend_limit?: string;
 }
 
-export const fabricateDistributorConfig = ({ address, spend_limit }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
+export const fabricateDistributorUpdateConfig = ({
+  address,
+  spend_limit,
+}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
   const distributor = addressProvider.distributor();

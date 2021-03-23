@@ -1,23 +1,22 @@
-import { LCDClient, MsgExecuteContract } from '@terra-money/terra.js';
-import { AddressProvider } from '../../address-provider/provider';
+import { LCDClient } from '@terra-money/terra.js';
+import { AddressProvider } from 'address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  bAsset: string;
 }
 interface WhitelistedValResponse {
-  validators: object[];
+  validators: string[];
 }
 
-export const queryHubWhiteVals = ({ lcd, bAsset }: Option) => async (
+export const queryHubWhiteVals = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<WhitelistedValResponse> => {
-  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
-  let reponse: WhitelistedValResponse = await lcd.wasm.contractQuery(
+  const bAssetContractAddress = addressProvider.bLunaHub();
+  const response: WhitelistedValResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {
       whitelisted_validators: {},
     },
   );
-  return reponse;
+  return response;
 };

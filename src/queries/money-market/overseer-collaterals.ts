@@ -8,7 +8,7 @@ interface Option {
 }
 interface CollateralResponse {
   borrower: string;
-  collaterals: object;
+  collaterals: Array<[string, string]>;
 }
 
 export const queryOverseerCollaterals = ({
@@ -19,7 +19,7 @@ export const queryOverseerCollaterals = ({
   addressProvider: AddressProvider,
 ): Promise<CollateralResponse> => {
   const overseerContractAddress = addressProvider.overseer(overseer);
-  let response: CollateralResponse = await lcd.wasm.contractQuery(
+  const response: CollateralResponse = await lcd.wasm.contractQuery(
     overseerContractAddress,
     {
       collaterals: {

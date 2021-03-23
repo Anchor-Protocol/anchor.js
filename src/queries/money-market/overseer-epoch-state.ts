@@ -6,17 +6,17 @@ interface Option {
   overseer: string;
 }
 interface EpochStateResponse {
-  depositRate: string;
-  prevATerraSupply: string;
-  prevExchangeRate: string;
-  lastExecutedHeight: number;
+  deposit_rate: string;
+  prev_aterra_supply: string;
+  prev_exchange_rate: string;
+  last_executed_height: number;
 }
 
 export const queryOverseerEpochState = ({ lcd, overseer }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<EpochStateResponse> => {
   const overseerContractAddress = addressProvider.overseer(overseer);
-  let response: EpochStateResponse = await lcd.wasm.contractQuery(
+  const response: EpochStateResponse = await lcd.wasm.contractQuery(
     overseerContractAddress,
     {
       epoch_state: {},

@@ -15,7 +15,7 @@ interface Option {
   snapshot_period?: number;
 }
 
-export const fabricateGovConfig = ({
+export const fabricateGovUpdateConfig = ({
   address,
   owner,
   quorum,
@@ -28,10 +28,9 @@ export const fabricateGovConfig = ({
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   if (owner) {
     validateInput([validateAddress(owner), validateAddress(address)]);
-  }else {
-    validateInput([validateAddress(address)])
+  } else {
+    validateInput([validateAddress(address)]);
   }
-
 
   const gov = addressProvider.gov();
 

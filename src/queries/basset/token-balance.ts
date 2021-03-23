@@ -3,21 +3,23 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  bAsset: string;
   address: string;
 }
 interface Balance {
   rewards: string;
 }
 
-export const queryTokenBalance = ({ lcd, bAsset, address }: Option) => async (
+export const queryTokenBalance = ({ lcd, address }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<Balance> => {
-  const bAssetContractAddress = addressProvider.blunaToken(bAsset);
-  let reponse: Balance = await lcd.wasm.contractQuery(bAssetContractAddress, {
-    balance: {
-      address: address,
+  const bAssetContractAddress = addressProvider.bLunaToken();
+  const response: Balance = await lcd.wasm.contractQuery(
+    bAssetContractAddress,
+    {
+      balance: {
+        address: address,
+      },
     },
-  });
-  return reponse;
+  );
+  return response;
 };

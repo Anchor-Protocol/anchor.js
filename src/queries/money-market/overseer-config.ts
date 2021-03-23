@@ -7,22 +7,24 @@ interface Option {
 }
 interface ConfigResponse {
   ownerAddr: string;
-  oracleContract: string;
-  marketContract: string;
-  liquidationContract: string;
-  distributionThresholdRate: string;
-  targetDepositRate: string;
-  bufferDistributionFactor: string;
-  stableDenom: string;
-  epochPeriod: number;
-  priceTimeframe: number;
+  oracle_contract: string;
+  market_contract: string;
+  collector_contract: string;
+  liquidation_contract: string;
+  threshold_deposit_rate: string;
+  distribution_threshold_rate: string;
+  target_deposit_rate: string;
+  buffer_distribution_factor: string;
+  stable_denom: string;
+  epoch_period: number;
+  price_timeframe: number;
 }
 
 export const queryOverseerConfig = ({ lcd, overseer }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ConfigResponse> => {
   const overseerContractAddress = addressProvider.overseer(overseer);
-  let response: ConfigResponse = await lcd.wasm.contractQuery(
+  const response: ConfigResponse = await lcd.wasm.contractQuery(
     overseerContractAddress,
     {
       config: {},

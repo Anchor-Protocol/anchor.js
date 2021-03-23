@@ -1,24 +1,23 @@
-import { LCDClient, MsgExecuteContract } from '@terra-money/terra.js';
-import { AddressProvider } from '../../address-provider/provider';
+import { LCDClient } from '@terra-money/terra.js';
+import { AddressProvider } from 'address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  bAsset: string;
 }
 interface ConfigResponse {
   hub_contract: string;
   reward_denom: string;
 }
 
-export const queryRewardConfig = ({ lcd, bAsset }: Option) => async (
+export const queryRewardConfig = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ConfigResponse> => {
-  const bAssetContractAddress = addressProvider.blunaReward(bAsset);
-  let reponse: ConfigResponse = await lcd.wasm.contractQuery(
+  const bAssetContractAddress = addressProvider.bLunaReward();
+  const response: ConfigResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {
       config: {},
     },
   );
-  return reponse;
+  return response;
 };

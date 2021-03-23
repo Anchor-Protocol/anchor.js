@@ -6,18 +6,18 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   address: string;
-  bAsset: string;
   owner?: string;
   reward_contract?: string;
   token_contract?: string;
+  airdrop_registry_contract: string;
 }
 
-export const fabricatebAssetConfig = ({
+export const fabricatebAssetUpdateConfig = ({
   address,
   owner,
   reward_contract,
   token_contract,
-  bAsset,
+  airdrop_registry_contract,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),
@@ -25,8 +25,7 @@ export const fabricatebAssetConfig = ({
     token_contract ? validateAddress(token_contract) : validateTrue,
   ]);
 
-  // const nativeTokenDenom = bAssetToNative.bluna[bAsset.toLowerCase()]
-  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
+  const bAssetContractAddress = addressProvider.bLunaHub();
 
   return [
     new MsgExecuteContract(address, bAssetContractAddress, {
@@ -34,6 +33,7 @@ export const fabricatebAssetConfig = ({
         owner: owner,
         reward_contract: reward_contract,
         token_contract: token_contract,
+        airdrop_registry_contract: airdrop_registry_contract,
       },
     }),
   ];

@@ -3,7 +3,6 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  bAsset: string;
 }
 
 interface ParamsResponse {
@@ -15,15 +14,15 @@ interface ParamsResponse {
   reward_denom: string;
 }
 
-export const queryHubParams = ({ lcd, bAsset }: Option) => async (
+export const queryHubParams = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ParamsResponse> => {
-  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
-  let reponse: ParamsResponse = await lcd.wasm.contractQuery(
+  const bAssetContractAddress = addressProvider.bLunaHub();
+  const response: ParamsResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {
       parameters: {},
     },
   );
-  return reponse;
+  return response;
 };

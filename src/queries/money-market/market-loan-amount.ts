@@ -21,7 +21,7 @@ export const queryMarketLoanAmount = ({
   addressProvider: AddressProvider,
 ): Promise<LoanAmountResponse> => {
   const marketContractAddress = addressProvider.market(market);
-  let response: LoanAmountResponse = await lcd.wasm.contractQuery(
+  const response: LoanAmountResponse = await lcd.wasm.contractQuery(
     marketContractAddress,
     {
       loan_amount: {

@@ -4,30 +4,30 @@ import {
   Dec,
   Int,
   MsgExecuteContract,
-} from "@terra-money/terra.js";
-import { validateInput } from "../../utils/validate-input";
-import { validateAddress } from "../../utils/validation/address";
+} from '@terra-money/terra.js';
+import { validateInput } from '../../utils/validate-input';
+import { validateAddress } from '../../utils/validation/address';
 import {
   validateIsGreaterThanZero,
   validateIsNumber,
-} from "../../utils/validation/number";
-import { AddressProvider } from "../../address-provider/provider";
+} from '../../utils/validation/number';
+import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   address: string;
   amount: string;
   denom: string;
   to?: string;
-  beliefPrice?: string;
-  maxSpread?: string;
+  belief_price?: string;
+  max_spread?: string;
 }
 
-export const fabricatebSwapLuna = ({
+export const fabricateTerraswapSwapLuna = ({
   address,
   amount,
   to,
-  beliefPrice,
-  maxSpread,
+  belief_price,
+  max_spread,
   denom,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
@@ -53,12 +53,12 @@ export const fabricatebSwapLuna = ({
             },
             amount: new Int(new Dec(amount).mul(1000000)).toString(),
           },
-          belief_price: beliefPrice,
-          max_spread: maxSpread,
+          belief_price: belief_price,
+          max_spread: max_spread,
           to: to,
         },
       },
-      coins
+      coins,
     ),
   ];
 };

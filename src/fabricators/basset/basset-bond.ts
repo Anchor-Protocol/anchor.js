@@ -10,24 +10,19 @@ import { validateIsGreaterThanZero } from '../../utils/validation/number';
 interface Option {
   address: string;
   amount: string;
-  bAsset: string;
   validator: string; // validator address
 }
 
-export const fabricatebAssetBond = ({
-  address,
-  amount,
-  bAsset,
-  validator,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
+export const fabricatebAssetBond = ({ address, amount, validator }: Option) => (
+  addressProvider: AddressProvider,
+): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),
     validateValAddress(validator),
     validateIsGreaterThanZero(amount),
   ]);
 
-  // const nativeTokenDenom = bAssetToNative.bluna[bAsset.toLowerCase()]
-  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
+  const bAssetContractAddress = addressProvider.bLunaHub();
 
   return [
     new MsgExecuteContract(

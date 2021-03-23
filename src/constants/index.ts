@@ -1,1 +1,1 @@
-export const FINDER = "https://finder.terra.money";
+export const FINDER = 'https://finder.terra.money';

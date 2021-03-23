@@ -2,27 +2,20 @@ import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateAddress } from '../../utils/validation/address';
 import { validateInput } from '../../utils/validate-input';
 
-import { validateWhitelistedMarket } from '../../utils/validation/market';
 import { validateTrue } from '../../utils/validation/true';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  MARKET_DENOMS,
+} from '../../address-provider/provider';
 import { isAmountSet } from '../../utils/validation/amount';
 
 interface Option {
   address: string;
-  market: string;
-  borrower?: string;
+  market: MARKET_DENOMS;
   amount?: string;
 }
 
-/**
- *
- * @param address Client’s Terra address.
- * @param market Type of stablecoin money market to redeem collateral.
- * @param symbol Symbol of collateral to redeem.
- * @param amount (optional) Amount of collateral to redeem. Set this to null if redeem_all is true.
- * @param withdraw_to (optional) Terra address to withdraw redeemed collateral. If null, withdraws to address.
- */
 export const fabricateRedeemCollateral = ({
   address,
   market,
@@ -30,13 +23,12 @@ export const fabricateRedeemCollateral = ({
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),
-    validateWhitelistedMarket(market),
     amount ? validateIsGreaterThanZero(amount) : validateTrue,
   ]);
 
-  const mmOverseerContract = addressProvider.overseer(market.toLowerCase());
-  const bAssetTokenContract = addressProvider.blunaToken('ubluna'); // fixed to ubluna for now
-  const custodyContract = addressProvider.custody(market.toLocaleLowerCase());
+  const mmOverseerContract = addressProvider.overseer(market);
+  const bAssetTokenContract = addressProvider.bLunaToken(); // fixed to ubluna for now
+  const custodyContract = addressProvider.custody(market);
 
   return [
     // unlock collateral

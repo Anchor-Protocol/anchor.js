@@ -1,4 +1,3 @@
-import { AddressProvider } from '../../address-provider/provider';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
@@ -9,13 +8,13 @@ import {
 
 interface Option {
   address: string;
-  contractAddress: string;
+  contract_address: string;
   amount: string;
 }
 
 export const fabricateCw20Burn = ({
   address,
-  contractAddress,
+  contract_address,
   amount,
 }: Option): MsgExecuteContract[] => {
   validateInput([
@@ -25,7 +24,7 @@ export const fabricateCw20Burn = ({
   ]);
 
   return [
-    new MsgExecuteContract(address, contractAddress, {
+    new MsgExecuteContract(address, contract_address, {
       burn: {
         amount: new Int(new Dec(amount).mul(1000000)).toString(),
       },

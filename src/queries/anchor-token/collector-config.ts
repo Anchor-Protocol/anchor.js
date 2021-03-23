@@ -10,7 +10,7 @@ export interface ConfigResponse {
   terraswap_factory: string;
   anchor_token: string;
   distributor_contract: string;
-  reward_weight: string;
+  reward_factor: string;
 }
 
 export const queryCollectorConfig = ({ lcd }: Option) => async (

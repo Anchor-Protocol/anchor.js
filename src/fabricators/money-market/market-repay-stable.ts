@@ -2,14 +2,12 @@ import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateAddress } from '../../utils/validation/address';
 import { validateInput } from '../../utils/validate-input';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
-import { validateWhitelistedMarket } from '../../utils/validation/market';
-import { validateTrue } from '../../utils/validation/true';
 import { AddressProvider } from '../../address-provider/provider';
+import { MARKET_DENOMS } from 'address-provider';
 
 interface Option {
   address: string;
-  market: string;
-  borrower?: string;
+  market: MARKET_DENOMS;
   amount: string;
 }
 
@@ -20,17 +18,10 @@ interface Option {
  * @param amount (optional) Amount of stablecoin to repay. Set to null if repay_all is set to true.
  */
 
-export const fabricateRepay = ({
-  address,
-  market,
-  borrower,
-  amount,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    borrower ? validateAddress(borrower) : validateTrue,
-    validateIsGreaterThanZero(amount),
-  ]);
+export const fabricateMarketRepay = ({ address, market, amount }: Option) => (
+  addressProvider: AddressProvider,
+): MsgExecuteContract[] => {
+  validateInput([validateAddress(address), validateIsGreaterThanZero(amount)]);
 
   //const nativeTokenDenom = market;
   const mmContractAddress = addressProvider.market(market);
@@ -45,7 +36,7 @@ export const fabricateRepay = ({
       },
       // sending stablecoin
       {
-        uusd: new Int(new Dec(amount).mul(1000000)).toString(),
+        [`${market}`]: new Int(new Dec(amount).mul(1000000)).toString(),
       },
     ),
   ];

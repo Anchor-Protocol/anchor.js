@@ -3,28 +3,29 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  collateralToken: string;
+  collateral_token: string;
   bidder: string;
 }
-interface BidResponse {
-  collateralToken: string;
+
+export interface BidResponse {
+  collateral_token: string;
   bidder: string;
   amount: string;
-  premiumRate: string;
+  premium_rate: string;
 }
 
 export const queryLiquidationBid = ({
   lcd,
-  collateralToken,
+  collateral_token,
   bidder,
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<BidResponse> => {
   const liquidationContractAddress = addressProvider.liquidation();
-  let response: BidResponse = await lcd.wasm.contractQuery(
+  const response: BidResponse = await lcd.wasm.contractQuery(
     liquidationContractAddress,
     {
-      bid: { collateral_token: collateralToken, bidder: bidder },
+      bid: { collateral_token: collateral_token, bidder: bidder },
     },
   );
   return response;

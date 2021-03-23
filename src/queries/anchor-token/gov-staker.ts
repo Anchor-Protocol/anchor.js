@@ -1,4 +1,4 @@
-import { LCDClient, MsgExecuteContract } from '@terra-money/terra.js';
+import { LCDClient } from '@terra-money/terra.js';
 import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
@@ -23,7 +23,7 @@ export const queryGovStaker = ({ lcd, address }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<StakerResponse> => {
   const gov = addressProvider.gov();
-  let response: StakerResponse = await lcd.wasm.contractQuery(gov, {
+  const response: StakerResponse = await lcd.wasm.contractQuery(gov, {
     staker: {
       address,
     },

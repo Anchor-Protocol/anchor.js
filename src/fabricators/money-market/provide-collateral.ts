@@ -2,16 +2,16 @@ import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../../utils/cw20/create-hook-msg';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
-import { validateWhitelistedBAsset } from '../../utils/validation/basset';
 
-import { validateWhitelistedMarket } from '../../utils/validation/market';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  MARKET_DENOMS,
+} from '../../address-provider/provider';
 
 interface Option {
   address: string;
-  market: string;
-  symbol: string;
+  market: MARKET_DENOMS;
   amount: string;
 }
 
@@ -27,22 +27,20 @@ interface Option {
 export const fabricateProvideCollateral = ({
   address,
   market,
-  symbol,
   amount,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),
-    validateWhitelistedMarket(market),
     // borrower ? validateAddress(borrower) : validateTrue,
-    validateWhitelistedBAsset(symbol),
     validateIsGreaterThanZero(amount),
   ]);
 
-  const bAssetTokenContract = addressProvider.blunaToken(symbol.toLowerCase());
-  const mmOverseerContract = addressProvider.overseer(market.toLowerCase());
-  const custodyContract = addressProvider.custody(market.toLocaleLowerCase());
+  const bAssetTokenContract = addressProvider.bLunaToken();
+  const mmOverseerContract = addressProvider.overseer(market);
+  const custodyContract = addressProvider.custody(market);
 
   // cw20 send + provide_collateral hook
+  /* eslint-disable */
   return [
     // provide_collateral call
     new MsgExecuteContract(address, bAssetTokenContract, {

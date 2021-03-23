@@ -3,9 +3,9 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  marketBalance: string;
-  totalLiabilities: string;
-  totalReserves: string;
+  market_balance: string;
+  total_liabilities: string;
+  total_reserves: string;
 }
 interface BorrowRateResponse {
   rate: string;
@@ -13,20 +13,20 @@ interface BorrowRateResponse {
 
 export const queryInterestModelBorrowRate = ({
   lcd,
-  marketBalance,
-  totalLiabilities,
-  totalReserves,
+  market_balance,
+  total_liabilities,
+  total_reserves,
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<BorrowRateResponse> => {
   const interestModelContractAddress = addressProvider.interest();
-  let response: BorrowRateResponse = await lcd.wasm.contractQuery(
+  const response: BorrowRateResponse = await lcd.wasm.contractQuery(
     interestModelContractAddress,
     {
       borrow_rate: {
-        market_balance: marketBalance,
-        total_liabilities: totalLiabilities,
-        total_reserves: totalReserves,
+        market_balance: market_balance,
+        total_liabilities: total_liabilities,
+        total_reserves: total_reserves,
       },
     },
   );

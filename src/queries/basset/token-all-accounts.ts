@@ -3,32 +3,30 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  bAsset: string;
-  startAfter?: string;
-  lim?: number;
+  start_after?: string;
+  limit?: number;
 }
 
 interface AllAccounts {
-  accounts: object[];
+  accounts: string[];
 }
 
 export const queryTokenAllAccounts = ({
   lcd,
-  bAsset,
-  startAfter,
-  lim,
+  start_after,
+  limit,
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<AllAccounts> => {
-  const bAssetContractAddress = addressProvider.blunaToken(bAsset);
-  let reponse: AllAccounts = await lcd.wasm.contractQuery(
+  const bAssetContractAddress = addressProvider.bLunaToken();
+  const response: AllAccounts = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {
       all_accounts: {
-        start_after: startAfter || undefined,
-        limit: lim || undefined,
+        start_after: start_after || undefined,
+        limit: limit || undefined,
       },
     },
   );
-  return reponse;
+  return response;
 };

@@ -5,18 +5,17 @@ import {
   validateIsGreaterThanZero,
   validateIsNumber,
 } from '../../utils/validation/number';
-import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   address: string;
-  contractAddress: string;
+  contract_address: string;
   amount: string;
   recipient: string;
 }
 
 export const fabricateCw20Transfer = ({
   address,
-  contractAddress,
+  contract_address,
   amount,
   recipient,
 }: Option): MsgExecuteContract[] => {
@@ -28,7 +27,7 @@ export const fabricateCw20Transfer = ({
   ]);
 
   return [
-    new MsgExecuteContract(address, contractAddress, {
+    new MsgExecuteContract(address, contract_address, {
       transfer: {
         recipient: recipient,
         amount: new Int(new Dec(amount).mul(1000000)).toString(),

@@ -3,32 +3,35 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  bAsset: string;
-  startFrom?: number;
-  lim?: number;
+  start_from?: number;
+  limit?: number;
 }
 
 interface HistoryResponse {
-  history: object[];
+  history: UnbondHistory[];
 }
 
-export const queryHubHistory = ({
-  lcd,
-  bAsset,
-  startFrom,
-  lim,
-}: Option) => async (
+interface UnbondHistory {
+  batch_id: number;
+  time: number;
+  amount: string;
+  applied_exchange_rate: string;
+  withdraw_rate: string;
+  released: boolean;
+}
+
+export const queryHubHistory = ({ lcd, start_from, limit }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<HistoryResponse> => {
-  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
-  let reponse: HistoryResponse = await lcd.wasm.contractQuery(
+  const bAssetContractAddress = addressProvider.bLunaHub();
+  const response: HistoryResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {
       all_history: {
-        start_from: startFrom || undefined,
-        limit: lim || undefined,
+        start_from: start_from || undefined,
+        limit: limit || undefined,
       },
     },
   );
-  return reponse;
+  return response;
 };

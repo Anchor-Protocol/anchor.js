@@ -3,7 +3,6 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  bAsset: string;
 }
 
 interface CurrentBatchResponse {
@@ -11,15 +10,15 @@ interface CurrentBatchResponse {
   requested_with_fee: string;
 }
 
-export const queryHubCurrentBatch = ({ lcd, bAsset }: Option) => async (
+export const queryHubCurrentBatch = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<CurrentBatchResponse> => {
-  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
-  let reponse: CurrentBatchResponse = await lcd.wasm.contractQuery(
+  const bAssetContractAddress = addressProvider.bLunaHub();
+  const response: CurrentBatchResponse = await lcd.wasm.contractQuery(
     bAssetContractAddress,
     {
       current_batch: {},
     },
   );
-  return reponse;
+  return response;
 };

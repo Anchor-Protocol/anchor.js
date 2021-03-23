@@ -1,4 +1,4 @@
-import { LCDClient, MsgExecuteContract } from '@terra-money/terra.js';
+import { LCDClient } from '@terra-money/terra.js';
 import { AddressProvider } from '../../address-provider/provider';
 import { PollResponse, PollStatus } from './gov-poll';
 
@@ -9,6 +9,10 @@ interface Option {
   limit?: number;
 }
 
+interface PollsResponse {
+  polls: PollResponse[];
+}
+
 export const queryGovPolls = ({
   lcd,
   filter,
@@ -16,9 +20,9 @@ export const queryGovPolls = ({
   limit,
 }: Option) => async (
   addressProvider: AddressProvider,
-): Promise<PollResponse> => {
+): Promise<PollsResponse> => {
   const gov = addressProvider.gov();
-  let response: PollResponse = await lcd.wasm.contractQuery(gov, {
+  const response: PollsResponse = await lcd.wasm.contractQuery(gov, {
     polls: {
       filter,
       start_after,

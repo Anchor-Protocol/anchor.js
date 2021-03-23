@@ -7,19 +7,18 @@ import {
 } from '../../utils/validation/number';
 import { AddressProvider } from '../../address-provider/provider';
 
+/* eslint-disable */
 interface Option {
   address: string;
   amount: string;
-  bAsset: string;
   owner: string;
   contract: string;
-  msg?: string;
+  msg?: object;
 }
 
 export const fabricatebAssetSendFrom = ({
   address,
   amount,
-  bAsset,
   contract,
   owner,
   msg,
@@ -32,7 +31,7 @@ export const fabricatebAssetSendFrom = ({
     validateAddress(contract),
   ]);
 
-  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
+  const bAssetTokenAddress = addressProvider.bLunaToken();
 
   let message = undefined;
   if (msg) {

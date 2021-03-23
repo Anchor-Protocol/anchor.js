@@ -7,20 +7,19 @@ import {
   validateIsNumber,
 } from '../../utils/validation/number';
 
+/* eslint-disable */
 type Expire = { at_height: number } | { at_time: number } | { never: {} };
 
 interface Option {
   address: string;
   amount: string;
-  bAsset: string;
   spender: string;
   expires?: Expire;
 }
 
-export const fabricatebAssetdDecreaseAllowance = ({
+export const fabricatebAssetDecreaseAllowance = ({
   address,
   amount,
-  bAsset,
   spender,
   expires,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
@@ -29,10 +28,9 @@ export const fabricatebAssetdDecreaseAllowance = ({
     validateIsNumber(amount),
     validateIsGreaterThanZero(amount),
     validateAddress(spender),
-    //TODO: validate the expiration
   ]);
 
-  const bAssetTokenAddress = addressProvider.blunaToken(bAsset);
+  const bAssetTokenAddress = addressProvider.bLunaToken();
 
   return [
     new MsgExecuteContract(address, bAssetTokenAddress, {

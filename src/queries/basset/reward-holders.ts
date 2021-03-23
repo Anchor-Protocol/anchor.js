@@ -1,29 +1,31 @@
 import { LCDClient } from '@terra-money/terra.js';
 import { AddressProvider } from '../../address-provider/provider';
+import { Holder } from 'queries';
 
 interface Option {
   lcd: LCDClient;
-  bAsset: string;
-  startAfter?: string;
-  lim?: number;
+  start_after?: string;
+  limit?: number;
 }
 
 interface Holders {
-  holders: object[];
+  holders: Holder[];
 }
 
 export const queryRewardHolders = ({
   lcd,
-  bAsset,
-  startAfter,
-  lim,
+  start_after,
+  limit,
 }: Option) => async (addressProvider: AddressProvider): Promise<Holders> => {
-  const bAssetContractAddress = addressProvider.blunaReward(bAsset);
-  let reponse: Holders = await lcd.wasm.contractQuery(bAssetContractAddress, {
-    holders: {
-      start_after: startAfter,
-      limit: lim,
+  const bAssetContractAddress = addressProvider.bLunaReward();
+  const response: Holders = await lcd.wasm.contractQuery(
+    bAssetContractAddress,
+    {
+      holders: {
+        start_after: start_after,
+        limit: limit,
+      },
     },
-  });
-  return reponse;
+  );
+  return response;
 };

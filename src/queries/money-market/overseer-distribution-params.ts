@@ -6,9 +6,9 @@ interface Option {
   overseer: string;
 }
 interface DistributionParamsResponse {
-  depositRate: string;
-  targetDepositRate: string;
-  distributionThresholdRate: string;
+  deposit_rate: string;
+  target_deposit_rate: string;
+  distribution_threshold_rate: string;
 }
 
 export const queryOverseerDistributionParams = ({
@@ -18,7 +18,7 @@ export const queryOverseerDistributionParams = ({
   addressProvider: AddressProvider,
 ): Promise<DistributionParamsResponse> => {
   const overseerContractAddress = addressProvider.overseer(overseer);
-  let response: DistributionParamsResponse = await lcd.wasm.contractQuery(
+  const response: DistributionParamsResponse = await lcd.wasm.contractQuery(
     overseerContractAddress,
     {
       distribution_params: {},

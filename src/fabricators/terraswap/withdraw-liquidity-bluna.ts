@@ -1,23 +1,21 @@
-import { Dec, Int, MsgExecuteContract } from "@terra-money/terra.js";
-import { validateInput } from "../../utils/validate-input";
-import { validateAddress } from "../../utils/validation/address";
+import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
+import { validateInput } from '../../utils/validate-input';
+import { validateAddress } from '../../utils/validation/address';
 import {
   validateIsGreaterThanZero,
   validateIsNumber,
-} from "../../utils/validation/number";
-import { createHookMsg } from "../../utils/cw20/create-hook-msg";
-import { AddressProvider } from "../../address-provider/provider";
+} from '../../utils/validation/number';
+import { createHookMsg } from '../../utils/cw20/create-hook-msg';
+import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   address: string;
   amount: string;
-  bAsset: string;
 }
 
-export const fabricatebWithdrawLiquiditybLuna = ({
+export const fabricateTerraswapWithdrawLiquiditybLuna = ({
   address,
   amount,
-  bAsset,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),
@@ -25,7 +23,7 @@ export const fabricatebWithdrawLiquiditybLuna = ({
     validateIsGreaterThanZero(amount),
   ]);
 
-  const lpToken = addressProvider.terraswapblunaLunaLPToken(bAsset);
+  const lpToken = addressProvider.terraswapblunaLunaLPToken();
   const pairAddress = addressProvider.terraswapblunaLunaPair();
 
   return [

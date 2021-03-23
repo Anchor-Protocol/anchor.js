@@ -7,12 +7,12 @@ interface Option {
   borrower: string;
   block_height: number;
 }
-interface LiabilityResponse {
+export interface BorrowInfoResponse {
   borrower: string;
-  interestIndex: string;
-  rewardIndex: string;
-  loanAmount: string;
-  pendingRewards: string;
+  interest_index: string;
+  reward_index: string;
+  loan_amount: string;
+  pending_rewards: string;
 }
 
 export const queryMarketBorrowerInfo = ({
@@ -22,9 +22,9 @@ export const queryMarketBorrowerInfo = ({
   block_height,
 }: Option) => async (
   addressProvider: AddressProvider,
-): Promise<LiabilityResponse> => {
+): Promise<BorrowInfoResponse> => {
   const marketContractAddress = addressProvider.market(market);
-  let response: LiabilityResponse = await lcd.wasm.contractQuery(
+  const response: BorrowInfoResponse = await lcd.wasm.contractQuery(
     marketContractAddress,
     {
       borrower_info: {

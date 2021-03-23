@@ -3,7 +3,7 @@ import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
 import { AddressProvider } from '../../address-provider/provider';
 
-type VoteOption = 'yes' | 'no';
+export type VoteOption = 'yes' | 'no';
 
 interface Option {
   address: string;

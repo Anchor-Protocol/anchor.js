@@ -1,4 +1,4 @@
-import { LCDClient, MsgExecuteContract } from '@terra-money/terra.js';
+import { LCDClient } from '@terra-money/terra.js';
 import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
@@ -15,7 +15,7 @@ export const queryCommunityConfig = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ConfigResponse> => {
   const community = addressProvider.community();
-  let response: ConfigResponse = await lcd.wasm.contractQuery(community, {
+  const response: ConfigResponse = await lcd.wasm.contractQuery(community, {
     config: {},
   });
   return response;

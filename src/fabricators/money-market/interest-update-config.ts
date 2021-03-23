@@ -1,4 +1,4 @@
-import { Dec, MsgExecuteContract } from '@terra-money/terra.js';
+import { MsgExecuteContract } from '@terra-money/terra.js';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
 import { validateTrue } from '../../utils/validation/true';
@@ -7,11 +7,11 @@ import { AddressProvider } from '../../address-provider/provider';
 interface Option {
   address: string;
   owner?: string;
-  base_rate?: Dec;
-  interest_multiplier?: Dec;
+  base_rate?: string;
+  interest_multiplier?: string;
 }
 
-export const fabricatebInterestConfig = ({
+export const fabricateInterestUpdateConfig = ({
   address,
   owner,
   base_rate,

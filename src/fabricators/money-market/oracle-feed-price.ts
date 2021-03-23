@@ -1,16 +1,16 @@
-import { Dec, MsgExecuteContract } from '@terra-money/terra.js';
+import { MsgExecuteContract } from '@terra-money/terra.js';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
 import { AddressProvider } from '../../address-provider/provider';
 
-type Price = [string, Dec];
+export type Pair = [string, string];
 
 interface Option {
   address: string;
-  prices: [Price];
+  prices: Pair[];
 }
 
-export const fabricatebOracleFeedPrice = ({ address, prices }: Option) => (
+export const fabricateOracleFeedPrice = ({ address, prices }: Option) => (
   addressProvider: AddressProvider,
 ): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);

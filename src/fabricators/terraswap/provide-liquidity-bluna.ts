@@ -4,50 +4,49 @@ import {
   Coins,
   Int,
   MsgExecuteContract,
-} from "@terra-money/terra.js";
-import { validateInput } from "../../utils/validate-input";
-import { validateAddress } from "../../utils/validation/address";
-import { AddressProvider } from "../../address-provider/provider";
-import { validateIsGreaterThanZero } from "../../utils/validation/number";
+} from '@terra-money/terra.js';
+import { validateInput } from '../../utils/validate-input';
+import { validateAddress } from '../../utils/validation/address';
+import { AddressProvider } from '../../address-provider/provider';
+import { validateIsGreaterThanZero } from '../../utils/validation/number';
 
+/* eslint-disable */
 type Expire = { at_height: number } | { at_time: number } | { never: {} };
 
 interface Option {
   address: string;
-  bAsset: string;
-  tokenAmount: string;
-  nativeAmount: string;
+  token_amount: string;
+  native_amount: string;
   quote: string;
-  slippageTolerance?: string;
+  slippage_tolerance?: string;
   expires: Expire;
 }
 
-export const fabricateTerraSwapProvideLiquiditybLuna = ({
+export const fabricateTerraswapProvideLiquiditybLuna = ({
   address,
-  slippageTolerance,
-  bAsset,
-  tokenAmount,
-  nativeAmount,
+  slippage_tolerance,
+  token_amount,
+  native_amount,
   quote,
   expires,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),
-    validateIsGreaterThanZero(tokenAmount),
-    validateIsGreaterThanZero(nativeAmount),
+    validateIsGreaterThanZero(token_amount),
+    validateIsGreaterThanZero(native_amount),
   ]);
 
   const pairAddress = addressProvider.terraswapblunaLunaPair();
-  const tokenAddress = addressProvider.blunaToken(bAsset);
+  const tokenAddress = addressProvider.bLunaToken();
 
   const coins = new Coins([
-    new Coin(quote, new Int(new Dec(nativeAmount).mul(1000000)).toString()),
+    new Coin(quote, new Int(new Dec(native_amount).mul(1000000)).toString()),
   ]);
   return [
     new MsgExecuteContract(address, tokenAddress, {
       increase_allowance: {
         spender: pairAddress,
-        amount: new Int(new Dec(tokenAmount).mul(1000000)).toString(),
+        amount: new Int(new Dec(token_amount).mul(1000000)).toString(),
         expires: expires || { never: {} },
       },
     }),
@@ -63,7 +62,7 @@ export const fabricateTerraSwapProvideLiquiditybLuna = ({
                   contract_addr: tokenAddress,
                 },
               },
-              amount: new Int(new Dec(tokenAmount).mul(1000000)).toString(),
+              amount: new Int(new Dec(token_amount).mul(1000000)).toString(),
             },
             {
               info: {
@@ -71,13 +70,15 @@ export const fabricateTerraSwapProvideLiquiditybLuna = ({
                   denom: quote,
                 },
               },
-              amount: new Int(new Dec(nativeAmount).mul(1000000)).toString(),
+              amount: new Int(new Dec(native_amount).mul(1000000)).toString(),
             },
           ],
-          slippage_tolerance: slippageTolerance ? slippageTolerance : undefined,
+          slippage_tolerance: slippage_tolerance
+            ? slippage_tolerance
+            : undefined,
         },
       },
-      coins
+      coins,
     ),
   ];
 };

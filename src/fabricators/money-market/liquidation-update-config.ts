@@ -1,4 +1,4 @@
-import { Dec, MsgExecuteContract } from '@terra-money/terra.js';
+import { MsgExecuteContract } from '@terra-money/terra.js';
 import { validateAddress } from '../../utils/validation/address';
 import { validateInput } from '../../utils/validate-input';
 import { validateTrue } from '../../utils/validation/true';
@@ -10,14 +10,14 @@ interface Option {
   owner?: string;
   oracle_contract?: string;
   stable_denom?: string;
-  safe_ratio?: Dec;
-  bid_fee?: Dec;
-  max_premium_rate?: Dec;
-  liquidation_threshold?: number;
+  safe_ratio?: string;
+  bid_fee?: string;
+  max_premium_rate?: string;
+  liquidation_threshold?: string;
   price_timeframe?: number;
 }
 
-export const fabricateLiquidationConfig = ({
+export const fabricateLiquidationUpdateConfig = ({
   address,
   owner,
   oracle_contract,
@@ -32,9 +32,6 @@ export const fabricateLiquidationConfig = ({
     validateAddress(address),
     owner ? validateAddress(owner) : validateTrue,
     oracle_contract ? validateAddress(oracle_contract) : validateTrue,
-    liquidation_threshold
-      ? validateIsNumber(liquidation_threshold)
-      : validateTrue,
     price_timeframe ? validateIsNumber(price_timeframe) : validateTrue,
   ]);
 

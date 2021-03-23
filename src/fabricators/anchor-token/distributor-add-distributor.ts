@@ -5,23 +5,21 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   address: string;
-  market: string;
-  overseer_contract: string;
+  distributor: string;
 }
 
-export const fabricatebMarketRegOverseer = ({
+export const fabricateDistributorAddDistributor = ({
   address,
-  overseer_contract,
-  market,
+  distributor,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address), validateAddress(overseer_contract)]);
+  validateInput([validateAddress(address)]);
 
-  const mmMarket = addressProvider.market(market);
+  const distributorAdd = addressProvider.distributor();
 
   return [
-    new MsgExecuteContract(address, mmMarket, {
-      register_overseer: {
-        overseer_contract: overseer_contract,
+    new MsgExecuteContract(address, distributorAdd, {
+      add_distributor: {
+        distributor,
       },
     }),
   ];

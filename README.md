@@ -34,7 +34,7 @@ Both of these functions are accessible through the [`Message Fabricators`](https
 
 To Use the message fabricators: 
 
-**Note**: Please note that `symbol` is a different variable from the coin denom. The denomination for the coins in the example is set to be `uusd`.
+**Note**: Please note that `market` is a different variable from the coin denom. The denomination for the coins in the example is set to be `uusd`.
 ```ts
 import {fabricateRedeemStable, fabricateDepositStableCoin} from '@anchor-protocol/anchor.js';
 import {AddressProviderFromJson} from ".@anchor-protocol/anchor.js"; 
@@ -44,13 +44,13 @@ const addressMap = somehowGetAddresses();
 const addressProvider = new AddressProviderFromJson(addressMap);
     const redeemMsg = fabricateRedeemStable({
       address: 'terra123...',
-      symbol: 'usd',
+      market: 'usd',
       amount: '10000',
     })(addressProvider);
 
     const depositMsg = fabricateDepositStableCoin({
       address: 'terra123...',
-      symbol: 'usd',
+      market: 'usd',
       amount: '10',
     })(addressProvider);
 ```
@@ -91,8 +91,8 @@ main();
   ```js
   {
     bLunaHub: 'terra1mtwph2juhj0rvjz7dy92gvl6xvukaxu8rfv8ts',
-    blunaToken: 'terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp',
-    blunaReward: 'terra17yap3mhph35pcwvhza38c2lkj7gzywzy05h7l0',
+    bLunaToken: 'terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp',
+    bLunaReward: 'terra17yap3mhph35pcwvhza38c2lkj7gzywzy05h7l0',
     blunaAirdrop: 'terra199t7hg7w5vymehhg834r6799pju2q3a0ya7ae9',
     mmInterestModel: 'terra1kq8zzq5hufas9t0kjsjc62t2kucfnx8txf547n',
     mmOracle: 'terra1cgg6yef7qcdm070qftghfulaxmllgmvk77nc7t',
@@ -122,8 +122,8 @@ main();
    ```js
     {
       bLunaHub: 'terra1fflas6wv4snv8lsda9knvq2w0cyt493r8puh2e',
-      blunaToken: 'terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x',
-      blunaReward: 'terra1ac24j6pdxh53czqyrkr6ygphdeftg7u3958tl2',
+      bLunaToken: 'terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x',
+      bLunaReward: 'terra1ac24j6pdxh53czqyrkr6ygphdeftg7u3958tl2',
       blunaAirdrop: 'terra1334h20c9ewxguw9p9vdxzmr8994qj4qu77ux6q',
       mmInterestModel: 'terra1m25aqupscdw2kw4tnq5ql6hexgr34mr76azh5x',
       mmOracle: 'terra1p4gg3p2ue6qy2qfuxtrmgv2ec3f4jmgqtazum8',

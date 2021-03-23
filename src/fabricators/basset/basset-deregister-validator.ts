@@ -5,24 +5,24 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   address: string; // sender address
-  validatorAddress: string; // validator address to whitelist
+  validator: string; // validator address to whitelist
 }
 
 /**
- * @param address Client’s Terra address.
+ * @param address Validator Terra address.
  */
-export const fabricateDeRegisterValidator = ({
+export const fabricatebAssetDeregisterValidator = ({
   address,
-  validatorAddress,
+  validator,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateValAddress(validatorAddress)]);
+  validateInput([validateValAddress(validator)]);
 
-  const bAssetHubAddress = addressProvider.blunaHub('bluna');
+  const bAssetHubAddress = addressProvider.bLunaHub();
 
   return [
     new MsgExecuteContract(address, bAssetHubAddress, {
       deregister_validator: {
-        validator: validatorAddress,
+        validator: validator,
       },
     }),
   ];

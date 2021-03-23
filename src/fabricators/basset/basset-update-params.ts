@@ -7,24 +7,18 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   address: string;
-  bAsset: string;
   epoch_period?: number;
-  underlying_coin_denom?: string;
   unbonding_period?: number;
-  peg_recovery_fee?: number;
-  er_threshold?: number;
-  reward_denom?: string;
+  peg_recovery_fee?: string;
+  er_threshold?: string;
 }
 
-export const fabricatebAssetParams = ({
+export const fabricatebAssetUpdateParams = ({
   address,
   epoch_period,
-  underlying_coin_denom,
   unbonding_period,
   peg_recovery_fee,
   er_threshold,
-  reward_denom,
-  bAsset,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),
@@ -33,18 +27,15 @@ export const fabricatebAssetParams = ({
     //TODO: validate decimal and denom
   ]);
 
-  // const nativeTokenDenom = bAssetToNative.bluna[bAsset.toLowerCase()]
-  const bAssetContractAddress = addressProvider.blunaHub(bAsset);
+  const bAssetContractAddress = addressProvider.bLunaHub();
 
   return [
     new MsgExecuteContract(address, bAssetContractAddress, {
       update_params: {
         epoch_period: epoch_period,
-        underlying_coin_denom: underlying_coin_denom,
         unbonding_period: unbonding_period,
         peg_recovery_fee: peg_recovery_fee,
         er_threshold: er_threshold,
-        reward_denom: reward_denom,
       },
     }),
   ];

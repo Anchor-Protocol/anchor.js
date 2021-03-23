@@ -5,20 +5,22 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   address: string;
-  bAsset: string;
+  airdrop_hooks?: string[];
 }
 
 export const fabricatebAssetUpdateGlobalIndex = ({
   address,
-  bAsset,
+  airdrop_hooks,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const bAssetHubAddress = addressProvider.blunaHub(bAsset);
+  const bAssetHubAddress = addressProvider.bLunaHub();
 
   return [
     new MsgExecuteContract(address, bAssetHubAddress, {
-      update_global_index: {},
+      update_global_index: {
+        airdrop_hooks,
+      },
     }),
   ];
 };

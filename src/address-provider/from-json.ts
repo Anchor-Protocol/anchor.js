@@ -1,10 +1,10 @@
-import { AddressProvider } from "./provider";
+import { AddressProvider } from './provider';
 
 export interface AddressMap {
   bLunaHub: string;
-  blunaToken: string;
-  blunaReward: string;
-  blunaAirdrop: string;
+  bLunaToken: string;
+  bLunaReward: string;
+  bLunaAirdrop: string;
   mmInterestModel: string;
   mmOracle: string;
   mmMarket: string;
@@ -25,25 +25,25 @@ export interface AddressMap {
   staking: string;
   ANC: string;
   airdrop: string;
-  vesting: string;
-  team: string;
+  investor_vesting: string;
+  team_vesting: string;
 }
 
-export type AllowedAddressKeys = keyof AddressMap
+export type AllowedAddressKeys = keyof AddressMap;
 
 export class AddressProviderFromJson implements AddressProvider {
   constructor(private data: AddressMap) {}
 
-  blunaReward(): string {
-    return this.data.blunaReward;
+  bLunaReward(): string {
+    return this.data.bLunaReward;
   }
 
-  blunaHub(): string {
+  bLunaHub(): string {
     return this.data.bLunaHub;
   }
 
-  blunaToken(): string {
-    return this.data.blunaToken;
+  bLunaToken(): string {
+    return this.data.bLunaToken;
   }
 
   market(): string {
@@ -123,10 +123,10 @@ export class AddressProviderFromJson implements AddressProvider {
   }
 
   investorLock(): string {
-    return this.data.vesting;
+    return this.data.investor_vesting;
   }
 
   teamLock(): string {
-    return this.data.team;
+    return this.data.team_vesting;
   }
 }

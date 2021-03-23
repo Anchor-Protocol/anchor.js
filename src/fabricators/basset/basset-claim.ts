@@ -5,18 +5,15 @@ import { validateAddress } from '../../utils/validation/address';
 
 interface Option {
   address: string;
-  bAsset: string;
   recipient?: string;
 }
 
-export const fabricatebAssetClaim = ({
-  address,
-  bAsset,
-  recipient,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
+export const fabricatebAssetClaimRewards = ({ address, recipient }: Option) => (
+  addressProvider: AddressProvider,
+): MsgExecuteContract[] => {
   validateInput([validateAddress(address)]);
 
-  const bAssetRewardAddress = addressProvider.blunaReward(bAsset);
+  const bAssetRewardAddress = addressProvider.bLunaReward();
 
   return [
     new MsgExecuteContract(address, bAssetRewardAddress, {

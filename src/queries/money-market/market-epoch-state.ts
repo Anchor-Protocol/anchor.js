@@ -4,26 +4,26 @@ import { AddressProvider } from '../../address-provider/provider';
 interface Option {
   lcd: LCDClient;
   market: string;
-  blockHeight?: number;
+  block_height?: number;
 }
 interface EpochStateResponse {
-  exchangeRate: string;
-  aTokenSupply: string;
+  exchange_rate: string;
+  aterra_supply: string;
 }
 
 export const queryMarketEpochState = ({
   lcd,
   market,
-  blockHeight,
+  block_height,
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<EpochStateResponse> => {
   const marketContractAddress = addressProvider.market(market);
-  let response: EpochStateResponse = await lcd.wasm.contractQuery(
+  const response: EpochStateResponse = await lcd.wasm.contractQuery(
     marketContractAddress,
     {
       epoch_state: {
-        block_height: blockHeight,
+        block_height: block_height,
       },
     },
   );
