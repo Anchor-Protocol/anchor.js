@@ -21,7 +21,7 @@ export const fabricateTerraswapCreatePair = ({
       create_pair: {
         asset_infos: [
           {
-            ANC: {
+            token: {
               contract_addr: bAssetTokenAddress,
             },
           },
