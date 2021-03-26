@@ -4,11 +4,14 @@ import { validateInput } from '../../utils/validate-input';
 
 import { validateTrue } from '../../utils/validation/true';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  MARKET_DENOMS,
+} from '../../address-provider/provider';
 
 interface Option {
   address: string;
-  market: string;
+  market: MARKET_DENOMS;
   amount: string;
 }
 
@@ -29,7 +32,7 @@ export const fabricateOverseerUnlockCollateral = ({
     amount ? validateIsGreaterThanZero(amount) : validateTrue,
   ]);
 
-  const mmOverseerContract = addressProvider.overseer(market.toLowerCase());
+  const mmOverseerContract = addressProvider.overseer(market);
   const bAssetTokenContract = addressProvider.bLunaToken();
 
   return [

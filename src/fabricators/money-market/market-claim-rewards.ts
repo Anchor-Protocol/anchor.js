@@ -3,7 +3,7 @@ import { validateAddress } from '../../utils/validation/address';
 import { validateInput } from '../../utils/validate-input';
 import { AddressProvider } from '../../address-provider/provider';
 import { validateTrue } from '../../utils/validation/true';
-import { MARKET_DENOMS } from 'address-provider';
+import { MARKET_DENOMS } from '../../address-provider';
 
 interface Option {
   address: string;

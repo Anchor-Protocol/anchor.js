@@ -1,16 +1,16 @@
 {
   "include": [
-    "src"
+    "src/**/*",
   ],
   "exclude": [
     "/node_modules/",
-    "./src/**/*.spec.ts"
+    "./src/**/*.spec.ts",
+    "src/**/*.no-commit.*"
   ],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "alwaysStrict": true,
-    "baseUrl": "./",
     "declaration": true,
     "esModuleInterop": true,
     "lib": [
@@ -35,10 +35,5 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "target": "es2015",
-    "paths": {
-      "*": [
-        "src/*"
-      ]
-    }
   }
 }

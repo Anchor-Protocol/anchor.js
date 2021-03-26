@@ -1,7 +1,5 @@
 # Anchor.js
 
-> 🚧 Please be noted that we are undergoing a major refactoring of the API. Changes will be reflected back when we reach v1.x.
-
 Anchor.js is a client SDK for building applications that can interact with Anchor Protocol from within JavaScript runtimes, such as web browsers, server backends, and on mobile through React Native.
 
 You can find a reference of the Anchor.js API [here](https://github.com/Anchor-Protocol/anchor.js).
@@ -23,7 +21,44 @@ $ npm install -S @terra-money/terra.js @anchor-protocol/anchor.js
 
 ## Usage
 
-### Message Fabricators
+
+### Using Facades
+
+Anchor.js provides class wrapper facade for the usual operations available on [webapp](https://app.anchorprotocol.com).
+
+```ts
+import { LCDClient, MnemonicKey, StdFee, Wallet } from '@terra-money/terra.js'
+import { columbus4, AddressProviderFromJson, MARKET_DENOMS } from '@anchor-protocol/anchor.js'
+import Anchor from './facade/anchor'
+import { OperationGasParameters } from './facade/operation'
+
+const addressProvider = new AddressProviderFromJson(columbus4)
+const lcd = new LCDClient({ URL: 'https://lcd.terra.dev', chainID: 'columbus-4' })
+const key = new MnemonicKey({ mnemonic: 'your key' })
+const wallet = new Wallet(lcd, key)
+const anchor = new Anchor(lcd, addressProvider)
+
+// you can generate message only, using your wallet
+const msgs = anchor.earn.depositStable(MARKET_DENOMS.UUSD, "100.5000").generateWithWallet(wallet)
+
+// you can ALSO generate message only, using your address in string
+const msgs = anchor.earn.depositStable(MARKET_DENOMS.UUSD, "100.5000").generateWithAddress("terra1...")
+
+// or, you can broadcast the tx using your wallet
+// below is the recommended default setting for gas parameters.
+// of course you can tailor it to your needs
+const gasParameters: OperationGasParameters = {
+  gasAdjustment: 1.4,
+  gasPrices: "0.15uusd",
+
+  // or if you want to fixate gas, you can use `fee`
+  fee: new StdFee(gasToSpend, "100000uusd")
+}
+const txResult = await anchor.earn.depositStable(MARKET_DENOMS.UUSD, "100.5000").execute(wallet, gasParameters)
+```
+
+
+### Using Message Fabricators
 
 Anchor.js provides facilities for 2 main use cases:
 
@@ -37,7 +72,7 @@ To Use the message fabricators:
 **Note**: Please note that `market` is a different variable from the coin denom. The denomination for the coins in the example is set to be `uusd`.
 ```ts
 import {fabricateRedeemStable, fabricateDepositStableCoin} from '@anchor-protocol/anchor.js';
-import {AddressProviderFromJson} from ".@anchor-protocol/anchor.js"; 
+import {AddressProviderFromJson} from "@anchor-protocol/anchor.js"; 
 
 // default -- uses tequila core contract addresses
 const addressMap = somehowGetAddresses();
@@ -93,7 +128,7 @@ main();
     bLunaHub: 'terra1mtwph2juhj0rvjz7dy92gvl6xvukaxu8rfv8ts',
     bLunaToken: 'terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp',
     bLunaReward: 'terra17yap3mhph35pcwvhza38c2lkj7gzywzy05h7l0',
-    blunaAirdrop: 'terra199t7hg7w5vymehhg834r6799pju2q3a0ya7ae9',
+    bLunaAirdrop: 'terra199t7hg7w5vymehhg834r6799pju2q3a0ya7ae9',
     mmInterestModel: 'terra1kq8zzq5hufas9t0kjsjc62t2kucfnx8txf547n',
     mmOracle: 'terra1cgg6yef7qcdm070qftghfulaxmllgmvk77nc7t',
     mmMarket: 'terra1sepfj7s0aeg5967uxnfk4thzlerrsktkpelm5s',
@@ -120,31 +155,33 @@ main();
 
 - `tequila-0004`:
    ```js
-    {
-      bLunaHub: 'terra1fflas6wv4snv8lsda9knvq2w0cyt493r8puh2e',
-      bLunaToken: 'terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x',
-      bLunaReward: 'terra1ac24j6pdxh53czqyrkr6ygphdeftg7u3958tl2',
-      blunaAirdrop: 'terra1334h20c9ewxguw9p9vdxzmr8994qj4qu77ux6q',
-      mmInterestModel: 'terra1m25aqupscdw2kw4tnq5ql6hexgr34mr76azh5x',
-      mmOracle: 'terra1p4gg3p2ue6qy2qfuxtrmgv2ec3f4jmgqtazum8',
-      mmMarket: 'terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal',
-      mmOverseer: 'terra1qljxd0y3j3gk97025qvl3lgq8ygup4gsksvaxv',
-      mmCustody: 'terra1ltnkx0mv7lf2rca9f8w740ashu93ujughy4s7p',
-      mmLiquidation: 'terra16vc4v9hhntswzkuunqhncs9yy30mqql3gxlqfe',
-      mmDistributionModel: 'terra1u64cezah94sq3ye8y0ung28x3pxc37tv8fth7h',
-      aTerra: 'terra1ajt556dpzvjwl0kl5tzku3fc3p3knkg9mkv8jl',
-      terraswapblunaLunaPair: 'terra13e4jmcjnwrauvl2fnjdwex0exuzd8zrh5xk29v',
-      terraswapblunaLunaLPToken: 'terra1tj4pavqjqjfm0wh73sh7yy9m4uq3m2cpmgva6n',
-      terraswapAncUstPair: 'terra1wfvczps2865j0awnurk9m04u7wdmd6qv3fdnvz',
-      terraswapAncUstLPToken: 'terra1vg0qyq92ky9z9dp0j9fv5rmr2s80sg605dah6f',
-      gov: 'terra16ckeuu7c6ggu52a8se005mg5c0kd2kmuun63cu',
-      distributor: 'terra1z7nxemcnm8kp7fs33cs7ge4wfuld307v80gypj',
-      collector: 'terra1hlctcrrhcl2azxzcsns467le876cfuzam6jty4',
-      community: 'terra17g577z0pqt6tejhceh06y3lyeudfs3v90mzduy',
-      staking: 'terra19nxz35c8f7t3ghdxrxherym20tux8eccar0c3k',
-      ANC: 'terra1747mad58h0w4y589y3sk84r5efqdev9q4r02pc',
-      airdrop: 'terra1u5ywhlve3wugzqslqvm8ks2j0nsvrqjx0mgxpk'
-    }
+  {
+    bLunaHub: 'terra1fflas6wv4snv8lsda9knvq2w0cyt493r8puh2e',
+    bLunaToken: 'terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x',
+    bLunaReward: 'terra1ac24j6pdxh53czqyrkr6ygphdeftg7u3958tl2',
+    bLunaAirdrop: 'terra1334h20c9ewxguw9p9vdxzmr8994qj4qu77ux6q',
+    mmInterestModel: 'terra1m25aqupscdw2kw4tnq5ql6hexgr34mr76azh5x',
+    mmOracle: 'terra1p4gg3p2ue6qy2qfuxtrmgv2ec3f4jmgqtazum8',
+    mmMarket: 'terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal',
+    mmOverseer: 'terra1qljxd0y3j3gk97025qvl3lgq8ygup4gsksvaxv',
+    mmCustody: 'terra1ltnkx0mv7lf2rca9f8w740ashu93ujughy4s7p',
+    mmLiquidation: 'terra16vc4v9hhntswzkuunqhncs9yy30mqql3gxlqfe',
+    mmDistributionModel: 'terra1u64cezah94sq3ye8y0ung28x3pxc37tv8fth7h',
+    aTerra: 'terra1ajt556dpzvjwl0kl5tzku3fc3p3knkg9mkv8jl',
+    terraswapblunaLunaPair: 'terra13e4jmcjnwrauvl2fnjdwex0exuzd8zrh5xk29v',
+    terraswapblunaLunaLPToken: 'terra1tj4pavqjqjfm0wh73sh7yy9m4uq3m2cpmgva6n',
+    terraswapAncUstPair: 'terra1wfvczps2865j0awnurk9m04u7wdmd6qv3fdnvz',
+    terraswapAncUstLPToken: 'terra1vg0qyq92ky9z9dp0j9fv5rmr2s80sg605dah6f',
+    gov: 'terra16ckeuu7c6ggu52a8se005mg5c0kd2kmuun63cu',
+    distributor: 'terra1z7nxemcnm8kp7fs33cs7ge4wfuld307v80gypj',
+    collector: 'terra1hlctcrrhcl2azxzcsns467le876cfuzam6jty4',
+    community: 'terra17g577z0pqt6tejhceh06y3lyeudfs3v90mzduy',
+    staking: 'terra19nxz35c8f7t3ghdxrxherym20tux8eccar0c3k',
+    ANC: 'terra1747mad58h0w4y589y3sk84r5efqdev9q4r02pc',
+    airdrop: 'terra1u5ywhlve3wugzqslqvm8ks2j0nsvrqjx0mgxpk',
+    investor_vesting: 'not available in testnet',
+    team_vesting: 'not available in testnet',
+  }
     ```
 
 ## License

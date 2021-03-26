@@ -1,10 +1,13 @@
 import { LCDClient } from '@terra-money/terra.js';
-import { AddressProvider } from '../../address-provider/provider';
-import { BorrowInfoResponse } from 'queries';
+import {
+  AddressProvider,
+  MARKET_DENOMS,
+} from '../../address-provider/provider';
+import { BorrowInfoResponse } from '../../queries';
 
 interface Option {
   lcd: LCDClient;
-  market: string;
+  market: MARKET_DENOMS;
   start_after?: string;
   limit?: number;
 }

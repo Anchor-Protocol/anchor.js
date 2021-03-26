@@ -1,9 +1,12 @@
 import { LCDClient } from '@terra-money/terra.js';
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  MARKET_DENOMS,
+} from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  overseer: string;
+  market: MARKET_DENOMS;
 }
 interface EpochStateResponse {
   deposit_rate: string;
@@ -12,10 +15,10 @@ interface EpochStateResponse {
   last_executed_height: number;
 }
 
-export const queryOverseerEpochState = ({ lcd, overseer }: Option) => async (
+export const queryOverseerEpochState = ({ lcd, market }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<EpochStateResponse> => {
-  const overseerContractAddress = addressProvider.overseer(overseer);
+  const overseerContractAddress = addressProvider.overseer(market);
   const response: EpochStateResponse = await lcd.wasm.contractQuery(
     overseerContractAddress,
     {

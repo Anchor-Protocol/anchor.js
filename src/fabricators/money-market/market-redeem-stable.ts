@@ -4,7 +4,7 @@ import { validateInput } from '../../utils/validate-input';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import { createHookMsg } from '../../utils/cw20/create-hook-msg';
 import { AddressProvider } from '../../address-provider/provider';
-import { MARKET_DENOMS } from 'address-provider';
+import { MARKET_DENOMS } from '../../address-provider';
 
 interface Option {
   address: string;

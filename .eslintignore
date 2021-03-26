@@ -4,3 +4,4 @@ out
 public
 coverage
 storybook-static
+**/*.no-commit.*

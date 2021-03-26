@@ -1,9 +1,12 @@
 import { LCDClient } from '@terra-money/terra.js';
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  MARKET_DENOMS,
+} from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  overseer: string;
+  market: MARKET_DENOMS;
   collateral_token?: string;
   start_after?: string;
   limit?: number;
@@ -22,14 +25,14 @@ interface WhitelistResponseElem {
 
 export const queryOverseerWhitelist = ({
   lcd,
-  overseer,
+  market,
   collateral_token,
   start_after,
   limit,
 }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<WhitelistResponse> => {
-  const overseerContractAddress = addressProvider.overseer(overseer);
+  const overseerContractAddress = addressProvider.overseer(market);
   const response: WhitelistResponse = await lcd.wasm.contractQuery(
     overseerContractAddress,
     {

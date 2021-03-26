@@ -1,9 +1,12 @@
 import { LCDClient } from '@terra-money/terra.js';
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  MARKET_DENOMS,
+} from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  overseer: string;
+  overseer: MARKET_DENOMS;
   borrower: string;
 }
 interface CollateralResponse {

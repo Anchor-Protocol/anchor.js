@@ -6,6 +6,7 @@ import { validateTrue } from '../../utils/validation/true';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
+  COLLATERAL_DENOMS,
   MARKET_DENOMS,
 } from '../../address-provider/provider';
 import { isAmountSet } from '../../utils/validation/amount';
@@ -13,12 +14,14 @@ import { isAmountSet } from '../../utils/validation/amount';
 interface Option {
   address: string;
   market: MARKET_DENOMS;
+  collateral: COLLATERAL_DENOMS;
   amount?: string;
 }
 
 export const fabricateRedeemCollateral = ({
   address,
   market,
+  collateral,
   amount,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
@@ -28,7 +31,7 @@ export const fabricateRedeemCollateral = ({
 
   const mmOverseerContract = addressProvider.overseer(market);
   const bAssetTokenContract = addressProvider.bLunaToken(); // fixed to ubluna for now
-  const custodyContract = addressProvider.custody(market);
+  const custodyContract = addressProvider.custody(market, collateral);
 
   return [
     // unlock collateral

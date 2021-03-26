@@ -6,12 +6,7 @@ import {
   validateIsNumber,
 } from '../../utils/validation/number';
 import { AddressProvider } from '../../address-provider/provider';
-
-/* eslint-disable */
-export type Expire =
-  | { at_height: number }
-  | { at_time: number }
-  | { never: {} };
+import { Expire } from '../types';
 
 interface Option {
   address: string;

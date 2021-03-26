@@ -6,24 +6,27 @@ import { validateAddress } from '../../utils/validation/address';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
-  CUSTODY_DENOMS,
+  COLLATERAL_DENOMS,
+  MARKET_DENOMS,
 } from '../../address-provider/provider';
 
 interface Option {
   address: string;
-  custody: CUSTODY_DENOMS;
+  market: MARKET_DENOMS;
+  collateral: COLLATERAL_DENOMS;
   amount: string;
 }
 
 export const fabricateCustodyDepositCollateral = ({
   address,
-  custody,
+  market,
+  collateral,
   amount,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([validateAddress(address), validateIsGreaterThanZero(amount)]);
 
   const bAssetTokenContract = addressProvider.bLunaToken();
-  const custodyContract = addressProvider.custody(custody);
+  const custodyContract = addressProvider.custody(market, collateral);
 
   // cw20 send + provide_collateral hook
   return [

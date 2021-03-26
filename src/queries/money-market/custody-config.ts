@@ -1,9 +1,14 @@
 import { LCDClient } from '@terra-money/terra.js';
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  COLLATERAL_DENOMS,
+  MARKET_DENOMS,
+} from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  custody: string;
+  market: MARKET_DENOMS;
+  collateral: COLLATERAL_DENOMS;
 }
 interface ConfigResponse {
   owner: string;
@@ -22,10 +27,14 @@ interface BAssetInfo {
   decimals: string;
 }
 
-export const queryCustodyConfig = ({ lcd, custody }: Option) => async (
+export const queryCustodyConfig = ({
+  lcd,
+  market,
+  collateral,
+}: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ConfigResponse> => {
-  const custodyContractAddress = addressProvider.custody(custody);
+  const custodyContractAddress = addressProvider.custody(market, collateral);
   const response: ConfigResponse = await lcd.wasm.contractQuery(
     custodyContractAddress,
     {

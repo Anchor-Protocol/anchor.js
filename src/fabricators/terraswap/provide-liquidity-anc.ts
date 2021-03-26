@@ -9,9 +9,7 @@ import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
 import { AddressProvider } from '../../address-provider/provider';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
-
-/* eslint-disable */
-type Expire = { at_height: number } | { at_time: number } | { never: {} };
+import { Expire } from '../types';
 
 interface Option {
   address: string;

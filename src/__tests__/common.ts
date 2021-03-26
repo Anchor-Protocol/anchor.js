@@ -1,6 +1,6 @@
 import { AddressMap, AddressProviderFromJson } from '../address-provider';
 
-const contracts = {
+const contracts: AddressMap = {
   bLunaHub: 'terra1fflas6wv4snv8lsda9knvq2w0cyt493r8puh2e',
   bLunaToken: 'terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x',
   bLunaReward: 'terra1ac24j6pdxh53czqyrkr6ygphdeftg7u3958tl2',
@@ -29,5 +29,5 @@ const contracts = {
 };
 
 export const addressProvider = new AddressProviderFromJson(
-  <AddressMap>contracts,
+  contracts,
 );
