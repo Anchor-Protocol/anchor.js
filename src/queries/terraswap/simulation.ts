@@ -1,4 +1,5 @@
 import { Dec, Int, LCDClient } from '@terra-money/terra.js';
+import { AddressProvider } from '../..';
 
 interface Option {
   lcd: LCDClient;
@@ -12,12 +13,12 @@ interface SimulationResponse {
   commission_amount: string;
 }
 
-export const queryTerraswapSimulation = async ({
+export const queryTerraswapSimulation = ({
   lcd,
   contractAddr,
   amount,
   pair_contract_address,
-}: Option): Promise<SimulationResponse> => {
+}: Option) => async(_: AddressProvider): Promise<SimulationResponse> => {
   const response: SimulationResponse = await lcd.wasm.contractQuery(
     pair_contract_address,
     {

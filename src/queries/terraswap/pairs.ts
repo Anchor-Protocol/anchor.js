@@ -1,4 +1,5 @@
 import { LCDClient } from '@terra-money/terra.js';
+import { AddressProvider } from '../..';
 
 type AssetInfo =
   | { token: { contract_addr: string } }
@@ -15,10 +16,10 @@ interface PairInfo {
   liquidityToken: string;
 }
 
-export const queryTerrasawpPair = async ({
+export const queryTerrasawpPair = ({
   lcd,
   pair_contract_address,
-}: Option): Promise<PairInfo> => {
+}: Option) => async(_: AddressProvider): Promise<PairInfo> => {
   const response: PairInfo = await lcd.wasm.contractQuery(
     pair_contract_address,
     {
