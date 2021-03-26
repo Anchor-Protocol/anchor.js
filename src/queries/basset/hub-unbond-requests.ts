@@ -1,12 +1,12 @@
 import { LCDClient } from '@terra-money/terra.js';
-import { AddressProvider } from 'address-provider/provider';
+import { AddressProvider } from '../../address-provider';
 
 interface Option {
   lcd: LCDClient;
-  bAsset: string;
   address: string;
 }
-interface UnbondResponse {
+
+export interface UnbondResponse {
   address: string;
   requests: Array<[number, string]>;
 }

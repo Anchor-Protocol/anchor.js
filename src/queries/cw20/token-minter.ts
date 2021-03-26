@@ -3,6 +3,7 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
+  token_address: string,
 }
 
 interface MinterResponse {
@@ -10,12 +11,11 @@ interface MinterResponse {
   cap?: string;
 }
 
-export const queryTokenMinter = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
+export const queryTokenMinter = ({ lcd, token_address }: Option) => async (
+  _: AddressProvider,
 ): Promise<MinterResponse> => {
-  const bAssetContractAddress = addressProvider.bLunaToken();
   const response: MinterResponse = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
+    token_address,
     {
       minter: {},
     },

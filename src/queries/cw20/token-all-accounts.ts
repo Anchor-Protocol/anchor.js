@@ -3,6 +3,7 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
+  token_address: string,
   start_after?: string;
   limit?: number;
 }
@@ -13,14 +14,14 @@ interface AllAccounts {
 
 export const queryTokenAllAccounts = ({
   lcd,
+  token_address,
   start_after,
   limit,
 }: Option) => async (
-  addressProvider: AddressProvider,
+  _: AddressProvider,
 ): Promise<AllAccounts> => {
-  const bAssetContractAddress = addressProvider.bLunaToken();
   const response: AllAccounts = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
+    token_address,
     {
       all_accounts: {
         start_after: start_after || undefined,

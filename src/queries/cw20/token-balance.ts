@@ -4,17 +4,18 @@ import { AddressProvider } from '../../address-provider/provider';
 interface Option {
   lcd: LCDClient;
   address: string;
-}
-interface Balance {
-  rewards: string;
+  token_address: string,
 }
 
-export const queryTokenBalance = ({ lcd, address }: Option) => async (
-  addressProvider: AddressProvider,
+interface Balance {
+  balance: string;
+}
+
+export const queryTokenBalance = ({ lcd, address, token_address }: Option) => async (
+  _: AddressProvider,
 ): Promise<Balance> => {
-  const bAssetContractAddress = addressProvider.bLunaToken();
   const response: Balance = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
+    token_address,
     {
       balance: {
         address: address,
