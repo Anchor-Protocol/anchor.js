@@ -77,9 +77,7 @@ export class BLuna {
   }
 
   async getUnbondRequests(address: string): Promise<UnbondResponse> {
-    return queryHubUnbond({ lcd: this._lcd, address })(
-      this._addressProvider,
-    );
+    return queryHubUnbond({ lcd: this._lcd, address })(this._addressProvider);
   }
 
   async getClaimableRewards(address: string): Promise<string> {

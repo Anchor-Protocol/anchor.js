@@ -52,13 +52,16 @@ export class Earn {
 
     return new Int(
       new Dec(epochState.exchange_rate).mul(userATerraBalance.balance),
-    ).div(1000000).toString();
+    )
+      .div(1000000)
+      .toString();
   }
 
   async getAPY(market: MARKET_DENOMS): Promise<number> {
-    const epochState = await queryOverseerEpochState({ lcd: this._lcd, market })(
-      this._addressProvider,
-    );
+    const epochState = await queryOverseerEpochState({
+      lcd: this._lcd,
+      market,
+    })(this._addressProvider);
     return new Dec(epochState.deposit_rate).mul(BLOCKS_PER_YEAR).toNumber();
   }
 }
