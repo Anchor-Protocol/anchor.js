@@ -28,7 +28,7 @@ Anchor.js provides class wrapper facade for the usual operations available on [w
 
 ```ts
 import { LCDClient, MnemonicKey, StdFee, Wallet } from '@terra-money/terra.js'
-import { columbus4, AddressProviderFromJson, MARKET_DENOMS } from './address-provider'
+import { columbus4, AddressProviderFromJson, MARKET_DENOMS } from '@anchor-protocol/anchor.js'
 import Anchor from './facade/anchor'
 import { OperationGasParameters } from './facade/operation'
 
@@ -74,7 +74,7 @@ To Use the message fabricators:
 **Note**: Please note that `market` is a different variable from the coin denom. The denomination for the coins in the example is set to be `uusd`.
 ```ts
 import {fabricateRedeemStable, fabricateDepositStableCoin} from '@anchor-protocol/anchor.js';
-import {AddressProviderFromJson} from ".@anchor-protocol/anchor.js"; 
+import {AddressProviderFromJson} from "@anchor-protocol/anchor.js"; 
 
 // default -- uses tequila core contract addresses
 const addressMap = somehowGetAddresses();
