@@ -13,7 +13,7 @@ import { isAmountSet } from '../../utils/validation/amount';
 
 interface Option {
   address: string;
-  market: MARKET_DENOMS,
+  market: MARKET_DENOMS;
   collateral: COLLATERAL_DENOMS;
   amount?: string;
 }

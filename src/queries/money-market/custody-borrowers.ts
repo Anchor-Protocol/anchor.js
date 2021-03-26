@@ -1,5 +1,9 @@
 import { LCDClient } from '@terra-money/terra.js';
-import { AddressProvider, COLLATERAL_DENOMS, MARKET_DENOMS } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  COLLATERAL_DENOMS,
+  MARKET_DENOMS,
+} from '../../address-provider/provider';
 import { BorrowerResponse } from '../../queries';
 
 interface Option {

@@ -12,8 +12,8 @@ import {
 
 interface Option {
   address: string;
-  market: MARKET_DENOMS,
-  collateral: COLLATERAL_DENOMS,
+  market: MARKET_DENOMS;
+  collateral: COLLATERAL_DENOMS;
   amount: string;
 }
 

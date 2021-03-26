@@ -4,7 +4,10 @@ import { validateInput } from '../../utils/validate-input';
 
 import { validateTrue } from '../../utils/validation/true';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
-import { AddressProvider, MARKET_DENOMS } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  MARKET_DENOMS,
+} from '../../address-provider/provider';
 
 interface Option {
   address: string;

@@ -1,5 +1,9 @@
 import { Dec, LCDClient } from '@terra-money/terra.js';
-import { AddressProvider, MARKET_DENOMS, COLLATERAL_DENOMS } from '../../address-provider';
+import {
+  AddressProvider,
+  MARKET_DENOMS,
+  COLLATERAL_DENOMS,
+} from '../../address-provider';
 import {
   fabricateMarketBorrow,
   fabricateMarketRepay,

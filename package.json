@@ -17,7 +17,6 @@
     "test": "jest",
     "format": "prettier --write ./src/**/**/*.ts",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
-    "doc": "typedoc",
     "prepublishOnly": "npm run build",
     "integration-test": "ts-node ./integration-test/index.ts",
     "prepublish": "npm run build"
@@ -38,8 +37,8 @@
     "@types/jest": "^26.0.21",
     "@types/node": "^14.14.22",
     "@types/yaml": "^1.9.7",
-    "@typescript-eslint/eslint-plugin": "^4.14.1",
-    "@typescript-eslint/parser": "^4.14.1",
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^8.1.0",
     "jest": "^26.6.3",
