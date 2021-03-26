@@ -1,9 +1,10 @@
-import { BlockTxBroadcastResult, Msg, StdFee, Wallet } from "@terra-money/terra.js"
+import { BlockTxBroadcastResult, Coins, Msg, Numeric, StdFee, Wallet } from "@terra-money/terra.js"
 import { AddressProvider } from "../address-provider"
 
 export interface OperationGasParameters {
   fee?: StdFee
-  gasAdjustment?: number
+  gasPrices?: Coins.Input;
+  gasAdjustment?: Numeric.Input;
 }
 
 type Fabricator<T> = (option: T) => (addressProvider: AddressProvider) => Msg[]
@@ -34,10 +35,11 @@ export class OperationImpl<FabricatorInputType> implements Operation {
     return this.generateWithAddress(wallet.key.accAddress)
   }
 
-  async execute(wallet: Wallet, { fee, gasAdjustment }: OperationGasParameters): Promise<BlockTxBroadcastResult> {
+  async execute(wallet: Wallet, { fee, gasPrices, gasAdjustment }: OperationGasParameters = {}): Promise<BlockTxBroadcastResult> {
     const tx = await wallet.createAndSignTx({
       fee,
       gasAdjustment,
+      gasPrices,
       msgs: this.fabricator({
         address: wallet.key.accAddress,
         ...this.option

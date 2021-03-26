@@ -1,11 +1,9 @@
-import { AddressProvider } from "src/address-provider";
+import { AddressProvider } from '../../address-provider';
 
 export class Liquidation {
-  addressProvider!: AddressProvider
+  addressProvider!: AddressProvider;
 
   constructor(addressProvider: AddressProvider) {
-    this.addressProvider = addressProvider
+    this.addressProvider = addressProvider;
   }
-
-
 }

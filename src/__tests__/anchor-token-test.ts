@@ -34,6 +34,7 @@ import {
 } from '../fabricators';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
 import { addressProvider } from '../__tests__/common';
+import { MARKET_DENOMS } from '..';
 
 /* eslint-disable */
 describe('Anchor Token', () => {
@@ -99,12 +100,12 @@ describe('Anchor Token', () => {
         fabricateCollectorSweep,
         {
           address: 'address',
-          denom: 'uusd',
+          denom: MARKET_DENOMS.UUSD,
         },
         addressProvider,
         [
           new MsgExecuteContract('address', addressProvider.collector(), {
-            sweep: { denom: 'uusd' },
+            sweep: { denom: MARKET_DENOMS.UUSD },
           }),
         ],
       );

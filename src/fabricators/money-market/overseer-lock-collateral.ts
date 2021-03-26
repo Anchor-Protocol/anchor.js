@@ -28,7 +28,7 @@ export const fabricateOverseerLockCollateral = ({
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([validateAddress(address), validateIsGreaterThanZero(amount)]);
 
-  const mmOverseerContract = addressProvider.overseer(market.toLowerCase());
+  const mmOverseerContract = addressProvider.overseer(market);
   const bAssetTokenContract = addressProvider.bLunaToken();
 
   return [

@@ -19,7 +19,8 @@ interface PairInfo {
 export const queryTerrasawpPair = ({
   lcd,
   pair_contract_address,
-}: Option) => async(_: AddressProvider): Promise<PairInfo> => {
+}: // eslint-disable-next-line @typescript-eslint/no-unused-vars
+Option) => async (_: AddressProvider): Promise<PairInfo> => {
   const response: PairInfo = await lcd.wasm.contractQuery(
     pair_contract_address,
     {

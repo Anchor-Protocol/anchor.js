@@ -1,6 +1,6 @@
 import { LCDClient } from '@terra-money/terra.js';
 import { AddressProvider } from '../../address-provider/provider';
-import { BidResponse } from 'queries';
+import { BidResponse } from '../../queries';
 
 interface Option {
   lcd: LCDClient;

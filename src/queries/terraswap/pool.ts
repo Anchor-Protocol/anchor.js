@@ -18,7 +18,8 @@ interface Asset {
 export const queryTerraswapPool = ({
   lcd,
   pair_contract_address,
-}: Option) => async(_: AddressProvider): Promise<PoolResponse> => {
+}: // eslint-disable-next-line @typescript-eslint/no-unused-vars
+Option) => async (_: AddressProvider): Promise<PoolResponse> => {
   const response: PoolResponse = await lcd.wasm.contractQuery(
     pair_contract_address,
     {

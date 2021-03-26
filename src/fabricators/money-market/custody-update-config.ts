@@ -5,20 +5,23 @@ import { validateTrue } from '../../utils/validation/true';
 import {
   AddressProvider,
   COLLATERAL_DENOMS,
+  MARKET_DENOMS,
 } from '../../address-provider/provider';
 
 interface Option {
   address: string;
+  market: MARKET_DENOMS,
+  collateral: COLLATERAL_DENOMS,
   owner?: string;
   liquidation_contract?: string;
-  custody: COLLATERAL_DENOMS;
 }
 
 export const fabricateCustodyUpdateConfig = ({
   address,
+  market,
+  collateral,
   liquidation_contract,
   owner,
-  custody,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),
@@ -26,7 +29,7 @@ export const fabricateCustodyUpdateConfig = ({
     liquidation_contract ? validateAddress(liquidation_contract) : validateTrue,
   ]);
 
-  const mmCustody = addressProvider.custody(custody);
+  const mmCustody = addressProvider.custody(market, collateral);
 
   return [
     new MsgExecuteContract(address, mmCustody, {

@@ -29,6 +29,7 @@ interface Option {
 export const fabricateProvideCollateral = ({
   address,
   market,
+  collateral,
   amount,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
@@ -39,7 +40,7 @@ export const fabricateProvideCollateral = ({
 
   const bAssetTokenContract = addressProvider.bLunaToken();
   const mmOverseerContract = addressProvider.overseer(market);
-  const custodyContract = addressProvider.custody(market);
+  const custodyContract = addressProvider.custody(market, collateral);
 
   // cw20 send + provide_collateral hook
   /* eslint-disable */

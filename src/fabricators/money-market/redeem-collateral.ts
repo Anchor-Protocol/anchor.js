@@ -21,7 +21,7 @@ interface Option {
 export const fabricateRedeemCollateral = ({
   address,
   market,
-  // collateral, // TODO: use me
+  collateral,
   amount,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
@@ -31,7 +31,7 @@ export const fabricateRedeemCollateral = ({
 
   const mmOverseerContract = addressProvider.overseer(market);
   const bAssetTokenContract = addressProvider.bLunaToken(); // fixed to ubluna for now
-  const custodyContract = addressProvider.custody(market);
+  const custodyContract = addressProvider.custody(market, collateral);
 
   return [
     // unlock collateral

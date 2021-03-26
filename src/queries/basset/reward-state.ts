@@ -1,5 +1,5 @@
 import { LCDClient } from '@terra-money/terra.js';
-import { AddressProvider } from 'address-provider/provider';
+import { AddressProvider } from '../../address-provider';
 
 interface Option {
   lcd: LCDClient;

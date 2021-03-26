@@ -4,23 +4,25 @@ import { AddressProvider } from '../../address-provider/provider';
 interface Option {
   lcd: LCDClient;
   address: string;
-  token_address: string,
+  token_address: string;
 }
 
 interface Balance {
   balance: string;
 }
 
-export const queryTokenBalance = ({ lcd, address, token_address }: Option) => async (
+export const queryTokenBalance = ({
+  lcd,
+  address,
+  token_address,
+}: Option) => async (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _: AddressProvider,
 ): Promise<Balance> => {
-  const response: Balance = await lcd.wasm.contractQuery(
-    token_address,
-    {
-      balance: {
-        address: address,
-      },
+  const response: Balance = await lcd.wasm.contractQuery(token_address, {
+    balance: {
+      address: address,
     },
-  );
+  });
   return response;
 };

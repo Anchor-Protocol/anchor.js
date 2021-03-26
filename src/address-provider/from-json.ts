@@ -12,7 +12,6 @@ export interface AddressMap {
   mmCustody: string;
   mmLiquidation: string;
   mmDistributionModel: string;
-  terraswapFactory: string;
   aTerra: string;
   terraswapblunaLunaPair: string;
   terraswapblunaLunaLPToken: string;
@@ -72,10 +71,6 @@ export class AddressProviderFromJson implements AddressProvider {
 
   liquidation(): string {
     return this.data.mmLiquidation;
-  }
-
-  terraswapFactory(): string {
-    return this.data.terraswapFactory;
   }
 
   terraswapblunaLunaPair(): string {

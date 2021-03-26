@@ -42,7 +42,7 @@ describe('Money Market', () => {
         fabricateOverseerUpdateConfig,
         {
           address: 'address',
-          overseer: MARKET_DENOMS.uusd,
+          overseer: MARKET_DENOMS.UUSD,
           owner_addr: 'owner',
           oracle_contract: 'oracle',
           liquidation_contract: 'liquidation',
@@ -78,7 +78,7 @@ describe('Money Market', () => {
         fabricateOverseerEpochOperations,
         {
           address: 'address',
-          overseer: MARKET_DENOMS.uusd,
+          overseer: MARKET_DENOMS.UUSD,
         },
         addressProvider,
         [
@@ -95,7 +95,7 @@ describe('Money Market', () => {
         fabricateOverseerLiquidateCollateral,
         {
           address: 'address',
-          overseer: MARKET_DENOMS.uusd,
+          overseer: MARKET_DENOMS.UUSD,
           borrower: 'borrower',
         },
         addressProvider,
@@ -115,7 +115,7 @@ describe('Money Market', () => {
         fabricateOverseerLockCollateral,
         {
           address: 'address',
-          market: MARKET_DENOMS.uusd,
+          market: MARKET_DENOMS.UUSD,
           amount: '1000',
         },
         addressProvider,
@@ -140,7 +140,7 @@ describe('Money Market', () => {
         fabricateOverseerUnlockCollateral,
         {
           address: 'address',
-          market: MARKET_DENOMS.uusd,
+          market: MARKET_DENOMS.UUSD,
           amount: '1000',
         },
         addressProvider,
@@ -165,7 +165,7 @@ describe('Money Market', () => {
         fabricateOverseerWhitelist,
         {
           address: 'address',
-          overseer: MARKET_DENOMS.uusd,
+          overseer: MARKET_DENOMS.UUSD,
           name: 'bAsset',
           symbol: 'BASSET',
           collateral_token: 'collateral',
@@ -193,7 +193,7 @@ describe('Money Market', () => {
         fabricateOverseerUpdateWhitelist,
         {
           address: 'address',
-          overseer: MARKET_DENOMS.uusd,
+          overseer: MARKET_DENOMS.UUSD,
           collateral_token: 'collateral',
           custody_contract: 'custody',
           max_ltv: '0.1',
@@ -219,7 +219,7 @@ describe('Money Market', () => {
         fabricateMarketBorrow,
         {
           address: 'address',
-          market: MARKET_DENOMS.uusd,
+          market: MARKET_DENOMS.UUSD,
           amount: '1000',
           to: 'to',
         },
@@ -241,7 +241,7 @@ describe('Money Market', () => {
         fabricateMarketClaimRewards,
         {
           address: 'address',
-          market: MARKET_DENOMS.uusd,
+          market: MARKET_DENOMS.UUSD,
           to: undefined,
         },
         addressProvider,
@@ -261,7 +261,7 @@ describe('Money Market', () => {
         fabricateMarketDepositStableCoin,
         {
           address: 'address',
-          market: MARKET_DENOMS.uusd,
+          market: MARKET_DENOMS.UUSD,
           amount: '1000',
         },
         addressProvider,
@@ -284,7 +284,7 @@ describe('Money Market', () => {
         fabricateMarketRedeemStable,
         {
           address: 'address',
-          market: MARKET_DENOMS.uusd,
+          market: MARKET_DENOMS.UUSD,
           amount: '1000',
         },
         addressProvider,
@@ -308,7 +308,7 @@ describe('Money Market', () => {
         fabricateMarketRepay,
         {
           address: 'address',
-          market: MARKET_DENOMS.uusd,
+          market: MARKET_DENOMS.UUSD,
           amount: '1000',
         },
         addressProvider,
@@ -331,7 +331,7 @@ describe('Money Market', () => {
         fabricateMarketUpdateConfig,
         {
           address: 'address',
-          market: MARKET_DENOMS.uusd,
+          market: MARKET_DENOMS.UUSD,
           owner_addr: 'owner',
           interest_model: 'interest',
           distribution_model: 'distribution',
@@ -360,7 +360,8 @@ describe('Money Market', () => {
         fabricateCustodyDepositCollateral,
         {
           address: 'address',
-          custody: COLLATERAL_DENOMS.ubluna,
+          market: MARKET_DENOMS.UUSD,
+          collateral: COLLATERAL_DENOMS.UBLUNA,
           amount: '1000',
         },
         addressProvider,
@@ -384,7 +385,8 @@ describe('Money Market', () => {
         fabricateCustodyWithdrawCollateral,
         {
           address: 'address',
-          custody: COLLATERAL_DENOMS.ubluna,
+          market: MARKET_DENOMS.UUSD,
+          collateral: COLLATERAL_DENOMS.UBLUNA,
           amount: '1000',
         },
         addressProvider,
@@ -405,8 +407,9 @@ describe('Money Market', () => {
         {
           address: 'address',
           owner: 'new-owner',
+          market: MARKET_DENOMS.UUSD,
+          collateral: COLLATERAL_DENOMS.UBLUNA,
           liquidation_contract: 'liquidation',
-          custody: COLLATERAL_DENOMS.ubluna,
         },
         addressProvider,
         [
@@ -546,7 +549,7 @@ describe('Money Market', () => {
           address: 'address',
           collateral_token: addressProvider.bLunaToken(),
           premium_rate: '0.3',
-          denom: 'uusd',
+          denom: MARKET_DENOMS.UUSD,
           amount: '1000',
         },
         addressProvider,
@@ -627,7 +630,8 @@ describe('Money Market', () => {
       fabricateProvideCollateral,
       {
         address: 'address',
-        market: MARKET_DENOMS.uusd,
+        collateral: COLLATERAL_DENOMS.UBLUNA,
+        market: MARKET_DENOMS.UUSD,
         amount: '1000',
       },
       addressProvider,
@@ -661,7 +665,8 @@ describe('Money Market', () => {
       fabricateRedeemCollateral,
       {
         address: 'address',
-        market: MARKET_DENOMS.uusd,
+        collateral: COLLATERAL_DENOMS.UBLUNA,
+        market: MARKET_DENOMS.UUSD,
         amount: '1000',
       },
       addressProvider,

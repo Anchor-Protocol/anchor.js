@@ -1,14 +1,14 @@
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateAddress } from '../../utils/validation/address';
 import { validateInput } from '../../utils/validate-input';
-import { AddressProvider } from '../../address-provider/provider';
+import { AddressProvider, MARKET_DENOMS } from '../../address-provider/provider';
 
 interface Option {
   address: string;
   collateral_token: string;
   premium_rate: string;
   amount: string;
-  denom: string;
+  denom: MARKET_DENOMS;
 }
 
 export const fabricateLiquidationSubmitBid = ({

@@ -12,6 +12,7 @@ import {
 import { addressProvider } from '../__tests__/common';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
+import { MARKET_DENOMS } from '..';
 
 /* eslint-disable */
 describe('terraswap<>anchor', () => {
@@ -53,7 +54,7 @@ describe('terraswap<>anchor', () => {
                 {
                   info: {
                     native_token: {
-                      denom: 'uusd',
+                      denom: MARKET_DENOMS.UUSD,
                     },
                   },
                   amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -226,7 +227,7 @@ describe('terraswap<>anchor', () => {
       {
         address: 'address',
         amount: '1000',
-        denom: 'uusd',
+        denom: MARKET_DENOMS.UUSD,
         to: 'recipient',
         belief_price: '10',
         max_spread: '1000',
@@ -241,7 +242,7 @@ describe('terraswap<>anchor', () => {
               offer_asset: {
                 info: {
                   native_token: {
-                    denom: 'uusd',
+                    denom: MARKET_DENOMS.UUSD,
                   },
                 },
                 amount: new Int(new Dec('1000').mul(1000000)).toString(),

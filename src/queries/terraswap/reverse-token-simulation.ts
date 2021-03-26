@@ -18,7 +18,8 @@ export const queryTerraswapReverseTokenSimulation = ({
   contractAddr,
   amount,
   pair_contract_address,
-}: Option) => async(_: AddressProvider): Promise<SimulationResponse> => {
+}: // eslint-disable-next-line @typescript-eslint/no-unused-vars
+Option) => async (_: AddressProvider): Promise<SimulationResponse> => {
   const response: SimulationResponse = await lcd.wasm.contractQuery(
     pair_contract_address,
     {

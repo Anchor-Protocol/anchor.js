@@ -7,18 +7,21 @@ import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
   COLLATERAL_DENOMS,
+  MARKET_DENOMS,
 } from '../../address-provider/provider';
 import { isAmountSet } from '../../utils/validation/amount';
 
 interface Option {
   address: string;
-  custody: COLLATERAL_DENOMS;
+  market: MARKET_DENOMS,
+  collateral: COLLATERAL_DENOMS;
   amount?: string;
 }
 
 export const fabricateCustodyWithdrawCollateral = ({
   address,
-  custody,
+  market,
+  collateral,
   amount = undefined,
 }: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
   validateInput([
@@ -26,7 +29,7 @@ export const fabricateCustodyWithdrawCollateral = ({
     amount ? validateIsGreaterThanZero(amount) : validateTrue,
   ]);
 
-  const custodyContract = addressProvider.custody(custody.toLocaleLowerCase());
+  const custodyContract = addressProvider.custody(market, collateral);
 
   return [
     new MsgExecuteContract(address, custodyContract, {

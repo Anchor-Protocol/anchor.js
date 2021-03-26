@@ -3,7 +3,7 @@ import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
-  token_address: string,
+  token_address: string;
 }
 
 interface MinterResponse {
@@ -12,13 +12,11 @@ interface MinterResponse {
 }
 
 export const queryTokenMinter = ({ lcd, token_address }: Option) => async (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _: AddressProvider,
 ): Promise<MinterResponse> => {
-  const response: MinterResponse = await lcd.wasm.contractQuery(
-    token_address,
-    {
-      minter: {},
-    },
-  );
+  const response: MinterResponse = await lcd.wasm.contractQuery(token_address, {
+    minter: {},
+  });
   return response;
 };

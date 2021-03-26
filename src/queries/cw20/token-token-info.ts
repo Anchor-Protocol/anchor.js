@@ -1,9 +1,9 @@
 import { LCDClient } from '@terra-money/terra.js';
-import { AddressProvider } from 'src/address-provider';
+import { AddressProvider } from '../../address-provider';
 
 interface Option {
   lcd: LCDClient;
-  token_address: string,
+  token_address: string;
 }
 
 interface TokenInfoResponse {
@@ -14,6 +14,7 @@ interface TokenInfoResponse {
 }
 
 export const queryTokenInfo = ({ lcd, token_address }: Option) => async (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _: AddressProvider,
 ): Promise<TokenInfoResponse> => {
   const response: TokenInfoResponse = await lcd.wasm.contractQuery(
