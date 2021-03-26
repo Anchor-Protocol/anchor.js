@@ -7,13 +7,13 @@ export interface AddressProvider {
 
   // https://github.com/Anchor-Protocol/money-market-contracts/tree/master/artifacts
   // moneymarket_market.wasm
-  market(denom: string): string;
+  market(denom: MARKET_DENOMS): string;
 
-  custody(denom: string): string;
+  custody(denom: MARKET_DENOMS, colalteral: COLLATERAL_DENOMS): string;
 
-  overseer(denom: string): string;
+  overseer(denom: MARKET_DENOMS): string;
 
-  aTerra(denom: string): string;
+  aTerra(denom: MARKET_DENOMS): string;
 
   oracle(): string;
 
@@ -55,7 +55,7 @@ export enum MARKET_DENOMS {
   'ukrw' = 'ukrw'
 }
 
-export enum CUSTODY_DENOMS {
+export enum COLLATERAL_DENOMS {
   'ubluna' = 'ubluna',
 }
 

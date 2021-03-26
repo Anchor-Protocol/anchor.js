@@ -30,7 +30,7 @@ import {
   fabricateProvideCollateral,
   fabricateRedeemCollateral,
 } from '../fabricators';
-import { CUSTODY_DENOMS, MARKET_DENOMS } from '../address-provider';
+import { COLLATERAL_DENOMS, MARKET_DENOMS } from '../address-provider';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
 
 /* eslint-disable */
@@ -360,7 +360,7 @@ describe('Money Market', () => {
         fabricateCustodyDepositCollateral,
         {
           address: 'address',
-          custody: CUSTODY_DENOMS.ubluna,
+          custody: COLLATERAL_DENOMS.ubluna,
           amount: '1000',
         },
         addressProvider,
@@ -384,7 +384,7 @@ describe('Money Market', () => {
         fabricateCustodyWithdrawCollateral,
         {
           address: 'address',
-          custody: CUSTODY_DENOMS.ubluna,
+          custody: COLLATERAL_DENOMS.ubluna,
           amount: '1000',
         },
         addressProvider,
@@ -406,7 +406,7 @@ describe('Money Market', () => {
           address: 'address',
           owner: 'new-owner',
           liquidation_contract: 'liquidation',
-          custody: CUSTODY_DENOMS.ubluna,
+          custody: COLLATERAL_DENOMS.ubluna,
         },
         addressProvider,
         [
