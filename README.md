@@ -58,8 +58,6 @@ const txResult = await anchor.earn.depositStable(MARKET_DENOMS.UUSD, "100.5000")
 ```
 
 
-
-
 ### Using Message Fabricators
 
 Anchor.js provides facilities for 2 main use cases:

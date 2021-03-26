@@ -1,0 +1,811 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>anchor.js</title>
+	<meta name="description" content="Documentation for anchor.js">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">anchor.js</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>anchor.js</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#anchorjs" id="anchorjs" style="color: inherit; text-decoration: none;">
+					<h1>Anchor.js</h1>
+				</a>
+				<p>Anchor.js is a client SDK for building applications that can interact with Anchor Protocol from within JavaScript runtimes, such as web browsers, server backends, and on mobile through React Native.</p>
+				<p>You can find a reference of the Anchor.js API <a href="https://github.com/Anchor-Protocol/anchor.js">here</a>.</p>
+				<a href="#getting-anchorjs" id="getting-anchorjs" style="color: inherit; text-decoration: none;">
+					<h2>Getting Anchor.js</h2>
+				</a>
+				<p>Anchor.js is available as a package on NPM and is intended to be used alongside Terra.js.</p>
+				<p>Add both:</p>
+				<ul>
+					<li><code>@terra-money/terra.js</code></li>
+					<li><code>@anchor-protocol/anchor.js</code></li>
+				</ul>
+				<p>To your JavaScript project&#39;s <code>package.json</code> as dependencies using your preferred package manager:</p>
+				<pre><code class="language-sh"><span style="color: #000000">$ npm install -S @terra-money/terra.js @anchor-protocol/anchor.js</span>
+</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<a href="#using-facades" id="using-facades" style="color: inherit; text-decoration: none;">
+					<h3>Using Facades</h3>
+				</a>
+				<p>Anchor.js provides class wrapper facade for the usual operations available on <a href="https://app.anchorprotocol.com">webapp</a>.</p>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">LCDClient</span><span style="color: #000000">, </span><span style="color: #001080">MnemonicKey</span><span style="color: #000000">, </span><span style="color: #001080">StdFee</span><span style="color: #000000">, </span><span style="color: #001080">Wallet</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@terra-money/terra.js&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">columbus4</span><span style="color: #000000">, </span><span style="color: #001080">AddressProviderFromJson</span><span style="color: #000000">, </span><span style="color: #001080">MARKET_DENOMS</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@anchor-protocol/anchor.js&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">Anchor</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./facade/anchor&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">OperationGasParameters</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./facade/operation&#039;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">addressProvider</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">AddressProviderFromJson</span><span style="color: #000000">(</span><span style="color: #001080">columbus4</span><span style="color: #000000">)</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">lcd</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">LCDClient</span><span style="color: #000000">({ </span><span style="color: #001080">URL:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;https://lcd.terra.dev&#039;</span><span style="color: #000000">, </span><span style="color: #001080">chainID:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;columbus-4&#039;</span><span style="color: #000000"> })</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">key</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MnemonicKey</span><span style="color: #000000">({ </span><span style="color: #001080">mnemonic:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;your key&#039;</span><span style="color: #000000"> })</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Wallet</span><span style="color: #000000">(</span><span style="color: #001080">lcd</span><span style="color: #000000">, </span><span style="color: #001080">key</span><span style="color: #000000">)</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">anchor</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Anchor</span><span style="color: #000000">(</span><span style="color: #001080">lcd</span><span style="color: #000000">, </span><span style="color: #001080">addressProvider</span><span style="color: #000000">)</span>
+
+<span style="color: #008000">// you can generate message only, using your wallet</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">msgs</span><span style="color: #000000"> = </span><span style="color: #001080">anchor</span><span style="color: #000000">.</span><span style="color: #001080">earn</span><span style="color: #000000">.</span><span style="color: #795E26">depositStable</span><span style="color: #000000">(</span><span style="color: #0070C1">MARKET_DENOMS</span><span style="color: #000000">.</span><span style="color: #0070C1">UUSD</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;100.5000&quot;</span><span style="color: #000000">).</span><span style="color: #795E26">generateWithWallet</span><span style="color: #000000">(</span><span style="color: #001080">wallet</span><span style="color: #000000">)</span>
+
+<span style="color: #008000">// you can ALSO generate message only, using your address in string</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">msgs</span><span style="color: #000000"> = </span><span style="color: #001080">anchor</span><span style="color: #000000">.</span><span style="color: #001080">earn</span><span style="color: #000000">.</span><span style="color: #795E26">depositStable</span><span style="color: #000000">(</span><span style="color: #0070C1">MARKET_DENOMS</span><span style="color: #000000">.</span><span style="color: #0070C1">UUSD</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;100.5000&quot;</span><span style="color: #000000">).</span><span style="color: #795E26">generateWithAddress</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;terra1...&quot;</span><span style="color: #000000">)</span>
+
+<span style="color: #008000">// or, you can broadcast the tx using your wallet</span>
+<span style="color: #008000">// below is the recommended default setting for gas parameters.</span>
+<span style="color: #008000">// of course you can tailor it to your needs</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">gasParameters</span><span style="color: #000000">: </span><span style="color: #267F99">OperationGasParameters</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">gasAdjustment:</span><span style="color: #000000"> </span><span style="color: #098658">1.4</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">gasPrices:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;0.15uusd&quot;</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">  </span><span style="color: #008000">// or if you want to fixate gas, you can use `fee`</span>
+<span style="color: #000000">  </span><span style="color: #001080">fee:</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">StdFee</span><span style="color: #000000">(</span><span style="color: #001080">gasToSpend</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;100000uusd&quot;</span><span style="color: #000000">)</span>
+<span style="color: #000000">}</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">txResult</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">anchor</span><span style="color: #000000">.</span><span style="color: #001080">earn</span><span style="color: #000000">.</span><span style="color: #795E26">depositStable</span><span style="color: #000000">(</span><span style="color: #0070C1">MARKET_DENOMS</span><span style="color: #000000">.</span><span style="color: #0070C1">UUSD</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;100.5000&quot;</span><span style="color: #000000">).</span><span style="color: #795E26">execute</span><span style="color: #000000">(</span><span style="color: #001080">wallet</span><span style="color: #000000">, </span><span style="color: #001080">gasParameters</span><span style="color: #000000">)</span>
+</code></pre>
+				<a href="#using-message-fabricators" id="using-message-fabricators" style="color: inherit; text-decoration: none;">
+					<h3>Using Message Fabricators</h3>
+				</a>
+				<p>Anchor.js provides facilities for 2 main use cases:</p>
+				<ul>
+					<li>query: runs smart contract queries through LCD</li>
+					<li>execute: creates proper <code>MsgExecuteContract</code> objects to be used in transactions</li>
+				</ul>
+				<p>Both of these functions are accessible through the <a href="https://github.com/Anchor-Protocol/anchor.js/tree/master/src/fabricators"><code>Message Fabricators</code></a>.</p>
+				<p>To Use the message fabricators: </p>
+				<p><strong>Note</strong>: Please note that <code>market</code> is a different variable from the coin denom. The denomination for the coins in the example is set to be <code>uusd</code>.</p>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> {</span><span style="color: #001080">fabricateRedeemStable</span><span style="color: #000000">, </span><span style="color: #001080">fabricateDepositStableCoin</span><span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@anchor-protocol/anchor.js&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> {</span><span style="color: #001080">AddressProviderFromJson</span><span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@anchor-protocol/anchor.js&quot;</span><span style="color: #000000">; </span>
+
+<span style="color: #008000">// default -- uses tequila core contract addresses</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">addressMap</span><span style="color: #000000"> = </span><span style="color: #795E26">somehowGetAddresses</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">addressProvider</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">AddressProviderFromJson</span><span style="color: #000000">(</span><span style="color: #001080">addressMap</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">redeemMsg</span><span style="color: #000000"> = </span><span style="color: #795E26">fabricateRedeemStable</span><span style="color: #000000">({</span>
+<span style="color: #000000">      </span><span style="color: #001080">address:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;terra123...&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">market:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;usd&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">amount:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;10000&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    })(</span><span style="color: #001080">addressProvider</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">depositMsg</span><span style="color: #000000"> = </span><span style="color: #795E26">fabricateDepositStableCoin</span><span style="color: #000000">({</span>
+<span style="color: #000000">      </span><span style="color: #001080">address:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;terra123...&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">market:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;usd&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">amount:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;10&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    })(</span><span style="color: #001080">addressProvider</span><span style="color: #000000">);</span>
+</code></pre>
+				<a href="#executing" id="executing" style="color: inherit; text-decoration: none;">
+					<h2>Executing</h2>
+				</a>
+				<p>A message fabricator contains functions for generating proper <code>MsgExecuteContract</code> messages to be included in a transaction and broadcasted.</p>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">LCDClient</span><span style="color: #000000">, </span><span style="color: #001080">Wallet</span><span style="color: #000000">, </span><span style="color: #001080">MnemonicKey</span><span style="color: #000000">, </span><span style="color: #001080">StdFee</span><span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@terra-money/terra.js&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">anchor</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">LCDClient</span><span style="color: #000000">({ </span><span style="color: #001080">URL:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;https://tequila-lcd.terra.dev&#039;</span><span style="color: #000000">, </span><span style="color: #001080">chainID:</span><span style="color: #A31515">&#039;tequila-0004&#039;</span><span style="color: #000000"> });</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">owner</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MnemonicKey</span><span style="color: #000000">({ </span><span style="color: #001080">mnemonic:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;....&quot;</span><span style="color: #000000">});</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Wallet</span><span style="color: #000000">(</span><span style="color: #001080">anchor</span><span style="color: #000000">, </span><span style="color: #001080">owner</span><span style="color: #000000">);</span>
+
+
+<span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">depositStable</span><span style="color: #000000">() {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">tx</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">wallet</span><span style="color: #000000">.</span><span style="color: #795E26">createAndSignTx</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">msgs:</span><span style="color: #000000"> </span><span style="color: #001080">depositMsg</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">fee:</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">StdFee</span><span style="color: #000000">(</span><span style="color: #098658">2_000_000</span><span style="color: #000000">, { </span><span style="color: #001080">uluna:</span><span style="color: #000000"> </span><span style="color: #098658">2_000_000</span><span style="color: #000000"> })</span>
+<span style="color: #000000">    });</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">anchor</span><span style="color: #000000">.</span><span style="color: #001080">tx</span><span style="color: #000000">.</span><span style="color: #795E26">broadcast</span><span style="color: #000000">(</span><span style="color: #001080">tx</span><span style="color: #000000">);</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">main</span><span style="color: #000000">() {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">depositStable</span><span style="color: #000000">()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">then</span><span style="color: #000000">((</span><span style="color: #001080">result</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">result</span><span style="color: #000000">);</span>
+<span style="color: #000000">    })</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #001080">error</span><span style="color: #000000">);</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #795E26">main</span><span style="color: #000000">();</span>
+</code></pre>
+				<a href="#list-of-contract-addresses-deployed-to-networks" id="list-of-contract-addresses-deployed-to-networks" style="color: inherit; text-decoration: none;">
+					<h2>List of contract addresses deployed to networks</h2>
+				</a>
+				<ul>
+					<li><p><code>columbus-4</code>:</p>
+						<pre><code class="language-js"><span style="color: #000000">{</span>
+<span style="color: #000000">  bLunaHub: </span><span style="color: #A31515">&#039;terra1mtwph2juhj0rvjz7dy92gvl6xvukaxu8rfv8ts&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  bLunaToken: </span><span style="color: #A31515">&#039;terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  bLunaReward: </span><span style="color: #A31515">&#039;terra17yap3mhph35pcwvhza38c2lkj7gzywzy05h7l0&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  bLunaAirdrop: </span><span style="color: #A31515">&#039;terra199t7hg7w5vymehhg834r6799pju2q3a0ya7ae9&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  mmInterestModel: </span><span style="color: #A31515">&#039;terra1kq8zzq5hufas9t0kjsjc62t2kucfnx8txf547n&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  mmOracle: </span><span style="color: #A31515">&#039;terra1cgg6yef7qcdm070qftghfulaxmllgmvk77nc7t&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  mmMarket: </span><span style="color: #A31515">&#039;terra1sepfj7s0aeg5967uxnfk4thzlerrsktkpelm5s&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  mmOverseer: </span><span style="color: #A31515">&#039;terra1tmnqgvg567ypvsvk6rwsga3srp7e3lg6u0elp8&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  mmCustody: </span><span style="color: #A31515">&#039;terra1ptjp2vfjrwh0j0faj9r6katm640kgjxnwwq9kn&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  mmLiquidation: </span><span style="color: #A31515">&#039;terra1w9ky73v4g7v98zzdqpqgf3kjmusnx4d4mvnac6&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  mmDistributionModel: </span><span style="color: #A31515">&#039;terra14mufqpr5mevdfn92p4jchpkxp7xr46uyknqjwq&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  aTerra: </span><span style="color: #A31515">&#039;terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  terraswapblunaLunaPair: </span><span style="color: #A31515">&#039;terra1jxazgm67et0ce260kvrpfv50acuushpjsz2y0p&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  terraswapblunaLunaLPToken: </span><span style="color: #A31515">&#039;terra1nuy34nwnsh53ygpc4xprlj263cztw7vc99leh2&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  terraswapAncUstPair: </span><span style="color: #A31515">&#039;terra1gm5p3ner9x9xpwugn9sp6gvhd0lwrtkyrecdn3&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  terraswapAncUstLPToken: </span><span style="color: #A31515">&#039;terra1gecs98vcuktyfkrve9czrpgtg0m3aq586x6gzm&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  gov: </span><span style="color: #A31515">&#039;terra1f32xyep306hhcxxxf7mlyh0ucggc00rm2s9da5&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  distributor: </span><span style="color: #A31515">&#039;terra1mxf7d5updqxfgvchd7lv6575ehhm8qfdttuqzz&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  collector: </span><span style="color: #A31515">&#039;terra14ku9pgw5ld90dexlyju02u4rn6frheexr5f96h&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  community: </span><span style="color: #A31515">&#039;terra12wk8dey0kffwp27l5ucfumczlsc9aned8rqueg&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  staking: </span><span style="color: #A31515">&#039;terra1897an2xux840p9lrh6py3ryankc6mspw49xse3&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  ANC: </span><span style="color: #A31515">&#039;terra14z56l0fp2lsf86zy3hty2z47ezkhnthtr9yq76&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  airdrop: </span><span style="color: #A31515">&#039;terra146ahqn6d3qgdvmj8cj96hh03dzmeedhsf0kxqm&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  team_vesting: </span><span style="color: #A31515">&#039;terra1pm54pmw3ej0vfwn3gtn6cdmaqxt0x37e9jt0za&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  investor_vesting: </span><span style="color: #A31515">&#039;terra10evq9zxk2m86n3n3xnpw28jpqwp628c6dzuq42&#039;</span>
+<span style="color: #000000">}</span>
+</code></pre>
+					</li>
+					<li><p><code>tequila-0004</code>:</p>
+						<pre><code class="language-js"><span style="color: #000000">{</span>
+<span style="color: #000000"> bLunaHub: </span><span style="color: #A31515">&#039;terra1fflas6wv4snv8lsda9knvq2w0cyt493r8puh2e&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> bLunaToken: </span><span style="color: #A31515">&#039;terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> bLunaReward: </span><span style="color: #A31515">&#039;terra1ac24j6pdxh53czqyrkr6ygphdeftg7u3958tl2&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> bLunaAirdrop: </span><span style="color: #A31515">&#039;terra1334h20c9ewxguw9p9vdxzmr8994qj4qu77ux6q&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> mmInterestModel: </span><span style="color: #A31515">&#039;terra1m25aqupscdw2kw4tnq5ql6hexgr34mr76azh5x&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> mmOracle: </span><span style="color: #A31515">&#039;terra1p4gg3p2ue6qy2qfuxtrmgv2ec3f4jmgqtazum8&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> mmMarket: </span><span style="color: #A31515">&#039;terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> mmOverseer: </span><span style="color: #A31515">&#039;terra1qljxd0y3j3gk97025qvl3lgq8ygup4gsksvaxv&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> mmCustody: </span><span style="color: #A31515">&#039;terra1ltnkx0mv7lf2rca9f8w740ashu93ujughy4s7p&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> mmLiquidation: </span><span style="color: #A31515">&#039;terra16vc4v9hhntswzkuunqhncs9yy30mqql3gxlqfe&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> mmDistributionModel: </span><span style="color: #A31515">&#039;terra1u64cezah94sq3ye8y0ung28x3pxc37tv8fth7h&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> aTerra: </span><span style="color: #A31515">&#039;terra1ajt556dpzvjwl0kl5tzku3fc3p3knkg9mkv8jl&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> terraswapblunaLunaPair: </span><span style="color: #A31515">&#039;terra13e4jmcjnwrauvl2fnjdwex0exuzd8zrh5xk29v&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> terraswapblunaLunaLPToken: </span><span style="color: #A31515">&#039;terra1tj4pavqjqjfm0wh73sh7yy9m4uq3m2cpmgva6n&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> terraswapAncUstPair: </span><span style="color: #A31515">&#039;terra1wfvczps2865j0awnurk9m04u7wdmd6qv3fdnvz&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> terraswapAncUstLPToken: </span><span style="color: #A31515">&#039;terra1vg0qyq92ky9z9dp0j9fv5rmr2s80sg605dah6f&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> gov: </span><span style="color: #A31515">&#039;terra16ckeuu7c6ggu52a8se005mg5c0kd2kmuun63cu&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> distributor: </span><span style="color: #A31515">&#039;terra1z7nxemcnm8kp7fs33cs7ge4wfuld307v80gypj&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> collector: </span><span style="color: #A31515">&#039;terra1hlctcrrhcl2azxzcsns467le876cfuzam6jty4&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> community: </span><span style="color: #A31515">&#039;terra17g577z0pqt6tejhceh06y3lyeudfs3v90mzduy&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> staking: </span><span style="color: #A31515">&#039;terra19nxz35c8f7t3ghdxrxherym20tux8eccar0c3k&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> ANC: </span><span style="color: #A31515">&#039;terra1747mad58h0w4y589y3sk84r5efqdev9q4r02pc&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> airdrop: </span><span style="color: #A31515">&#039;terra1u5ywhlve3wugzqslqvm8ks2j0nsvrqjx0mgxpk&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> investor_vesting: </span><span style="color: #A31515">&#039;not available in testnet&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> team_vesting: </span><span style="color: #A31515">&#039;not available in testnet&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">}</span>
+</code></pre>
+					</li>
+				</ul>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p>This software is licensed under the Apache 2.0 license. Read more about it <a href="./LICENSE">here</a>.</p>
+				<p>© 2021 Anchor Protocol</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/address_provider_addresses.html">address-<wbr>provider/addresses</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/address_provider_from_json.html">address-<wbr>provider/from-<wbr>json</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/address_provider_provider.html">address-<wbr>provider/provider</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/address_provider_react_app_prefix.html">address-<wbr>provider/react-<wbr>app-<wbr>prefix</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_airdrop_claim.html">fabricators/anchor-<wbr>token/airdrop-<wbr>claim</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_airdrop_register_merkle_root.html">fabricators/anchor-<wbr>token/airdrop-<wbr>register-<wbr>merkle-<wbr>root</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_airdrop_update_config.html">fabricators/anchor-<wbr>token/airdrop-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_collector_sweep.html">fabricators/anchor-<wbr>token/collector-<wbr>sweep</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_collector_update_config.html">fabricators/anchor-<wbr>token/collector-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_community_spend.html">fabricators/anchor-<wbr>token/community-<wbr>spend</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_community_update_config.html">fabricators/anchor-<wbr>token/community-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_distributor_add_distributor.html">fabricators/anchor-<wbr>token/distributor-<wbr>add-<wbr>distributor</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_distributor_remove_distributor.html">fabricators/anchor-<wbr>token/distributor-<wbr>remove-<wbr>distributor</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_distributor_spend.html">fabricators/anchor-<wbr>token/distributor-<wbr>spend</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_distributor_update_config.html">fabricators/anchor-<wbr>token/distributor-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_gov_cast_vote.html">fabricators/anchor-<wbr>token/gov-<wbr>cast-<wbr>vote</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_gov_create_poll.html">fabricators/anchor-<wbr>token/gov-<wbr>create-<wbr>poll</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_gov_end_poll.html">fabricators/anchor-<wbr>token/gov-<wbr>end-<wbr>poll</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_gov_execute_poll.html">fabricators/anchor-<wbr>token/gov-<wbr>execute-<wbr>poll</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_gov_expire_poll.html">fabricators/anchor-<wbr>token/gov-<wbr>expire-<wbr>poll</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_gov_snapshot_poll.html">fabricators/anchor-<wbr>token/gov-<wbr>snapshot-<wbr>poll</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_gov_stake_voting.html">fabricators/anchor-<wbr>token/gov-<wbr>stake-<wbr>voting</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_gov_update_config.html">fabricators/anchor-<wbr>token/gov-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_gov_withdraw_voting.html">fabricators/anchor-<wbr>token/gov-<wbr>withdraw-<wbr>voting</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_investor_vesting_claim.html">fabricators/anchor-<wbr>token/investor-<wbr>vesting-<wbr>claim</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_investor_vesting_register_accounts.html">fabricators/anchor-<wbr>token/investor-<wbr>vesting-<wbr>register-<wbr>accounts</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_investor_vesting_update_config.html">fabricators/anchor-<wbr>token/investor-<wbr>vesting-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_staking_bond.html">fabricators/anchor-<wbr>token/staking-<wbr>bond</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_staking_unbond.html">fabricators/anchor-<wbr>token/staking-<wbr>unbond</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_staking_withdraw.html">fabricators/anchor-<wbr>token/staking-<wbr>withdraw</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_team_vesting_claim.html">fabricators/anchor-<wbr>token/team-<wbr>vesting-<wbr>claim</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_team_vesting_register_accounts.html">fabricators/anchor-<wbr>token/team-<wbr>vesting-<wbr>register-<wbr>accounts</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_anchor_token_team_vesting_update_config.html">fabricators/anchor-<wbr>token/team-<wbr>vesting-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_bond.html">fabricators/basset/basset-<wbr>bond</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_burn.html">fabricators/basset/basset-<wbr>burn</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_burn_from.html">fabricators/basset/basset-<wbr>burn-<wbr>from</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_check_slashing.html">fabricators/basset/basset-<wbr>check-<wbr>slashing</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_claim.html">fabricators/basset/basset-<wbr>claim</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_decrease_allowance.html">fabricators/basset/basset-<wbr>decrease-<wbr>allowance</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_deregister_validator.html">fabricators/basset/basset-<wbr>deregister-<wbr>validator</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_increase_allowance.html">fabricators/basset/basset-<wbr>increase-<wbr>allowance</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_register_validator.html">fabricators/basset/basset-<wbr>register-<wbr>validator</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_send.html">fabricators/basset/basset-<wbr>send</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_send_from.html">fabricators/basset/basset-<wbr>send-<wbr>from</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_transfer.html">fabricators/basset/basset-<wbr>transfer</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_transfer_from.html">fabricators/basset/basset-<wbr>transfer-<wbr>from</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_unbond.html">fabricators/basset/basset-<wbr>unbond</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_update_config.html">fabricators/basset/basset-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_update_params.html">fabricators/basset/basset-<wbr>update-<wbr>params</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_basset_basset_withdraw_unbonded.html">fabricators/basset/basset-<wbr>withdraw-<wbr>unbonded</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_cw20_token_burn.html">fabricators/cw20-<wbr>token/burn</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_cw20_token_burn_from.html">fabricators/cw20-<wbr>token/burn-<wbr>from</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_cw20_token_decrease_allowance.html">fabricators/cw20-<wbr>token/decrease-<wbr>allowance</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_cw20_token_increase_allowance.html">fabricators/cw20-<wbr>token/increase-<wbr>allowance</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_cw20_token_send.html">fabricators/cw20-<wbr>token/send</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_cw20_token_send_from.html">fabricators/cw20-<wbr>token/send-<wbr>from</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_cw20_token_transfer.html">fabricators/cw20-<wbr>token/transfer</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_cw20_token_transfer_from.html">fabricators/cw20-<wbr>token/transfer-<wbr>from</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_custody_deposit_collateral.html">fabricators/money-<wbr>market/custody-<wbr>deposit-<wbr>collateral</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_custody_update_config.html">fabricators/money-<wbr>market/custody-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_custody_withdraw_collateral.html">fabricators/money-<wbr>market/custody-<wbr>withdraw-<wbr>collateral</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_distribution_update_config.html">fabricators/money-<wbr>market/distribution-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_interest_update_config.html">fabricators/money-<wbr>market/interest-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_liquidation_retract_bid.html">fabricators/money-<wbr>market/liquidation-<wbr>retract-<wbr>bid</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_liquidation_submit_bid.html">fabricators/money-<wbr>market/liquidation-<wbr>submit-<wbr>bid</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_liquidation_update_config.html">fabricators/money-<wbr>market/liquidation-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_market_borrow_stable.html">fabricators/money-<wbr>market/market-<wbr>borrow-<wbr>stable</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_market_claim_rewards.html">fabricators/money-<wbr>market/market-<wbr>claim-<wbr>rewards</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_market_deposit_stable.html">fabricators/money-<wbr>market/market-<wbr>deposit-<wbr>stable</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_market_redeem_stable.html">fabricators/money-<wbr>market/market-<wbr>redeem-<wbr>stable</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_market_register_contracts.html">fabricators/money-<wbr>market/market-<wbr>register-<wbr>contracts</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_market_repay_stable.html">fabricators/money-<wbr>market/market-<wbr>repay-<wbr>stable</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_market_update_config.html">fabricators/money-<wbr>market/market-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_oracle_feed_price.html">fabricators/money-<wbr>market/oracle-<wbr>feed-<wbr>price</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_oracle_register_feeder.html">fabricators/money-<wbr>market/oracle-<wbr>register-<wbr>feeder</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_oracle_update_config.html">fabricators/money-<wbr>market/oracle-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_overseer_execute_epoch.html">fabricators/money-<wbr>market/overseer-<wbr>execute-<wbr>epoch</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_overseer_liquidate_collateral.html">fabricators/money-<wbr>market/overseer-<wbr>liquidate-<wbr>collateral</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_overseer_lock_collateral.html">fabricators/money-<wbr>market/overseer-<wbr>lock-<wbr>collateral</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_overseer_unlock_collateral.html">fabricators/money-<wbr>market/overseer-<wbr>unlock-<wbr>collateral</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_overseer_update_config.html">fabricators/money-<wbr>market/overseer-<wbr>update-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_overseer_update_whitelist.html">fabricators/money-<wbr>market/overseer-<wbr>update-<wbr>whitelist</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_overseer_whitelist.html">fabricators/money-<wbr>market/overseer-<wbr>whitelist</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_provide_collateral.html">fabricators/money-<wbr>market/provide-<wbr>collateral</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_money_market_redeem_collateral.html">fabricators/money-<wbr>market/redeem-<wbr>collateral</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_terraswap_provide_liquidity_anc.html">fabricators/terraswap/provide-<wbr>liquidity-<wbr>anc</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_terraswap_provide_liquidity_bluna.html">fabricators/terraswap/provide-<wbr>liquidity-<wbr>bluna</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_terraswap_swap_anc.html">fabricators/terraswap/swap-<wbr>anc</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_terraswap_swap_bluna.html">fabricators/terraswap/swap-<wbr>bluna</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_terraswap_swap_luna.html">fabricators/terraswap/swap-<wbr>luna</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_terraswap_swap_ust.html">fabricators/terraswap/swap-<wbr>ust</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_terraswap_withdraw_liquidity_anc.html">fabricators/terraswap/withdraw-<wbr>liquidity-<wbr>anc</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_terraswap_withdraw_liquidity_bluna.html">fabricators/terraswap/withdraw-<wbr>liquidity-<wbr>bluna</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fabricators_types.html">fabricators/types</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/facade_anchor.html">facade/anchor</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/facade_anchor_token_anchor_token.html">facade/anchor-<wbr>token/anchor-<wbr>token</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/facade_bluna_bluna.html">facade/bluna/bluna</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/facade_borrow_borrow.html">facade/borrow/borrow</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/facade_earn_earn.html">facade/earn/earn</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/facade_operation.html">facade/operation</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/facade_operation_test.html">facade/operation.test</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/facade_types.html">facade/types</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_collector_config.html">queries/anchor-<wbr>token/collector-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_community_config.html">queries/anchor-<wbr>token/community-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_distributor_config.html">queries/anchor-<wbr>token/distributor-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_gov_config.html">queries/anchor-<wbr>token/gov-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_gov_poll.html">queries/anchor-<wbr>token/gov-<wbr>poll</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_gov_polls.html">queries/anchor-<wbr>token/gov-<wbr>polls</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_gov_staker.html">queries/anchor-<wbr>token/gov-<wbr>staker</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_gov_state.html">queries/anchor-<wbr>token/gov-<wbr>state</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_gov_voters.html">queries/anchor-<wbr>token/gov-<wbr>voters</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_staking_config.html">queries/anchor-<wbr>token/staking-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_staking_reward_info.html">queries/anchor-<wbr>token/staking-<wbr>reward-<wbr>info</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_staking_staker_info.html">queries/anchor-<wbr>token/staking-<wbr>staker-<wbr>info</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_anchor_token_staking_state.html">queries/anchor-<wbr>token/staking-<wbr>state</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_hub_all_history.html">queries/basset/hub-<wbr>all-<wbr>history</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_hub_config.html">queries/basset/hub-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_hub_current_batch.html">queries/basset/hub-<wbr>current-<wbr>batch</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_hub_params.html">queries/basset/hub-<wbr>params</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_hub_state.html">queries/basset/hub-<wbr>state</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_hub_unbond_requests.html">queries/basset/hub-<wbr>unbond-<wbr>requests</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_hub_whitelisted_validators.html">queries/basset/hub-<wbr>whitelisted-<wbr>validators</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_hub_withdrawable.html">queries/basset/hub-<wbr>withdrawable</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_reward_accrued_rewards.html">queries/basset/reward-<wbr>accrued-<wbr>rewards</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_reward_config.html">queries/basset/reward-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_reward_holder.html">queries/basset/reward-<wbr>holder</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_reward_holders.html">queries/basset/reward-<wbr>holders</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_basset_reward_state.html">queries/basset/reward-<wbr>state</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_cw20_token_all_accounts.html">queries/cw20/token-<wbr>all-<wbr>accounts</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_cw20_token_all_allowance.html">queries/cw20/token-<wbr>all-<wbr>allowance</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_cw20_token_allowance.html">queries/cw20/token-<wbr>allowance</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_cw20_token_balance.html">queries/cw20/token-<wbr>balance</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_cw20_token_minter.html">queries/cw20/token-<wbr>minter</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_cw20_token_token_info.html">queries/cw20/token-<wbr>token-<wbr>info</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_custody_borrower.html">queries/money-<wbr>market/custody-<wbr>borrower</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_custody_borrowers.html">queries/money-<wbr>market/custody-<wbr>borrowers</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_custody_config.html">queries/money-<wbr>market/custody-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_interest_model_borrow_rate.html">queries/money-<wbr>market/interest-<wbr>model-<wbr>borrow-<wbr>rate</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_interest_model_config.html">queries/money-<wbr>market/interest-<wbr>model-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_liquidation_bid.html">queries/money-<wbr>market/liquidation-<wbr>bid</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_liquidation_bids_by_collateral.html">queries/money-<wbr>market/liquidation-<wbr>bids-<wbr>by-<wbr>collateral</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_liquidation_bids_by_user.html">queries/money-<wbr>market/liquidation-<wbr>bids-<wbr>by-<wbr>user</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_liquidation_config.html">queries/money-<wbr>market/liquidation-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_liquidation_liquidation_amount.html">queries/money-<wbr>market/liquidation-<wbr>liquidation-<wbr>amount</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_market_borrower_info.html">queries/money-<wbr>market/market-<wbr>borrower-<wbr>info</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_market_borrower_infos.html">queries/money-<wbr>market/market-<wbr>borrower-<wbr>infos</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_market_config.html">queries/money-<wbr>market/market-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_market_epoch_state.html">queries/money-<wbr>market/market-<wbr>epoch-<wbr>state</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_market_loan_amount.html">queries/money-<wbr>market/market-<wbr>loan-<wbr>amount</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_market_state.html">queries/money-<wbr>market/market-<wbr>state</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_oracle_config.html">queries/money-<wbr>market/oracle-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_oracle_feeder.html">queries/money-<wbr>market/oracle-<wbr>feeder</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_oracle_price.html">queries/money-<wbr>market/oracle-<wbr>price</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_oracle_prices.html">queries/money-<wbr>market/oracle-<wbr>prices</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_overseer_all_collaterals.html">queries/money-<wbr>market/overseer-<wbr>all-<wbr>collaterals</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_overseer_borrow_limit.html">queries/money-<wbr>market/overseer-<wbr>borrow-<wbr>limit</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_overseer_collaterals.html">queries/money-<wbr>market/overseer-<wbr>collaterals</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_overseer_config.html">queries/money-<wbr>market/overseer-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_overseer_distribution_params.html">queries/money-<wbr>market/overseer-<wbr>distribution-<wbr>params</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_overseer_epoch_state.html">queries/money-<wbr>market/overseer-<wbr>epoch-<wbr>state</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_money_market_overseer_whitelist.html">queries/money-<wbr>market/overseer-<wbr>whitelist</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_terraswap_native_simulation.html">queries/terraswap/native-<wbr>simulation</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_terraswap_pairs.html">queries/terraswap/pairs</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_terraswap_pool.html">queries/terraswap/pool</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_terraswap_reverse_native_simulation.html">queries/terraswap/reverse-<wbr>native-<wbr>simulation</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_terraswap_reverse_token_simulation.html">queries/terraswap/reverse-<wbr>token-<wbr>simulation</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_terraswap_simulation.html">queries/terraswap/simulation</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/utils_cw20_create_hook_msg.html">utils/cw20/create-<wbr>hook-<wbr>msg</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/utils_json_to_base64.html">utils/json-<wbr>to-<wbr>base64</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/utils_test_fabricators_test_fabricator.html">utils/test-<wbr>fabricators/test-<wbr>fabricator</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/utils_validate_input.html">utils/validate-<wbr>input</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/utils_validation_address.html">utils/validation/address</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/utils_validation_amount.html">utils/validation/amount</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/utils_validation_number.html">utils/validation/number</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/utils_validation_stable.html">utils/validation/stable</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/utils_validation_true.html">utils/validation/true</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
