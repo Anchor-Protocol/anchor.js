@@ -2,7 +2,7 @@
 
 Anchor.js is a client SDK for building applications that can interact with Anchor Protocol from within JavaScript runtimes, such as web browsers, server backends, and on mobile through React Native.
 
-You can find a reference of the Anchor.js API [here](https://github.com/Anchor-Protocol/anchor.js).
+You can find a reference of the Anchor.js API [here](https://anchor-protocol.github.io/anchor.js/).
 
 ## Getting Anchor.js
 
