@@ -1,6 +1,6 @@
 {
   "include": [
-    "src"
+    "src/**/*"
   ],
   "exclude": [
     "/node_modules/",
@@ -10,7 +10,6 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "alwaysStrict": true,
-    "baseUrl": "./",
     "declaration": true,
     "esModuleInterop": true,
     "lib": [
@@ -35,10 +34,5 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "target": "es2015",
-    "paths": {
-      "*": [
-        "src/*"
-      ]
-    }
   }
 }
