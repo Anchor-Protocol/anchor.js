@@ -6,7 +6,7 @@ import { Borrow } from './borrow/borrow'
 import { Earn } from './earn/earn'
 
 // the frontier 
-export default class Anchor {
+export class Anchor {
   // sub-facades
   earn!: Earn
   borrow!: Borrow

@@ -28,13 +28,13 @@ Anchor.js provides class wrapper facade for the usual operations available on [w
 
 ```ts
 import { LCDClient, MnemonicKey, StdFee, Wallet } from '@terra-money/terra.js'
-import { columbus4, AddressProviderFromJson, MARKET_DENOMS } from '@anchor-protocol/anchor.js'
-import Anchor from './facade/anchor'
-import { OperationGasParameters } from './facade/operation'
+import { Anchor, columbus4, AddressProviderFromJson, MARKET_DENOMS, OperationGasParameters } from '@anchor-protocol/anchor.js'
 
 const addressProvider = new AddressProviderFromJson(columbus4)
 const lcd = new LCDClient({ URL: 'https://lcd.terra.dev', chainID: 'columbus-4' })
-const key = new MnemonicKey({ mnemonic: 'your key' })
+const key = new MnemonicKey({
+  mnemonic: 'your key'
+})
 const wallet = new Wallet(lcd, key)
 const anchor = new Anchor(lcd, addressProvider)
 
