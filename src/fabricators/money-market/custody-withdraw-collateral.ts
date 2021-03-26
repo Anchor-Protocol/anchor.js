@@ -6,13 +6,13 @@ import { validateTrue } from '../../utils/validation/true';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
-  CUSTODY_DENOMS,
+  COLLATERAL_DENOMS,
 } from '../../address-provider/provider';
 import { isAmountSet } from '../../utils/validation/amount';
 
 interface Option {
   address: string;
-  custody: CUSTODY_DENOMS;
+  custody: COLLATERAL_DENOMS;
   amount?: string;
 }
 

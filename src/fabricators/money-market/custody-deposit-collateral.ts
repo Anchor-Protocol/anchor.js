@@ -6,12 +6,12 @@ import { validateAddress } from '../../utils/validation/address';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
-  CUSTODY_DENOMS,
+  COLLATERAL_DENOMS,
 } from '../../address-provider/provider';
 
 interface Option {
   address: string;
-  custody: CUSTODY_DENOMS;
+  custody: COLLATERAL_DENOMS;
   amount: string;
 }
 

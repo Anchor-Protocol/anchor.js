@@ -6,12 +6,14 @@ import { validateAddress } from '../../utils/validation/address';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
+  COLLATERAL_DENOMS,
   MARKET_DENOMS,
 } from '../../address-provider/provider';
 
 interface Option {
   address: string;
   market: MARKET_DENOMS;
+  collateral: COLLATERAL_DENOMS;
   amount: string;
 }
 

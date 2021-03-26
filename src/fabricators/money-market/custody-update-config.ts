@@ -4,14 +4,14 @@ import { validateAddress } from '../../utils/validation/address';
 import { validateTrue } from '../../utils/validation/true';
 import {
   AddressProvider,
-  CUSTODY_DENOMS,
+  COLLATERAL_DENOMS,
 } from '../../address-provider/provider';
 
 interface Option {
   address: string;
   owner?: string;
   liquidation_contract?: string;
-  custody: CUSTODY_DENOMS;
+  custody: COLLATERAL_DENOMS;
 }
 
 export const fabricateCustodyUpdateConfig = ({
