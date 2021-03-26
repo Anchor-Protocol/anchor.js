@@ -24,19 +24,19 @@ interface UserCollateral {
 }
 
 export class Borrow {
-  lcd!: LCDClient;
-  addressProvider!: AddressProvider;
+  private _lcd!: LCDClient;
+  private _addressProvider!: AddressProvider;
 
   constructor(lcd: LCDClient, addressProvider: AddressProvider) {
-    this.lcd = lcd;
-    this.addressProvider = addressProvider;
+    this._lcd = lcd;
+    this._addressProvider = addressProvider;
   }
 
   borrow(market: MARKET_DENOMS, amount: string): Operation {
     return new OperationImpl(
       fabricateMarketBorrow,
       { market, amount },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -44,7 +44,7 @@ export class Borrow {
     return new OperationImpl(
       fabricateMarketRepay,
       { market, amount },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -56,7 +56,7 @@ export class Borrow {
     return new OperationImpl(
       fabricateProvideCollateral,
       { market, collateral, amount },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -68,7 +68,7 @@ export class Borrow {
     return new OperationImpl(
       fabricateRedeemCollateral,
       { market, collateral, amount },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -77,8 +77,8 @@ export class Borrow {
     address: string,
   ): Promise<string> {
     // only bLuna is supported now, and the below requests are only about bLuna
-    const oraclePrice = await queryOraclePrices({ lcd: this.lcd, limit: 30 })(
-      this.addressProvider,
+    const oraclePrice = await queryOraclePrices({ lcd: this._lcd, limit: 30 })(
+      this._addressProvider,
     );
     const COLLATERAL_DENOMS = await this.getCOLLATERAL_DENOMS(market, address);
 
@@ -93,7 +93,7 @@ export class Borrow {
       return sum.add(new Dec(collateral.balance).mul(collateralPrice.price));
     }, new Dec(0));
 
-    return total.toString();
+    return total.div(1000000).toString();
   }
 
   async getCOLLATERAL_DENOMS(
@@ -101,19 +101,19 @@ export class Borrow {
     address: string,
   ): Promise<UserCollateral[]> {
     // get user balances of all COLLATERAL_DENOMS
-    const whitelistedCOLLATERAL_DENOMS = await queryOverseerWhitelist({
-      lcd: this.lcd,
+    const whitelistedCollaterals = await queryOverseerWhitelist({
+      lcd: this._lcd,
       market,
-    })(this.addressProvider);
-    const COLLATERAL_DENOMS = await Promise.all(
-      whitelistedCOLLATERAL_DENOMS.elems
+    })(this._addressProvider);
+    const collateralDenoms = await Promise.all(
+      whitelistedCollaterals.elems
         .map(async (whitelist) => {
           const userBalance = await queryCustodyBorrower({
-            lcd: this.lcd,
+            lcd: this._lcd,
             address,
             market,
             custody: whitelist.collateral_token,
-          })(this.addressProvider);
+          })(this._addressProvider);
 
           if (userBalance.balance === '0') {
             return null;
@@ -121,27 +121,27 @@ export class Borrow {
 
           return {
             collateral: whitelist.collateral_token,
-            balance: userBalance.balance,
+            balance: new Dec(userBalance.balance).div(1000000).toString(),
           };
         })
         .filter(Boolean),
     );
 
-    return COLLATERAL_DENOMS as UserCollateral[];
+    return collateralDenoms as UserCollateral[];
   }
 
   async getBorrowedValue(
     market: MARKET_DENOMS,
     address: string,
   ): Promise<string> {
-    const { block } = await this.lcd.tendermint.blockInfo();
+    const { block } = await this._lcd.tendermint.blockInfo();
     const loanAmount = await queryMarketLoanAmount({
-      lcd: this.lcd,
+      lcd: this._lcd,
       market,
       borrower: address,
       blockHeight: +block.header.height,
-    })(this.addressProvider);
+    })(this._addressProvider);
 
-    return loanAmount.loanAmount;
+    return new Dec(loanAmount.loanAmount).div(1000000).toString();
   }
 }

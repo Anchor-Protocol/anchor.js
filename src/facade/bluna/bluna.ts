@@ -21,19 +21,19 @@ interface SlippageToleranceConfig {
 }
 
 export class BLuna {
-  lcd!: LCDClient;
-  addressProvider!: AddressProvider;
+  private _lcd!: LCDClient;
+  private _addressProvider!: AddressProvider;
 
   constructor(lcd: LCDClient, addressProvider: AddressProvider) {
-    this.lcd = lcd;
-    this.addressProvider = addressProvider;
+    this._lcd = lcd;
+    this._addressProvider = addressProvider;
   }
 
   mint(amount: string, validator: string): Operation {
     return new OperationImpl(
       fabricatebAssetBond,
       { amount, validator },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -41,7 +41,7 @@ export class BLuna {
     return new OperationImpl(
       fabricatebAssetBurn,
       { amount: bLunaAmount },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -56,7 +56,7 @@ export class BLuna {
         belief_price: slippageTolerance?.beliefPrice,
         max_spread: slippageTolerance?.maxSpread,
       },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -64,7 +64,7 @@ export class BLuna {
     return new OperationImpl(
       fabricatebAssetWithdrawUnbonded,
       {},
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -72,22 +72,22 @@ export class BLuna {
     return new OperationImpl(
       fabricatebAssetClaimRewards,
       { recipient },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
   async getUnbondRequests(address: string): Promise<UnbondResponse> {
-    return await queryHubUnbond({ lcd: this.lcd, address })(
-      this.addressProvider,
+    return await queryHubUnbond({ lcd: this._lcd, address })(
+      this._addressProvider,
     );
   }
 
   async getClaimableRewards(address: string): Promise<string> {
-    const holder = await queryRewardHolder({ lcd: this.lcd, address })(
-      this.addressProvider,
+    const holder = await queryRewardHolder({ lcd: this._lcd, address })(
+      this._addressProvider,
     );
-    const rewardState = await queryRewardState({ lcd: this.lcd })(
-      this.addressProvider,
+    const rewardState = await queryRewardState({ lcd: this._lcd })(
+      this._addressProvider,
     );
 
     return new Int(
@@ -96,6 +96,7 @@ export class BLuna {
       ),
     )
       .add(new Int(holder.pending_rewards))
+      .div(1000000)
       .toString();
   }
 }

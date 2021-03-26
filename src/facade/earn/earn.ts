@@ -14,19 +14,19 @@ import { Int, Dec } from '@terra-money/terra.js';
 import { BLOCKS_PER_YEAR } from '../../constants';
 
 export class Earn {
-  lcd!: LCDClient;
-  addressProvider!: AddressProvider;
+  private _lcd!: LCDClient;
+  private _addressProvider!: AddressProvider;
 
   constructor(lcd: LCDClient, addressProvider: AddressProvider) {
-    this.lcd = lcd;
-    this.addressProvider = addressProvider;
+    this._lcd = lcd;
+    this._addressProvider = addressProvider;
   }
 
   depositStable(market: MARKET_DENOMS, amount: string): Operation {
     return new OperationImpl(
       fabricateMarketDepositStableCoin,
       { market, amount },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -34,7 +34,7 @@ export class Earn {
     return new OperationImpl(
       fabricateMarketRedeemStable,
       { market, amount },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -42,23 +42,23 @@ export class Earn {
     market: MARKET_DENOMS,
     address: string,
   ): Promise<string> {
-    const epochState = await queryMarketEpochState({ lcd: this.lcd, market })(
-      this.addressProvider,
+    const epochState = await queryMarketEpochState({ lcd: this._lcd, market })(
+      this._addressProvider,
     );
     const userATerraBalance = await queryTokenBalance({
-      lcd: this.lcd,
+      lcd: this._lcd,
       address,
-      token_address: this.addressProvider.aTerra(market),
-    })(this.addressProvider);
+      token_address: this._addressProvider.aTerra(market),
+    })(this._addressProvider);
 
     return new Int(
       new Dec(epochState.exchange_rate).mul(userATerraBalance.balance),
-    ).toString();
+    ).div(1000000).toString();
   }
 
   async getAPY(market: MARKET_DENOMS): Promise<number> {
-    const epochState = await queryOverseerEpochState({ lcd: this.lcd, market })(
-      this.addressProvider,
+    const epochState = await queryOverseerEpochState({ lcd: this._lcd, market })(
+      this._addressProvider,
     );
     return new Dec(epochState.deposit_rate).mul(BLOCKS_PER_YEAR).toNumber();
   }

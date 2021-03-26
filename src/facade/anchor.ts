@@ -7,9 +7,6 @@ import { Earn } from './earn/earn'
 
 // the frontier 
 export default class Anchor {
-  lcd!: LCDClient
-  addressProvider!: AddressProvider
-
   // sub-facades
   earn!: Earn
   borrow!: Borrow
@@ -17,9 +14,6 @@ export default class Anchor {
   anchorToken!: AnchorToken
 
   constructor(lcd: LCDClient, addressProvider: AddressProvider) {
-    this.addressProvider = addressProvider
-    this.lcd = lcd
-
     this.earn = new Earn(lcd, addressProvider)
     this.borrow = new Borrow(lcd, addressProvider)
     this.bluna = new BLuna(lcd, addressProvider)

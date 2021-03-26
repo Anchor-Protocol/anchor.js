@@ -17,18 +17,18 @@ export interface Operation {
 }
 
 export class OperationImpl<FabricatorInputType> implements Operation {
-  fabricator!: Fabricator<FabricatorInputType>
-  option!: OmitAddress<FabricatorInputType>
-  addressProvider!: AddressProvider
+  private _fabricator!: Fabricator<FabricatorInputType>
+  private _option!: OmitAddress<FabricatorInputType>
+  private _addressProvider!: AddressProvider
 
   constructor(fabricator: Fabricator<FabricatorInputType>, option: OmitAddress<FabricatorInputType>, addressProvider: AddressProvider) {
-    this.fabricator = fabricator
-    this.option = option
-    this.addressProvider = addressProvider
+    this._fabricator = fabricator
+    this._option = option
+    this._addressProvider = addressProvider
   }
 
   generateWithAddress(address: string): Msg[] {
-    return this.fabricator({ address, ...this.option } as unknown as FabricatorInputType)(this.addressProvider)
+    return this._fabricator({ address, ...this._option } as unknown as FabricatorInputType)(this._addressProvider)
   }
 
   generateWithWallet(wallet: Wallet): Msg[] {
@@ -40,11 +40,11 @@ export class OperationImpl<FabricatorInputType> implements Operation {
       fee,
       gasAdjustment,
       gasPrices,
-      msgs: this.fabricator({
+      msgs: this._fabricator({
         address: wallet.key.accAddress,
-        ...this.option
+        ...this._option
       } as unknown as FabricatorInputType)(
-        this.addressProvider
+        this._addressProvider
       ), 
     })
     return wallet.lcd.tx.broadcast(tx)

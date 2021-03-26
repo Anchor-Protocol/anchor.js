@@ -17,19 +17,19 @@ import { Operation, OperationImpl } from '../operation';
 import { SlippageToleranceConfig } from '../types';
 
 export class AnchorToken {
-  lcd!: LCDClient;
-  addressProvider!: AddressProvider;
+  private _lcd!: LCDClient;
+  private _addressProvider!: AddressProvider;
 
   constructor(lcd: LCDClient, addressProvider: AddressProvider) {
-    this.lcd = lcd;
-    this.addressProvider = addressProvider;
+    this._lcd = lcd;
+    this._addressProvider = addressProvider;
   }
 
   claimUSTBorrowRewards(market: MARKET_DENOMS, to?: string): Operation {
     return new OperationImpl(
       fabricateMarketClaimRewards,
       { market, to },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -37,7 +37,7 @@ export class AnchorToken {
     return new OperationImpl(
       fabricateStakingWithdraw,
       {},
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -55,7 +55,7 @@ export class AnchorToken {
         max_spread: slippageControl?.maxSpread,
         to,
       },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -72,7 +72,7 @@ export class AnchorToken {
         belief_price: slippageControl?.beliefPrice,
         max_spread: slippageControl?.maxSpread,
       },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -91,7 +91,7 @@ export class AnchorToken {
         slippage_tolerance: slippageTolerance,
         expires,
       },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -101,7 +101,7 @@ export class AnchorToken {
       {
         amount: tokenAmount,
       },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -111,7 +111,7 @@ export class AnchorToken {
       {
         amount: lpTokenAmount,
       },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
@@ -121,41 +121,41 @@ export class AnchorToken {
       {
         amount: unstakeAmount,
       },
-      this.addressProvider,
+      this._addressProvider,
     );
   }
 
   async getBalance(address: string): Promise<string> {
     const balance = await queryTokenBalance({
-      lcd: this.lcd,
+      lcd: this._lcd,
       address,
-      token_address: this.addressProvider.ANC(),
-    })(this.addressProvider);
-    return balance.balance;
+      token_address: this._addressProvider.ANC(),
+    })(this._addressProvider);
+    return new Dec(balance.balance).div(1000000).toString();
   }
 
   async getLPBalance(address: string): Promise<string> {
     const balance = await queryTokenBalance({
-      lcd: this.lcd,
+      lcd: this._lcd,
       address,
-      token_address: this.addressProvider.terraswapAncUstLPToken(),
-    })(this.addressProvider);
-    return balance.balance;
+      token_address: this._addressProvider.terraswapAncUstLPToken(),
+    })(this._addressProvider);
+    return new Dec(balance.balance).div(1000000).toString();
   }
 
   async getProvidedLP(address: string): Promise<string> {
     const provided = await queryStakingStaker({
-      lcd: this.lcd,
+      lcd: this._lcd,
       staker: address,
-    })(this.addressProvider);
-    return provided.bond_amount;
+    })(this._addressProvider);
+    return new Dec(provided.bond_amount).div(1000000).toString();
   }
 
   async getANCPrice(): Promise<string> {
     const poolInfo = await queryTerraswapPool({
-      lcd: this.lcd,
-      pair_contract_address: this.addressProvider.terraswapAncUstPair(),
-    })(this.addressProvider);
+      lcd: this._lcd,
+      pair_contract_address: this._addressProvider.terraswapAncUstPair(),
+    })(this._addressProvider);
     const anc = poolInfo.assets[0].amount;
     const uusd = poolInfo.assets[1].amount;
 
