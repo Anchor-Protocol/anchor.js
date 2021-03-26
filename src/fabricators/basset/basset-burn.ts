@@ -5,7 +5,7 @@ import {
   validateIsGreaterThanZero,
   validateIsNumber,
 } from '../../utils/validation/number';
-import { AddressProvider } from 'address-provider';
+import { AddressProvider } from '../../address-provider';
 
 interface Option {
   address: string;

@@ -11,7 +11,7 @@ import { AddressProvider } from '../../address-provider/provider';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 
 /* eslint-disable */
-type Expire = { at_height: number } | { at_time: number } | { never: {} };
+export type Expire = { at_height: number } | { at_time: number } | { never: {} };
 
 interface Option {
   address: string;
