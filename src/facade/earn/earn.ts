@@ -1,4 +1,4 @@
-import { LCDClient } from '@terra-money/terra.js';
+import { Int, Dec, LCDClient } from '@terra-money/terra.js';
 import { AddressProvider, MARKET_DENOMS } from '../../address-provider';
 import {
   fabricateMarketDepositStableCoin,
@@ -10,7 +10,6 @@ import {
   queryTokenBalance,
 } from '../../queries';
 import { Operation, OperationImpl } from '../operation';
-import { Int, Dec } from '@terra-money/terra.js';
 import { BLOCKS_PER_YEAR } from '../../constants';
 
 export class Earn {

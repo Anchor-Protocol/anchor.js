@@ -21,11 +21,10 @@ export const queryTokenAllAccounts = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _: AddressProvider,
 ): Promise<AllAccounts> => {
-  const response: AllAccounts = await lcd.wasm.contractQuery(token_address, {
+  return lcd.wasm.contractQuery<AllAccounts>(token_address, {
     all_accounts: {
       start_after: start_after || undefined,
       limit: limit || undefined,
     },
   });
-  return response;
 };

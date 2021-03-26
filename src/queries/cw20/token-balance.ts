@@ -19,10 +19,9 @@ export const queryTokenBalance = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _: AddressProvider,
 ): Promise<Balance> => {
-  const response: Balance = await lcd.wasm.contractQuery(token_address, {
+  return lcd.wasm.contractQuery<Balance>(token_address, {
     balance: {
       address: address,
     },
   });
-  return response;
 };

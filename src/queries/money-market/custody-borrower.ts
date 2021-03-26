@@ -29,7 +29,7 @@ export const queryCustodyBorrower = ({
     ? custody
     : addressProvider.custody(market, custody as COLLATERAL_DENOMS);
 
-  const response: BorrowerResponse = await lcd.wasm.contractQuery(
+  return lcd.wasm.contractQuery<BorrowerResponse>(
     custodyAddress,
     {
       borrower: {
@@ -37,5 +37,4 @@ export const queryCustodyBorrower = ({
       },
     },
   );
-  return response;
 };

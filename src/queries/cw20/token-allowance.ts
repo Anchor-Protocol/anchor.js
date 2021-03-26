@@ -20,11 +20,10 @@ export const queryTokenAllowance = ({
   owner,
   spender,
 }: Option) => async (_: AddressProvider): Promise<Allowance> => {
-  const response: Allowance = await lcd.wasm.contractQuery(token_address, {
+  return lcd.wasm.contractQuery<Allowance>(token_address, {
     allowance: {
       owner: owner,
       spender: spender,
     },
   });
-  return response;
 };

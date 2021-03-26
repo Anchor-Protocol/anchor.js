@@ -17,11 +17,10 @@ export const queryTokenInfo = ({ lcd, token_address }: Option) => async (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _: AddressProvider,
 ): Promise<TokenInfoResponse> => {
-  const response: TokenInfoResponse = await lcd.wasm.contractQuery(
+  return lcd.wasm.contractQuery<TokenInfoResponse>(
     token_address,
     {
       token_info: {},
     },
   );
-  return response;
 };
