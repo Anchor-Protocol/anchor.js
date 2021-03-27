@@ -30,7 +30,6 @@ export * from './money-market/market-config';
 export * from './money-market/market-epoch-state';
 export * from './money-market/market-borrower-infos';
 export * from './money-market/market-borrower-info';
-export * from './money-market/market-loan-amount';
 export * from './money-market/oracle-feeder';
 export * from './money-market/market-state';
 export * from './money-market/oracle-config';

@@ -12,8 +12,9 @@ import {
 } from '../../fabricators';
 import {
   queryCustodyBorrower,
-  queryMarketLoanAmount,
+  queryMarketBorrowerInfo,
   queryOraclePrices,
+  queryOverseerBorrowLimit,
   queryOverseerWhitelist,
 } from '../../queries';
 import { Operation, OperationImpl } from '../operation';
@@ -80,9 +81,9 @@ export class Borrow {
     const oraclePrice = await queryOraclePrices({ lcd: this._lcd, limit: 30 })(
       this._addressProvider,
     );
-    const COLLATERAL_DENOMS = await this.getCOLLATERAL_DENOMS(market, address);
+    const collaterals = await this.getCollaterals(market, address);
 
-    const total = COLLATERAL_DENOMS.reduce((sum, collateral) => {
+    const total = collaterals.reduce((sum, collateral) => {
       const collateralPrice = oraclePrice.prices.find(
         (p) => p.asset === collateral.collateral,
       );
@@ -96,7 +97,7 @@ export class Borrow {
     return total.div(1000000).toString();
   }
 
-  async getCOLLATERAL_DENOMS(
+  async getCollaterals(
     market: MARKET_DENOMS,
     address: string,
   ): Promise<UserCollateral[]> {
@@ -135,13 +136,27 @@ export class Borrow {
     address: string,
   ): Promise<string> {
     const { block } = await this._lcd.tendermint.blockInfo();
-    const loanAmount = await queryMarketLoanAmount({
+    const loanAmount = await queryMarketBorrowerInfo({
       lcd: this._lcd,
       market,
       borrower: address,
-      blockHeight: +block.header.height,
+      block_height: +block.header.height,
     })(this._addressProvider);
 
-    return new Dec(loanAmount.loanAmount).div(1000000).toString();
+    return new Dec(loanAmount.loan_amount).div(1000000).toString();
+  }
+
+  async getBorrowLimit(
+    market: MARKET_DENOMS,
+    address: string,
+  ): Promise<string> {
+    const { block } = await this._lcd.tendermint.blockInfo();
+    const borrowLimitResponse = await queryOverseerBorrowLimit({
+      lcd: this._lcd,
+      overseer: market,
+      borrower: address,
+      block_time: +block.header.height,
+    })(this._addressProvider);
+    return new Dec(borrowLimitResponse.borrow_limit).div(1000000).toString();
   }
 }

@@ -6,7 +6,12 @@ interface Option {
   start_after?: string;
   limit?: number;
 }
-interface PricesResponse {
+
+interface PriceResponseInterim {
+  Ok: PricesResponse;
+}
+
+export interface PricesResponse {
   prices: PricesResponseElem[];
 }
 
@@ -24,14 +29,12 @@ export const queryOraclePrices = ({
   addressProvider: AddressProvider,
 ): Promise<PricesResponse> => {
   const oracleContractAddress = addressProvider.oracle();
-  const response: PricesResponse = await lcd.wasm.contractQuery(
-    oracleContractAddress,
-    {
+  return await lcd.wasm
+    .contractQuery<PriceResponseInterim>(oracleContractAddress, {
       prices: {
         start_after: start_after,
         limit: limit,
       },
-    },
-  );
-  return response;
+    })
+    .then((data) => data.Ok);
 };
