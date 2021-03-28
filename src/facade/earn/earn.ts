@@ -3,6 +3,8 @@ import { AddressProvider, MARKET_DENOMS } from '../../address-provider';
 import {
   fabricateMarketDepositStableCoin,
   fabricateMarketRedeemStable,
+  OmitAddress,
+  OptionType,
 } from '../../fabricators';
 import {
   queryMarketEpochState,
@@ -11,6 +13,22 @@ import {
 } from '../../queries';
 import { Operation, OperationImpl } from '../operation';
 import { BLOCKS_PER_YEAR } from '../../constants';
+
+export type EarnDepositStableOption = OptionType<
+  typeof fabricateMarketDepositStableCoin
+>;
+export type EarnWithdrawStableOption = OptionType<
+  typeof fabricateMarketRedeemStable
+>;
+
+export interface GetTotalDepositOption {
+  market: MARKET_DENOMS;
+  address: string;
+}
+
+export interface GetApyOption {
+  market: MARKET_DENOMS;
+}
 
 export class Earn {
   private _lcd!: LCDClient;
@@ -21,33 +39,37 @@ export class Earn {
     this._addressProvider = addressProvider;
   }
 
-  depositStable(market: MARKET_DENOMS, amount: string): Operation {
+  depositStable(
+    depositStableOption: OmitAddress<EarnDepositStableOption>,
+  ): Operation {
     return new OperationImpl(
       fabricateMarketDepositStableCoin,
-      { market, amount },
+      depositStableOption,
       this._addressProvider,
     );
   }
 
-  withdrawStable(market: MARKET_DENOMS, amount: string): Operation {
+  withdrawStable(
+    withdrawStableOption: OmitAddress<EarnWithdrawStableOption>,
+  ): Operation {
     return new OperationImpl(
       fabricateMarketRedeemStable,
-      { market, amount },
+      withdrawStableOption,
       this._addressProvider,
     );
   }
 
   async getTotalDeposit(
-    market: MARKET_DENOMS,
-    address: string,
+    getTotalDepositOption: GetTotalDepositOption,
   ): Promise<string> {
-    const epochState = await queryMarketEpochState({ lcd: this._lcd, market })(
-      this._addressProvider,
-    );
+    const epochState = await queryMarketEpochState({
+      lcd: this._lcd,
+      market: getTotalDepositOption.market,
+    })(this._addressProvider);
     const userATerraBalance = await queryTokenBalance({
       lcd: this._lcd,
-      address,
-      token_address: this._addressProvider.aTerra(market),
+      address: getTotalDepositOption.address,
+      token_address: this._addressProvider.aTerra(getTotalDepositOption.market),
     })(this._addressProvider);
 
     return new Int(
@@ -57,10 +79,10 @@ export class Earn {
       .toString();
   }
 
-  async getAPY(market: MARKET_DENOMS): Promise<number> {
+  async getAPY(getAPYOption: GetApyOption): Promise<number> {
     const epochState = await queryOverseerEpochState({
       lcd: this._lcd,
-      market,
+      ...getAPYOption,
     })(this._addressProvider);
     return new Dec(epochState.deposit_rate).mul(BLOCKS_PER_YEAR).toNumber();
   }
