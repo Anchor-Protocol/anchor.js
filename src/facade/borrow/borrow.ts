@@ -22,14 +22,14 @@ interface UserCollateral {
   balance: string;
 }
 
-export type BorrowBorrowOption = OptionType<typeof fabricateMarketBorrow>;
-export type BorrowRepayOption = OptionType<typeof fabricateMarketRepay>;
-export type BorrowProvideCollateralOption = OptionType<
+export type BorrowBorrowOption = OmitAddress<OptionType<typeof fabricateMarketBorrow>>;
+export type BorrowRepayOption = OmitAddress<OptionType<typeof fabricateMarketRepay>>;
+export type BorrowProvideCollateralOption = OmitAddress<OptionType<
   typeof fabricateProvideCollateral
->;
-export type BorrowWithdrawCollateralOption = OptionType<
+>>;
+export type BorrowWithdrawCollateralOption = OmitAddress<OptionType<
   typeof fabricateRedeemCollateral
->;
+>>;
 
 export interface BorrowQueriesOptions {
   market: MARKET_DENOMS;
@@ -45,7 +45,7 @@ export class Borrow {
     this._addressProvider = addressProvider;
   }
 
-  borrow(borrowOption: OmitAddress<BorrowBorrowOption>): Operation {
+  borrow(borrowOption: BorrowBorrowOption): Operation {
     return new OperationImpl(
       fabricateMarketBorrow,
       borrowOption,
@@ -53,7 +53,7 @@ export class Borrow {
     );
   }
 
-  repay(repayOption: OmitAddress<BorrowRepayOption>): Operation {
+  repay(repayOption: BorrowRepayOption): Operation {
     return new OperationImpl(
       fabricateMarketRepay,
       repayOption,
@@ -62,7 +62,7 @@ export class Borrow {
   }
 
   provideCollateral(
-    provideCollateralOptions: OmitAddress<BorrowProvideCollateralOption>,
+    provideCollateralOptions: BorrowProvideCollateralOption,
   ): Operation {
     return new OperationImpl(
       fabricateProvideCollateral,
@@ -72,7 +72,7 @@ export class Borrow {
   }
 
   withdrawCollateral(
-    withdrawCollateralOption: OmitAddress<BorrowWithdrawCollateralOption>,
+    withdrawCollateralOption: BorrowWithdrawCollateralOption,
   ): Operation {
     return new OperationImpl(
       fabricateRedeemCollateral,

@@ -14,12 +14,12 @@ import {
 import { Operation, OperationImpl } from '../operation';
 import { BLOCKS_PER_YEAR } from '../../constants';
 
-export type EarnDepositStableOption = OptionType<
+export type EarnDepositStableOption = OmitAddress<OptionType<
   typeof fabricateMarketDepositStableCoin
->;
-export type EarnWithdrawStableOption = OptionType<
+>>;
+export type EarnWithdrawStableOption = OmitAddress<OptionType<
   typeof fabricateMarketRedeemStable
->;
+>>;
 
 export interface GetTotalDepositOption {
   market: MARKET_DENOMS;
@@ -40,7 +40,7 @@ export class Earn {
   }
 
   depositStable(
-    depositStableOption: OmitAddress<EarnDepositStableOption>,
+    depositStableOption: EarnDepositStableOption,
   ): Operation {
     return new OperationImpl(
       fabricateMarketDepositStableCoin,
@@ -50,7 +50,7 @@ export class Earn {
   }
 
   withdrawStable(
-    withdrawStableOption: OmitAddress<EarnWithdrawStableOption>,
+    withdrawStableOption: EarnWithdrawStableOption,
   ): Operation {
     return new OperationImpl(
       fabricateMarketRedeemStable,
