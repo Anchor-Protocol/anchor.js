@@ -82,13 +82,13 @@ export class Borrow {
   }
 
   async getCollateralValue(
-    getCollateralsOption: BorrowQueriesOptions,
+      getCollateralValueOption: BorrowQueriesOptions,
   ): Promise<string> {
     // only bLuna is supported now, and the below requests are only about bLuna
     const oraclePrice = await queryOraclePrices({ lcd: this._lcd, limit: 30 })(
       this._addressProvider,
     );
-    const collaterals = await this.getCollaterals(getCollateralsOption);
+    const collaterals = await this.getCollaterals(getCollateralValueOption);
 
     const total = collaterals.reduce((sum, collateral) => {
       const collateralPrice = oraclePrice.prices.find(
@@ -137,13 +137,13 @@ export class Borrow {
   }
 
   async getBorrowedValue(
-    getCollateralsOption: BorrowQueriesOptions,
+      getBorrowedValueOption: BorrowQueriesOptions,
   ): Promise<string> {
     const { block } = await this._lcd.tendermint.blockInfo();
     const loanAmount = await queryMarketBorrowerInfo({
       lcd: this._lcd,
-      market: getCollateralsOption.market,
-      borrower: getCollateralsOption.address,
+      market: getBorrowedValueOption.market,
+      borrower: getBorrowedValueOption.address,
       block_height: +block.header.height,
     })(this._addressProvider);
 
@@ -151,13 +151,13 @@ export class Borrow {
   }
 
   async getBorrowLimit(
-    getCollateralsOption: BorrowQueriesOptions,
+      getBorrowLimitOption: BorrowQueriesOptions,
   ): Promise<string> {
     const { block } = await this._lcd.tendermint.blockInfo();
     const borrowLimitResponse = await queryOverseerBorrowLimit({
       lcd: this._lcd,
-      overseer: getCollateralsOption.market,
-      borrower: getCollateralsOption.address,
+      overseer: getBorrowLimitOption.market,
+      borrower: getBorrowLimitOption.address,
       block_time: +block.header.height,
     })(this._addressProvider);
     return new Dec(borrowLimitResponse.borrow_limit).div(1000000).toString();
