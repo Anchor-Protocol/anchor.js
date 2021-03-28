@@ -7,6 +7,6 @@ export type Expire =
   // eslint-disable-next-line @typescript-eslint/ban-types
   | { never: {} };
 
-export type OptionType<T> = T extends Fabricator<infer Option> ? Option : null
+export type OptionType<T> = T extends Fabricator<infer Option> ? OmitAddress<Option> : null
 export type Fabricator<T> = (option: T) => (addressProvider: AddressProvider) => Msg[]
 export type OmitAddress<T> = Omit<T, "address">
