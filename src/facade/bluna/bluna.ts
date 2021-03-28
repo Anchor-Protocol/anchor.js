@@ -6,6 +6,8 @@ import {
   fabricatebAssetClaimRewards,
   fabricatebAssetWithdrawUnbonded,
   fabricateTerraswapSwapbLuna,
+  OmitAddress,
+  OptionType,
 } from '../../fabricators';
 import {
   queryHubUnbond,
@@ -15,9 +17,17 @@ import {
 } from '../../queries';
 import { Operation, OperationImpl } from '../operation';
 
-interface SlippageToleranceConfig {
-  beliefPrice: string;
-  maxSpread: string;
+export type BlunaMintOption = OptionType<typeof fabricatebAssetBond>;
+export type BlunaBurnOption = OptionType<typeof fabricatebAssetBurn>;
+export type BlunaInstantBurnOption = OptionType<
+  typeof fabricateTerraswapSwapbLuna
+>;
+export type BlunaClaimRewardsOption = OptionType<
+  typeof fabricatebAssetClaimRewards
+>;
+
+export interface BlunaQueriesOption {
+  address: string;
 }
 
 export class BLuna {
@@ -29,33 +39,28 @@ export class BLuna {
     this._addressProvider = addressProvider;
   }
 
-  mint(amount: string, validator: string): Operation {
+  mint(mintOption: OmitAddress<BlunaMintOption>): Operation {
     return new OperationImpl(
       fabricatebAssetBond,
-      { amount, validator },
+      mintOption,
       this._addressProvider,
     );
   }
 
-  burn(bLunaAmount: string): Operation {
+  burn(burnOption: OmitAddress<BlunaBurnOption>): Operation {
     return new OperationImpl(
       fabricatebAssetBurn,
-      { amount: bLunaAmount },
+      burnOption,
       this._addressProvider,
     );
   }
 
   instantBurn(
-    bLunaAmount: string,
-    slippageTolerance?: SlippageToleranceConfig,
+    instantiateBurnOption: OmitAddress<BlunaInstantBurnOption>,
   ): Operation {
     return new OperationImpl(
       fabricateTerraswapSwapbLuna,
-      {
-        amount: bLunaAmount,
-        belief_price: slippageTolerance?.beliefPrice,
-        max_spread: slippageTolerance?.maxSpread,
-      },
+      instantiateBurnOption,
       this._addressProvider,
     );
   }
@@ -68,22 +73,29 @@ export class BLuna {
     );
   }
 
-  claim(recipient?: string): Operation {
+  claim(claimOptions: OmitAddress<BlunaClaimRewardsOption>): Operation {
     return new OperationImpl(
       fabricatebAssetClaimRewards,
-      { recipient },
+      claimOptions,
       this._addressProvider,
     );
   }
 
-  async getUnbondRequests(address: string): Promise<UnbondResponse> {
-    return queryHubUnbond({ lcd: this._lcd, address })(this._addressProvider);
-  }
-
-  async getClaimableRewards(address: string): Promise<string> {
-    const holder = await queryRewardHolder({ lcd: this._lcd, address })(
+  async getUnbondRequests(
+    getUnbondRequestsOption: BlunaQueriesOption,
+  ): Promise<UnbondResponse> {
+    return queryHubUnbond({ lcd: this._lcd, ...getUnbondRequestsOption })(
       this._addressProvider,
     );
+  }
+
+  async getClaimableRewards(
+    getClaimableRewardsOption: BlunaQueriesOption,
+  ): Promise<string> {
+    const holder = await queryRewardHolder({
+      lcd: this._lcd,
+      ...getClaimableRewardsOption,
+    })(this._addressProvider);
     const rewardState = await queryRewardState({ lcd: this._lcd })(
       this._addressProvider,
     );

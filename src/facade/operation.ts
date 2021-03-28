@@ -1,4 +1,5 @@
 import { BlockTxBroadcastResult, Coins, Msg, Numeric, StdFee, Wallet } from "@terra-money/terra.js"
+import { Fabricator, OmitAddress } from ".."
 import { AddressProvider } from "../address-provider"
 
 export interface OperationGasParameters {
@@ -6,9 +7,6 @@ export interface OperationGasParameters {
   gasPrices?: Coins.Input;
   gasAdjustment?: Numeric.Input;
 }
-
-type Fabricator<T> = (option: T) => (addressProvider: AddressProvider) => Msg[]
-type OmitAddress<T> = Omit<T, "address">
 
 export interface Operation {
   generateWithAddress(address: string): Msg[]

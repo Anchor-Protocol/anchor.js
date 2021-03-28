@@ -1,7 +1,12 @@
 import { Dec, LCDClient } from '@terra-money/terra.js';
 import { AddressProvider, MARKET_DENOMS } from '../../address-provider';
 import {
-  Expire,
+  fabricateGovCastVote,
+  fabricateGovCreatePoll,
+  fabricateGovEndPoll,
+  fabricateGovExecutePoll,
+  fabricateGovExpirePoll,
+  fabricateGovStakeVoting,
   fabricateMarketClaimRewards,
   fabricateStakingBond,
   fabricateStakingUnbond,
@@ -10,11 +15,29 @@ import {
   fabricateTerraswapSwapANC,
   fabricateTerraswapSwapUSTANC,
   fabricateTerraswapWithdrawLiquidityANC,
+  OmitAddress,
+  OmitLCD,
+  OptionType,
 } from '../../fabricators';
-import { queryStakingStaker, queryTokenBalance } from '../../queries';
+import { queryGovPoll, queryGovPolls, queryGovStaker, queryGovState, queryStakingStaker, queryTokenBalance } from '../../queries';
 import { queryTerraswapPool } from '../../queries/terraswap/pool';
+import { QueryOptionType, QueryResponseType } from '../../queries/types';
 import { Operation, OperationImpl } from '../operation';
 import { SlippageToleranceConfig } from '../types';
+
+// type exports
+export type AnchorTokenClaimUSTBorrowRewardsOption = OmitAddress<OptionType<typeof fabricateMarketClaimRewards>>
+export type AnchorTokenGovCreatePollOption = OmitAddress<OptionType<typeof fabricateGovCreatePoll>>
+export type AnchorTokenGovCastVoteOption = OmitAddress<OptionType<typeof fabricateGovCastVote>>
+export type AnchorTokenGovEndPollOption = OmitAddress<OptionType<typeof fabricateGovEndPoll>>
+export type AnchorTokenGovExecutePollOption = OmitAddress<OptionType<typeof fabricateGovExecutePoll>>
+export type AnchorTokenGovExpirePollOption = OmitAddress<OptionType<typeof fabricateGovExpirePoll>>
+export type AnchorTokenStakeVotingTokensOption = OmitAddress<OptionType<typeof fabricateGovStakeVoting>>
+export type AnchorTokenProvideLiquidityOption = OmitAddress<Omit<OptionType<typeof fabricateTerraswapProvideLiquidityANC>, "quote">>
+export type AnchorTokenGetStakerOption = OmitLCD<QueryOptionType<typeof queryGovStaker>>
+export type AnchorTokenGetPollOption = OmitLCD<QueryOptionType<typeof queryGovPoll>>
+export type AnchorTokenGetPollsOption = OmitLCD<QueryOptionType<typeof queryGovPolls>>
+
 
 export class AnchorToken {
   private _lcd!: LCDClient;
@@ -25,10 +48,10 @@ export class AnchorToken {
     this._addressProvider = addressProvider;
   }
 
-  claimUSTBorrowRewards(market: MARKET_DENOMS, to?: string): Operation {
+  claimUSTBorrowRewards(option: AnchorTokenClaimUSTBorrowRewardsOption): Operation {
     return new OperationImpl(
       fabricateMarketClaimRewards,
-      { market, to },
+      option,
       this._addressProvider,
     );
   }
@@ -76,21 +99,10 @@ export class AnchorToken {
     );
   }
 
-  provideLiquidity(
-    uusdAmount: string,
-    ancAmount: string,
-    slippageTolerance?: string,
-    expires?: Expire,
-  ): Operation {
+  provideLiquidity(option: AnchorTokenProvideLiquidityOption): Operation {
     return new OperationImpl(
       fabricateTerraswapProvideLiquidityANC,
-      {
-        token_amount: ancAmount,
-        native_amount: uusdAmount,
-        quote: 'uusd',
-        slippage_tolerance: slippageTolerance,
-        expires,
-      },
+      { ...option, quote: 'uusd' },
       this._addressProvider,
     );
   }
@@ -160,5 +172,71 @@ export class AnchorToken {
     const uusd = poolInfo.assets[1].amount;
 
     return new Dec(uusd).div(anc).toString();
+  }
+
+  // gov related
+  createPoll(createPollOption: AnchorTokenGovCreatePollOption): Operation {
+    return new OperationImpl(
+      fabricateGovCreatePoll,
+      createPollOption,
+      this._addressProvider
+    )
+  }
+
+  castVote(castVoteOption: AnchorTokenGovCastVoteOption): Operation {
+    return new OperationImpl(
+      fabricateGovCastVote,
+      castVoteOption,
+      this._addressProvider
+    )
+  }
+
+  endPoll(endPollOption: AnchorTokenGovEndPollOption): Operation {
+    return new OperationImpl(
+      fabricateGovEndPoll,
+      endPollOption,
+      this._addressProvider
+    )
+  }
+
+  executePoll(executePollOption: AnchorTokenGovExecutePollOption): Operation {
+    return new OperationImpl(
+      fabricateGovExecutePoll,
+      executePollOption,
+      this._addressProvider
+    )
+
+  }
+
+  expirePoll(expirePollOption: AnchorTokenGovExpirePollOption): Operation {
+    return new OperationImpl(
+      fabricateGovExpirePoll,
+      expirePollOption,
+      this._addressProvider
+    )
+  }
+
+  stakeVotingTokens(stakeVotingTokensOption: AnchorTokenStakeVotingTokensOption): Operation {
+    return new OperationImpl(
+      fabricateGovStakeVoting,
+      stakeVotingTokensOption,
+      this._addressProvider
+    )
+  }
+
+  async getGovState(): QueryResponseType<typeof queryGovState> {
+    return queryGovState({ lcd: this._lcd })(this._addressProvider)
+  }
+
+  async getStaker(option: AnchorTokenGetStakerOption): QueryResponseType<typeof queryGovStaker> {
+    return queryGovStaker({ lcd: this._lcd, ...option })(this._addressProvider)
+  }
+  
+  async getPoll(option: AnchorTokenGetPollOption): QueryResponseType<typeof queryGovPoll> {
+    return queryGovPoll({ lcd: this._lcd, ...option })(this._addressProvider)
+  }
+
+  async getPolls(option: AnchorTokenGetPollsOption): QueryResponseType<typeof queryGovPolls> {
+    return queryGovPolls({ lcd: this._lcd, ...option })(this._addressProvider)
   }
 }

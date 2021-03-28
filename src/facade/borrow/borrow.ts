@@ -1,14 +1,12 @@
 import { Dec, LCDClient } from '@terra-money/terra.js';
-import {
-  AddressProvider,
-  MARKET_DENOMS,
-  COLLATERAL_DENOMS,
-} from '../../address-provider';
+import { AddressProvider, MARKET_DENOMS } from '../../address-provider';
 import {
   fabricateMarketBorrow,
   fabricateMarketRepay,
   fabricateProvideCollateral,
   fabricateRedeemCollateral,
+  OmitAddress,
+  OptionType,
 } from '../../fabricators';
 import {
   queryCustodyBorrower,
@@ -24,6 +22,20 @@ interface UserCollateral {
   balance: string;
 }
 
+export type BorrowBorrowOption = OmitAddress<OptionType<typeof fabricateMarketBorrow>>;
+export type BorrowRepayOption = OmitAddress<OptionType<typeof fabricateMarketRepay>>;
+export type BorrowProvideCollateralOption = OmitAddress<OptionType<
+  typeof fabricateProvideCollateral
+>>;
+export type BorrowWithdrawCollateralOption = OmitAddress<OptionType<
+  typeof fabricateRedeemCollateral
+>>;
+
+export interface BorrowQueriesOptions {
+  market: MARKET_DENOMS;
+  address: string;
+}
+
 export class Borrow {
   private _lcd!: LCDClient;
   private _addressProvider!: AddressProvider;
@@ -33,55 +45,50 @@ export class Borrow {
     this._addressProvider = addressProvider;
   }
 
-  borrow(market: MARKET_DENOMS, amount: string): Operation {
+  borrow(borrowOption: BorrowBorrowOption): Operation {
     return new OperationImpl(
       fabricateMarketBorrow,
-      { market, amount },
+      borrowOption,
       this._addressProvider,
     );
   }
 
-  repay(market: MARKET_DENOMS, amount: string): Operation {
+  repay(repayOption: BorrowRepayOption): Operation {
     return new OperationImpl(
       fabricateMarketRepay,
-      { market, amount },
+      repayOption,
       this._addressProvider,
     );
   }
 
   provideCollateral(
-    market: MARKET_DENOMS,
-    collateral: COLLATERAL_DENOMS,
-    amount: string,
+    provideCollateralOptions: BorrowProvideCollateralOption,
   ): Operation {
     return new OperationImpl(
       fabricateProvideCollateral,
-      { market, collateral, amount },
+      provideCollateralOptions,
       this._addressProvider,
     );
   }
 
   withdrawCollateral(
-    market: MARKET_DENOMS,
-    collateral: COLLATERAL_DENOMS,
-    amount: string,
+    withdrawCollateralOption: BorrowWithdrawCollateralOption,
   ): Operation {
     return new OperationImpl(
       fabricateRedeemCollateral,
-      { market, collateral, amount },
+      withdrawCollateralOption,
       this._addressProvider,
     );
   }
 
   async getCollateralValue(
-    market: MARKET_DENOMS,
-    address: string,
+      getCollateralValueOption: BorrowQueriesOptions,
   ): Promise<string> {
     // only bLuna is supported now, and the below requests are only about bLuna
     const oraclePrice = await queryOraclePrices({ lcd: this._lcd, limit: 30 })(
       this._addressProvider,
     );
-    const collaterals = await this.getCollaterals(market, address);
+    const collaterals = await this.getCollaterals(getCollateralValueOption);
 
     const total = collaterals.reduce((sum, collateral) => {
       const collateralPrice = oraclePrice.prices.find(
@@ -98,22 +105,20 @@ export class Borrow {
   }
 
   async getCollaterals(
-    market: MARKET_DENOMS,
-    address: string,
+    getCollateralsOption: BorrowQueriesOptions,
   ): Promise<UserCollateral[]> {
     // get user balances of all COLLATERAL_DENOMS
     const whitelistedCollaterals = await queryOverseerWhitelist({
       lcd: this._lcd,
-      market,
+      ...getCollateralsOption,
     })(this._addressProvider);
     const collateralDenoms = await Promise.all(
       whitelistedCollaterals.elems
         .map(async (whitelist) => {
           const userBalance = await queryCustodyBorrower({
             lcd: this._lcd,
-            address,
-            market,
-            custody: market,
+            ...getCollateralsOption,
+            custody: getCollateralsOption.market,
           })(this._addressProvider);
 
           if (userBalance.balance === '0') {
@@ -132,14 +137,13 @@ export class Borrow {
   }
 
   async getBorrowedValue(
-    market: MARKET_DENOMS,
-    address: string,
+      getBorrowedValueOption: BorrowQueriesOptions,
   ): Promise<string> {
     const { block } = await this._lcd.tendermint.blockInfo();
     const loanAmount = await queryMarketBorrowerInfo({
       lcd: this._lcd,
-      market,
-      borrower: address,
+      market: getBorrowedValueOption.market,
+      borrower: getBorrowedValueOption.address,
       block_height: +block.header.height,
     })(this._addressProvider);
 
@@ -147,14 +151,13 @@ export class Borrow {
   }
 
   async getBorrowLimit(
-    market: MARKET_DENOMS,
-    address: string,
+      getBorrowLimitOption: BorrowQueriesOptions,
   ): Promise<string> {
     const { block } = await this._lcd.tendermint.blockInfo();
     const borrowLimitResponse = await queryOverseerBorrowLimit({
       lcd: this._lcd,
-      overseer: market,
-      borrower: address,
+      overseer: getBorrowLimitOption.market,
+      borrower: getBorrowLimitOption.address,
       block_time: +block.header.height,
     })(this._addressProvider);
     return new Dec(borrowLimitResponse.borrow_limit).div(1000000).toString();
