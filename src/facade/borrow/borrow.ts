@@ -113,7 +113,7 @@ export class Borrow {
             lcd: this._lcd,
             address,
             market,
-            custody: whitelist.collateral_token,
+            custody: market,
           })(this._addressProvider);
 
           if (userBalance.balance === '0') {
@@ -122,7 +122,7 @@ export class Borrow {
 
           return {
             collateral: whitelist.collateral_token,
-            balance: new Dec(userBalance.balance).div(1000000).toString(),
+            balance: new Dec(userBalance.balance).toString(),
           };
         })
         .filter(Boolean),
