@@ -2,6 +2,12 @@ import { Dec, LCDClient } from '@terra-money/terra.js';
 import { AddressProvider, MARKET_DENOMS } from '../../address-provider';
 import {
   Expire,
+  fabricateGovCastVote,
+  fabricateGovCreatePoll,
+  fabricateGovEndPoll,
+  fabricateGovExecutePoll,
+  fabricateGovExpirePoll,
+  fabricateGovStakeVoting,
   fabricateMarketClaimRewards,
   fabricateStakingBond,
   fabricateStakingUnbond,
@@ -10,11 +16,17 @@ import {
   fabricateTerraswapSwapANC,
   fabricateTerraswapSwapUSTANC,
   fabricateTerraswapWithdrawLiquidityANC,
+  OmitAddress,
+  OptionType,
+  VoteOption,
 } from '../../fabricators';
 import { queryStakingStaker, queryTokenBalance } from '../../queries';
 import { queryTerraswapPool } from '../../queries/terraswap/pool';
 import { Operation, OperationImpl } from '../operation';
 import { SlippageToleranceConfig } from '../types';
+
+// type exports
+export type GovCreatePollOption = OptionType<typeof fabricateGovCreatePoll>
 
 export class AnchorToken {
   private _lcd!: LCDClient;
@@ -161,4 +173,71 @@ export class AnchorToken {
 
     return new Dec(uusd).div(anc).toString();
   }
+
+  // gov related
+  createPoll(createPollOption: OmitAddress<GovCreatePollOption>): Operation {
+    return new OperationImpl(
+      fabricateGovCreatePoll,
+      createPollOption,
+      this._addressProvider
+    )
+  }
+
+  castVote(poll_id: number, vote: VoteOption, amount: string): Operation {
+    return new OperationImpl(
+      fabricateGovCastVote,
+      {
+        poll_id,
+        vote,
+        amount
+      },
+      this._addressProvider
+    )
+  }
+
+  endPoll(poll_id: number): Operation {
+    return new OperationImpl(
+      fabricateGovEndPoll,
+      {
+        poll_id,
+      },
+      this._addressProvider
+    )
+  }
+
+  executePoll(poll_id: number): Operation {
+    return new OperationImpl(
+      fabricateGovExecutePoll,
+      {
+        poll_id
+      },
+      this._addressProvider
+    )
+
+  }
+
+  expirePoll(poll_id: number): Operation {
+    return new OperationImpl(
+      fabricateGovExpirePoll,
+      {
+        poll_id
+      },
+      this._addressProvider
+    )
+  }
+
+  stakeVotingTokens(amount: string): Operation {
+    return new OperationImpl(
+      fabricateGovStakeVoting,
+      {
+        amount
+      },
+      this._addressProvider
+    )
+  }
+
+  async getGovState() {}
+  async getStaker() {}
+  async getPoll() {}
+  async getPolls() {}
 }
