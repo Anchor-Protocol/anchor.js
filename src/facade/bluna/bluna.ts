@@ -3,7 +3,7 @@ import { AddressProvider } from '../../address-provider';
 import {
   fabricatebAssetBond,
   fabricatebAssetBurn,
-  fabricatebAssetClaimRewards,
+  fabricatebAssetClaimRewards, fabricatebAssetUnbond,
   fabricatebAssetWithdrawUnbonded,
   fabricateTerraswapSwapbLuna,
   OmitAddress,
@@ -18,7 +18,7 @@ import {
 import { Operation, OperationImpl } from '../operation';
 
 export type BlunaMintOption = OptionType<typeof fabricatebAssetBond>;
-export type BlunaBurnOption = OptionType<typeof fabricatebAssetBurn>;
+export type BlunaBurnOption = OptionType<typeof fabricatebAssetUnbond>;
 export type BlunaInstantBurnOption = OptionType<
   typeof fabricateTerraswapSwapbLuna
 >;
@@ -49,7 +49,7 @@ export class BLuna {
 
   burn(burnOption: OmitAddress<BlunaBurnOption>): Operation {
     return new OperationImpl(
-      fabricatebAssetBurn,
+      fabricatebAssetUnbond,
       burnOption,
       this._addressProvider,
     );
