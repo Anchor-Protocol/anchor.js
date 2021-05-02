@@ -72,7 +72,7 @@ export class Earn {
       token_address: this._addressProvider.aTerra(getTotalDepositOption.market),
     })(this._addressProvider);
 
-    return new Int(
+    return new Dec(
       new Dec(epochState.exchange_rate).mul(userATerraBalance.balance),
     )
       .div(1000000)

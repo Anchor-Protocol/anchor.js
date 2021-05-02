@@ -100,12 +100,12 @@ export class BLuna {
       this._addressProvider,
     );
 
-    return new Int(
-      new Int(holder.balance).mul(
+    return new Dec(
+      new Dec(holder.balance).mul(
         new Dec(rewardState.global_index).sub(new Dec(holder.index)),
       ),
     )
-      .add(new Int(holder.pending_rewards))
+      .add(new Dec(holder.pending_rewards))
       .div(1000000)
       .toString();
   }
