@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - main
 
 jobs:
   deploy:
@@ -16,8 +17,8 @@ jobs:
 
       - name: Build
         run: |
-          yarn
-          yarn doc
+          npm i
+          npm run doc
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:

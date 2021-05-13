@@ -7,9 +7,9 @@ function precommit(...workspaces) {
 module.exports = {
   hooks: {
     'pre-commit': [
-      `yarn format`,
-      `yarn lint`,
-      `yarn build`,
+      `npm run format`,
+      `npm run lint`,
+      `npm run build`,
       // ...precommit(`packages-template`),
     ].join(' && '),
   },
