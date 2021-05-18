@@ -91,7 +91,7 @@ export class Borrow {
     const collaterals = await this.getCollaterals(getCollateralValueOption);
 
     if (collaterals.length === 1 && collaterals[0] === null) {
-      return new terra_js_1.Dec(0).toString();
+      return new Dec(0).toString();
     }
 
     const total = collaterals.reduce((sum, collateral) => {
