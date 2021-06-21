@@ -1,24 +1,13 @@
 {
-  "include": [
-    "src/**/*",
-  ],
-  "exclude": [
-    "/node_modules/",
-    "./src/**/*.spec.ts",
-    "src/**/*.no-commit.*"
-  ],
+  "include": ["src/**/*"],
+  "exclude": ["/node_modules/", "./src/**/*.spec.ts", "src/**/*.no-commit.*"],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "alwaysStrict": true,
     "declaration": true,
     "esModuleInterop": true,
-    "lib": [
-      "es2015",
-      "es2016",
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2015", "es2016", "es2017", "es2020", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
@@ -34,6 +23,6 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "target": "es2015",
+    "target": "es2015"
   }
 }
