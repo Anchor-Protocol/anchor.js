@@ -1,37 +1,38 @@
-import { testFabricator } from '../utils/test-fabricators/test-fabricator';
-import { addressProvider } from '../__tests__/common';
-import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
+import {testFabricator} from '../utils/test-fabricators/test-fabricator';
+import {addressProvider} from '../__tests__/common';
+import {Dec, Int, MsgExecuteContract} from '@terra-money/terra.js';
 import {
-  fabricateCustodyDepositCollateral,
-  fabricateCustodyUpdateConfig,
-  fabricateCustodyWithdrawCollateral,
-  fabricateMarketBorrow,
-  fabricateMarketClaimRewards,
-  fabricateMarketDepositStableCoin,
-  fabricateMarketRedeemStable,
-  fabricateMarketRepay,
-  fabricateMarketUpdateConfig,
-  fabricateOverseerEpochOperations,
-  fabricateOverseerLiquidateCollateral,
-  fabricateOverseerLockCollateral,
-  fabricateOverseerUnlockCollateral,
-  fabricateOverseerUpdateConfig,
-  fabricateOverseerUpdateWhitelist,
-  fabricateOverseerWhitelist,
-  fabricateInterestUpdateConfig,
-  fabricateDistributionUpdateConfig,
-  fabricateOracleUpdateConfig,
-  fabricateOracleRegisterFeeder,
-  fabricateOracleFeedPrice,
-  Pair,
-  fabricateLiquidationSubmitBid,
-  fabricateLiquidationRetractBid,
-  fabricateLiquidationUpdateConfig,
-  fabricateProvideCollateral,
-  fabricateRedeemCollateral,
+    fabricateCustodyDepositCollateral,
+    fabricateCustodyUpdateConfig,
+    fabricateCustodyWithdrawCollateral,
+    fabricateDistributionUpdateConfig,
+    fabricateInterestUpdateConfig,
+    fabricateLiquidationRetractBid,
+    fabricateLiquidationSubmitBid,
+    fabricateLiquidationUpdateConfig,
+    fabricateMarketBorrow,
+    fabricateMarketClaimRewards,
+    fabricateMarketDepositStableCoin,
+    fabricateMarketRedeemStable,
+    fabricateMarketRepay,
+    fabricateMarketUpdateConfig,
+    fabricateOracleFeedPrice,
+    fabricateOracleRegisterFeeder,
+    fabricateOracleUpdateConfig,
+    fabricateOverseerEpochOperations,
+    fabricateOverseerLiquidateCollateral,
+    fabricateOverseerLockCollateral,
+    fabricateOverseerUnlockCollateral,
+    fabricateOverseerUpdateConfig,
+    fabricateOverseerUpdateWhitelist,
+    fabricateOverseerWhitelist,
+    fabricateProvideCollateral,
+    fabricateRedeemCollateral,
+    Pair,
 } from '../fabricators';
-import { COLLATERAL_DENOMS, MARKET_DENOMS } from '../address-provider';
-import { createHookMsg } from '../utils/cw20/create-hook-msg';
+import {COLLATERAL_DENOMS, MARKET_DENOMS} from '../address-provider';
+import {createHookMsg} from '../utils/cw20/create-hook-msg';
+
 
 /* eslint-disable */
 describe('Money Market', () => {
@@ -368,7 +369,7 @@ describe('Money Market', () => {
         [
           new MsgExecuteContract('address', addressProvider.bLunaToken(), {
             send: {
-              contract: addressProvider.custody(),
+              contract: addressProvider.custody(MARKET_DENOMS.UUSD, COLLATERAL_DENOMS.UBLUNA),
               amount: new Int(new Dec('1000').mul(1000000)).toString(),
               msg: createHookMsg({
                 deposit_collateral: {},
@@ -391,7 +392,7 @@ describe('Money Market', () => {
         },
         addressProvider,
         [
-          new MsgExecuteContract('address', addressProvider.custody(), {
+          new MsgExecuteContract('address', addressProvider.custody(MARKET_DENOMS.UUSD, COLLATERAL_DENOMS.UBLUNA), {
             withdraw_collateral: {
               amount: new Int(new Dec('1000').mul(1000000)).toString(),
             },
@@ -413,7 +414,7 @@ describe('Money Market', () => {
         },
         addressProvider,
         [
-          new MsgExecuteContract('address', addressProvider.custody(), {
+          new MsgExecuteContract('address', addressProvider.custody(MARKET_DENOMS.UUSD, COLLATERAL_DENOMS.UBLUNA), {
             update_config: {
               owner: 'new-owner',
               liquidation_contract: 'liquidation',
@@ -423,6 +424,77 @@ describe('Money Market', () => {
       );
     });
   });
+
+    describe('custody-beth', () => {
+        it('deposit-collateral', async () => {
+            testFabricator(
+                expect,
+                fabricateCustodyDepositCollateral,
+                {
+                    address: 'address',
+                    market: MARKET_DENOMS.UUSD,
+                    collateral: COLLATERAL_DENOMS.UBETH,
+                    amount: '1000',
+                },
+                addressProvider,
+                [
+                    new MsgExecuteContract('address', addressProvider.bEthToken(), {
+                        send: {
+                            contract: addressProvider.custody(MARKET_DENOMS.UUSD, COLLATERAL_DENOMS.UBETH),
+                            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+                            msg: createHookMsg({
+                                deposit_collateral: {},
+                            }),
+                        },
+                    }),
+                ],
+            );
+        });
+
+        it('withdraw-collateral', async () => {
+            testFabricator(
+                expect,
+                fabricateCustodyWithdrawCollateral,
+                {
+                    address: 'address',
+                    market: MARKET_DENOMS.UUSD,
+                    collateral: COLLATERAL_DENOMS.UBETH,
+                    amount: '1000',
+                },
+                addressProvider,
+                [
+                    new MsgExecuteContract('address', addressProvider.custody(MARKET_DENOMS.UUSD, COLLATERAL_DENOMS.UBETH), {
+                        withdraw_collateral: {
+                            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+                        },
+                    }),
+                ],
+            );
+        });
+
+        it('update-config', async () => {
+            testFabricator(
+                expect,
+                fabricateCustodyUpdateConfig,
+                {
+                    address: 'address',
+                    owner: 'new-owner',
+                    market: MARKET_DENOMS.UUSD,
+                    collateral: COLLATERAL_DENOMS.UBETH,
+                    liquidation_contract: 'liquidation',
+                },
+                addressProvider,
+                [
+                    new MsgExecuteContract('address', addressProvider.custody(MARKET_DENOMS.UUSD, COLLATERAL_DENOMS.UBETH), {
+                        update_config: {
+                            owner: 'new-owner',
+                            liquidation_contract: 'liquidation',
+                        },
+                    }),
+                ],
+            );
+        });
+    });
 
   describe('interest-model', () => {
     it('update-config', async () => {
@@ -638,7 +710,7 @@ describe('Money Market', () => {
       [
         new MsgExecuteContract('address', addressProvider.bLunaToken(), {
           send: {
-            contract: addressProvider.custody(),
+            contract: addressProvider.custody(MARKET_DENOMS.UUSD, COLLATERAL_DENOMS.UBLUNA),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             msg: createHookMsg({
               deposit_collateral: {},
@@ -681,7 +753,7 @@ describe('Money Market', () => {
             ],
           },
         }),
-        new MsgExecuteContract('address', addressProvider.custody(), {
+        new MsgExecuteContract('address', addressProvider.custody(MARKET_DENOMS.UUSD, COLLATERAL_DENOMS.UBLUNA), {
           withdraw_collateral: {
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
           },

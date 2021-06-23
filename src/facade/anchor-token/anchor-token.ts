@@ -19,25 +19,53 @@ import {
   OmitLCD,
   OptionType,
 } from '../../fabricators';
-import { queryGovPoll, queryGovPolls, queryGovStaker, queryGovState, queryStakingStaker, queryTokenBalance } from '../../queries';
+import {
+  queryGovPoll,
+  queryGovPolls,
+  queryGovStaker,
+  queryGovState,
+  queryStakingStaker,
+  queryTokenBalance,
+} from '../../queries';
 import { queryTerraswapPool } from '../../queries/terraswap/pool';
 import { QueryOptionType, QueryResponseType } from '../../queries/types';
 import { Operation, OperationImpl } from '../operation';
 import { SlippageToleranceConfig } from '../types';
 
 // type exports
-export type AnchorTokenClaimUSTBorrowRewardsOption = OmitAddress<OptionType<typeof fabricateMarketClaimRewards>>
-export type AnchorTokenGovCreatePollOption = OmitAddress<OptionType<typeof fabricateGovCreatePoll>>
-export type AnchorTokenGovCastVoteOption = OmitAddress<OptionType<typeof fabricateGovCastVote>>
-export type AnchorTokenGovEndPollOption = OmitAddress<OptionType<typeof fabricateGovEndPoll>>
-export type AnchorTokenGovExecutePollOption = OmitAddress<OptionType<typeof fabricateGovExecutePoll>>
-export type AnchorTokenGovExpirePollOption = OmitAddress<OptionType<typeof fabricateGovExpirePoll>>
-export type AnchorTokenStakeVotingTokensOption = OmitAddress<OptionType<typeof fabricateGovStakeVoting>>
-export type AnchorTokenProvideLiquidityOption = OmitAddress<Omit<OptionType<typeof fabricateTerraswapProvideLiquidityANC>, "quote">>
-export type AnchorTokenGetStakerOption = OmitLCD<QueryOptionType<typeof queryGovStaker>>
-export type AnchorTokenGetPollOption = OmitLCD<QueryOptionType<typeof queryGovPoll>>
-export type AnchorTokenGetPollsOption = OmitLCD<QueryOptionType<typeof queryGovPolls>>
-
+export type AnchorTokenClaimUSTBorrowRewardsOption = OmitAddress<
+  OptionType<typeof fabricateMarketClaimRewards>
+>;
+export type AnchorTokenGovCreatePollOption = OmitAddress<
+  OptionType<typeof fabricateGovCreatePoll>
+>;
+export type AnchorTokenGovCastVoteOption = OmitAddress<
+  OptionType<typeof fabricateGovCastVote>
+>;
+export type AnchorTokenGovEndPollOption = OmitAddress<
+  OptionType<typeof fabricateGovEndPoll>
+>;
+export type AnchorTokenGovExecutePollOption = OmitAddress<
+  OptionType<typeof fabricateGovExecutePoll>
+>;
+export type AnchorTokenGovExpirePollOption = OmitAddress<
+  OptionType<typeof fabricateGovExpirePoll>
+>;
+export type AnchorTokenStakeVotingTokensOption = OmitAddress<
+  OptionType<typeof fabricateGovStakeVoting>
+>;
+export type AnchorTokenProvideLiquidityOption = OmitAddress<
+  Omit<OptionType<typeof fabricateTerraswapProvideLiquidityANC>, 'quote'>
+>;
+export type AnchorTokenGetStakerOption = OmitLCD<
+  QueryOptionType<typeof queryGovStaker>
+>;
+export type AnchorTokenGetPollOption = OmitLCD<
+  QueryOptionType<typeof queryGovPoll>
+>;
+export type AnchorTokenGetPollsOption = OmitLCD<
+  QueryOptionType<typeof queryGovPolls>
+>;
 
 export class AnchorToken {
   private _lcd!: LCDClient;
@@ -48,7 +76,9 @@ export class AnchorToken {
     this._addressProvider = addressProvider;
   }
 
-  claimUSTBorrowRewards(option: AnchorTokenClaimUSTBorrowRewardsOption): Operation {
+  claimUSTBorrowRewards(
+    option: AnchorTokenClaimUSTBorrowRewardsOption,
+  ): Operation {
     return new OperationImpl(
       fabricateMarketClaimRewards,
       option,
@@ -179,64 +209,71 @@ export class AnchorToken {
     return new OperationImpl(
       fabricateGovCreatePoll,
       createPollOption,
-      this._addressProvider
-    )
+      this._addressProvider,
+    );
   }
 
   castVote(castVoteOption: AnchorTokenGovCastVoteOption): Operation {
     return new OperationImpl(
       fabricateGovCastVote,
       castVoteOption,
-      this._addressProvider
-    )
+      this._addressProvider,
+    );
   }
 
   endPoll(endPollOption: AnchorTokenGovEndPollOption): Operation {
     return new OperationImpl(
       fabricateGovEndPoll,
       endPollOption,
-      this._addressProvider
-    )
+      this._addressProvider,
+    );
   }
 
   executePoll(executePollOption: AnchorTokenGovExecutePollOption): Operation {
     return new OperationImpl(
       fabricateGovExecutePoll,
       executePollOption,
-      this._addressProvider
-    )
-
+      this._addressProvider,
+    );
   }
 
   expirePoll(expirePollOption: AnchorTokenGovExpirePollOption): Operation {
     return new OperationImpl(
       fabricateGovExpirePoll,
       expirePollOption,
-      this._addressProvider
-    )
+      this._addressProvider,
+    );
   }
 
-  stakeVotingTokens(stakeVotingTokensOption: AnchorTokenStakeVotingTokensOption): Operation {
+  stakeVotingTokens(
+    stakeVotingTokensOption: AnchorTokenStakeVotingTokensOption,
+  ): Operation {
     return new OperationImpl(
       fabricateGovStakeVoting,
       stakeVotingTokensOption,
-      this._addressProvider
-    )
+      this._addressProvider,
+    );
   }
 
   async getGovState(): QueryResponseType<typeof queryGovState> {
-    return queryGovState({ lcd: this._lcd })(this._addressProvider)
+    return queryGovState({ lcd: this._lcd })(this._addressProvider);
   }
 
-  async getStaker(option: AnchorTokenGetStakerOption): QueryResponseType<typeof queryGovStaker> {
-    return queryGovStaker({ lcd: this._lcd, ...option })(this._addressProvider)
-  }
-  
-  async getPoll(option: AnchorTokenGetPollOption): QueryResponseType<typeof queryGovPoll> {
-    return queryGovPoll({ lcd: this._lcd, ...option })(this._addressProvider)
+  async getStaker(
+    option: AnchorTokenGetStakerOption,
+  ): QueryResponseType<typeof queryGovStaker> {
+    return queryGovStaker({ lcd: this._lcd, ...option })(this._addressProvider);
   }
 
-  async getPolls(option: AnchorTokenGetPollsOption): QueryResponseType<typeof queryGovPolls> {
-    return queryGovPolls({ lcd: this._lcd, ...option })(this._addressProvider)
+  async getPoll(
+    option: AnchorTokenGetPollOption,
+  ): QueryResponseType<typeof queryGovPoll> {
+    return queryGovPoll({ lcd: this._lcd, ...option })(this._addressProvider);
+  }
+
+  async getPolls(
+    option: AnchorTokenGetPollsOption,
+  ): QueryResponseType<typeof queryGovPolls> {
+    return queryGovPolls({ lcd: this._lcd, ...option })(this._addressProvider);
   }
 }

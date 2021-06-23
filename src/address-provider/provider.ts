@@ -5,11 +5,13 @@ export interface AddressProvider {
 
   bLunaToken(): string;
 
-  // https://github.com/Anchor-Protocol/money-market-contracts/tree/master/artifacts
-  // moneymarket_market.wasm
+  bEthReward(): string;
+
+  bEthToken(): string;
+
   market(denom: MARKET_DENOMS): string;
 
-  custody(denom: MARKET_DENOMS, colalteral: COLLATERAL_DENOMS): string;
+  custody(denom: MARKET_DENOMS, collateral: COLLATERAL_DENOMS): string;
 
   overseer(denom: MARKET_DENOMS): string;
 
@@ -55,5 +57,6 @@ export enum MARKET_DENOMS {
 
 export enum COLLATERAL_DENOMS {
   UBLUNA = 'ubluna',
+  UBETH = 'ubeth'
 }
 

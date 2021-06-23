@@ -11,6 +11,7 @@ export * from './basset/reward-state';
 export * from './basset/reward-accrued-rewards';
 export * from './basset/reward-holder';
 export * from './basset/reward-holders';
+export * from './beth';
 export * from './cw20/token-token-info';
 export * from './cw20/token-balance';
 export * from './cw20/token-minter';

@@ -14,6 +14,7 @@ export * from './basset/basset-register-validator';
 export * from './basset/basset-update-config';
 export * from './basset/basset-update-params';
 export * from './basset/basset-withdraw-unbonded';
+export * from './beth';
 export * from './money-market/market-borrow-stable';
 export * from './money-market/market-repay-stable';
 export * from './money-market/market-deposit-stable';
