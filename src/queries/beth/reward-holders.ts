@@ -18,14 +18,10 @@ export const querybEthRewardHolders = ({
   limit,
 }: Option) => async (addressProvider: AddressProvider): Promise<Holders> => {
   const bAssetContractAddress = addressProvider.bEthReward();
-  const response: Holders = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
-    {
-      holders: {
-        start_after: start_after,
-        limit: limit,
-      },
+  return lcd.wasm.contractQuery(bAssetContractAddress, {
+    holders: {
+      start_after: start_after,
+      limit: limit,
     },
-  );
-  return response;
+  });
 };

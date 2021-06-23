@@ -13,11 +13,7 @@ export const querybEthRewardConfig = ({ lcd }: Option) => async (
   addressProvider: AddressProvider,
 ): Promise<ConfigResponse> => {
   const bAssetContractAddress = addressProvider.bEthReward();
-  const response: ConfigResponse = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
-    {
-      config: {},
-    },
-  );
-  return response;
+  return lcd.wasm.contractQuery(bAssetContractAddress, {
+    config: {},
+  });
 };
