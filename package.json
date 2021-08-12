@@ -20,7 +20,6 @@
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "prepublishOnly": "npm run build",
     "integration-test": "ts-node ./integration-test/index.ts",
-    "prepublish": "npm run build",
     "prepare": "husky install"
   },
   "main": "./dist/index.js",
