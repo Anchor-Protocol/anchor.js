@@ -12,21 +12,21 @@ interface Option {
   amount: string;
 }
 
-export const fabricatebAssetBurn = ({ address, amount }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateIsNumber(+amount),
-    validateIsGreaterThanZero(+amount),
-  ]);
+export const fabricatebAssetBurn =
+  ({ address, amount }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsNumber(amount),
+      validateIsGreaterThanZero(amount),
+    ]);
 
-  const bAssetTokenAddress = addressProvider.bLunaToken();
-  return [
-    new MsgExecuteContract(address, bAssetTokenAddress, {
-      burn: {
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-      },
-    }),
-  ];
-};
+    const bAssetTokenAddress = addressProvider.bLunaToken();
+    return [
+      new MsgExecuteContract(address, bAssetTokenAddress, {
+        burn: {
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+        },
+      }),
+    ];
+  };

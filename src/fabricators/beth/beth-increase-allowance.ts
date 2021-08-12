@@ -22,28 +22,25 @@ interface Option {
   expires?: Expire;
 }
 
-export const fabricatebEthIncreaseAllowance = ({
-  address,
-  amount,
-  spender,
-  expires,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateIsNumber(+amount),
-    validateIsGreaterThanZero(+amount),
-    validateAddress(spender),
-  ]);
+export const fabricatebEthIncreaseAllowance =
+  ({ address, amount, spender, expires }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsNumber(amount),
+      validateIsGreaterThanZero(amount),
+      validateAddress(spender),
+    ]);
 
-  const bEthToken = addressProvider.bEthToken();
+    const bEthToken = addressProvider.bEthToken();
 
-  return [
-    new MsgExecuteContract(address, bEthToken, {
-      increase_allowance: {
-        spender: spender,
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-        expires: expires,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bEthToken, {
+        increase_allowance: {
+          spender: spender,
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          expires: expires,
+        },
+      }),
+    ];
+  };

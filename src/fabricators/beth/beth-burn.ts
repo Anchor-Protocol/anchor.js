@@ -17,21 +17,21 @@ interface Option {
   amount: string;
 }
 
-export const fabricatebEthBurn = ({ address, amount }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateIsNumber(+amount),
-    validateIsGreaterThanZero(+amount),
-  ]);
+export const fabricatebEthBurn =
+  ({ address, amount }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsNumber(amount),
+      validateIsGreaterThanZero(amount),
+    ]);
 
-  const bEthTokenAddress = addressProvider.bEthToken();
-  return [
-    new MsgExecuteContract(address, bEthTokenAddress, {
-      burn: {
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-      },
-    }),
-  ];
-};
+    const bEthTokenAddress = addressProvider.bEthToken();
+    return [
+      new MsgExecuteContract(address, bEthTokenAddress, {
+        burn: {
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+        },
+      }),
+    ];
+  };

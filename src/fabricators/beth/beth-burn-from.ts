@@ -19,24 +19,24 @@ interface Option {
   owner: string;
 }
 
-export const fabricatebEthBurnFrom = ({ address, amount, owner }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateIsNumber(+amount),
-    validateIsGreaterThanZero(+amount),
-    validateAddress(owner),
-  ]);
+export const fabricatebEthBurnFrom =
+  ({ address, amount, owner }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsNumber(amount),
+      validateIsGreaterThanZero(amount),
+      validateAddress(owner),
+    ]);
 
-  const bEthTokenAddress = addressProvider.bEthToken();
+    const bEthTokenAddress = addressProvider.bEthToken();
 
-  return [
-    new MsgExecuteContract(address, bEthTokenAddress, {
-      burn_from: {
-        owner: owner,
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bEthTokenAddress, {
+        burn_from: {
+          owner: owner,
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+        },
+      }),
+    ];
+  };

@@ -24,36 +24,32 @@ interface Option {
   msg?: object;
 }
 
-export const fabricatebEthSendFrom = ({
-  address,
-  amount,
-  contract,
-  owner,
-  msg,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateIsNumber(+amount),
-    validateIsGreaterThanZero(+amount),
-    validateAddress(owner),
-    validateAddress(contract),
-  ]);
+export const fabricatebEthSendFrom =
+  ({ address, amount, contract, owner, msg }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsNumber(amount),
+      validateIsGreaterThanZero(amount),
+      validateAddress(owner),
+      validateAddress(contract),
+    ]);
 
-  const bEthTokenAddress = addressProvider.bEthToken();
+    const bEthTokenAddress = addressProvider.bEthToken();
 
-  let message = undefined;
-  if (msg) {
-    message = Buffer.from(JSON.stringify(msg)).toString('base64');
-  }
+    let message = undefined;
+    if (msg) {
+      message = Buffer.from(JSON.stringify(msg)).toString('base64');
+    }
 
-  return [
-    new MsgExecuteContract(address, bEthTokenAddress, {
-      send_from: {
-        owner: owner,
-        contract: contract,
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-        msg: message,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bEthTokenAddress, {
+        send_from: {
+          owner: owner,
+          contract: contract,
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          msg: message,
+        },
+      }),
+    ];
+  };

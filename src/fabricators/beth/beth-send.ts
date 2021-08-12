@@ -21,32 +21,29 @@ interface Option {
  * @param contract Client's Terra address (address of contract that receives the amount).
  * @param msg, message of receiver contract.
  */
-export const fabricatebEthSend = ({
-  address,
-  amount,
-  contract,
-  msg,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateIsNumber(+amount),
-    validateIsGreaterThanZero(+amount),
-    validateAddress(contract),
-  ]);
+export const fabricatebEthSend =
+  ({ address, amount, contract, msg }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsNumber(amount),
+      validateIsGreaterThanZero(amount),
+      validateAddress(contract),
+    ]);
 
-  const bEthTokenAddress = addressProvider.bEthToken();
-  let message = undefined;
-  if (msg) {
-    message = Buffer.from(JSON.stringify(msg)).toString('base64');
-  }
+    const bEthTokenAddress = addressProvider.bEthToken();
+    let message = undefined;
+    if (msg) {
+      message = Buffer.from(JSON.stringify(msg)).toString('base64');
+    }
 
-  return [
-    new MsgExecuteContract(address, bEthTokenAddress, {
-      send: {
-        contract: contract,
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-        msg: message,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bEthTokenAddress, {
+        send: {
+          contract: contract,
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          msg: message,
+        },
+      }),
+    ];
+  };

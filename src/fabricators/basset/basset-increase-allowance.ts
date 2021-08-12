@@ -15,29 +15,26 @@ interface Option {
   expires?: Expire;
 }
 
-export const fabricatebAssetIncreaseAllowance = ({
-  address,
-  amount,
-  spender,
-  expires,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateIsNumber(+amount),
-    validateIsGreaterThanZero(+amount),
-    validateAddress(spender),
-  ]);
+export const fabricatebAssetIncreaseAllowance =
+  ({ address, amount, spender, expires }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsNumber(amount),
+      validateIsGreaterThanZero(amount),
+      validateAddress(spender),
+    ]);
 
-  const bAssetTokenAddress = addressProvider.bLunaToken();
+    const bAssetTokenAddress = addressProvider.bLunaToken();
 
-  return [
-    new MsgExecuteContract(address, bAssetTokenAddress, {
-      // @see https://github.com/Anchor-Protocol/anchor-bAsset-contracts/blob/cce41e707c67ee2852c4929e17fb1472dbd2aa35/contracts/anchor_basset_token/src/contract.rs#L57
-      increase_allowance: {
-        spender: spender,
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-        expires: expires,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bAssetTokenAddress, {
+        // @see https://github.com/Anchor-Protocol/anchor-bAsset-contracts/blob/cce41e707c67ee2852c4929e17fb1472dbd2aa35/contracts/anchor_basset_token/src/contract.rs#L57
+        increase_allowance: {
+          spender: spender,
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          expires: expires,
+        },
+      }),
+    ];
+  };
