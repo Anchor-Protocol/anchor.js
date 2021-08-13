@@ -29,8 +29,13 @@ export const fabricateRedeemCollateral = ({
     amount ? validateIsGreaterThanZero(amount) : validateTrue,
   ]);
 
+  let bAssetTokenContract = addressProvider.bLunaToken();
+
+  if (collateral == COLLATERAL_DENOMS.UBETH) {
+    bAssetTokenContract = addressProvider.bEthToken();
+  }
+
   const mmOverseerContract = addressProvider.overseer(market);
-  const bAssetTokenContract = addressProvider.bLunaToken(); // fixed to ubluna for now
   const custodyContract = addressProvider.custody(market, collateral);
 
   return [

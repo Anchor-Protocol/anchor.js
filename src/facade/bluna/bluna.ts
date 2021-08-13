@@ -2,8 +2,8 @@ import { Dec, Int, LCDClient } from '@terra-money/terra.js';
 import { AddressProvider } from '../../address-provider';
 import {
   fabricatebAssetBond,
-  fabricatebAssetBurn,
-  fabricatebAssetClaimRewards, fabricatebAssetUnbond,
+  fabricatebAssetClaimRewards,
+  fabricatebAssetUnbond,
   fabricatebAssetWithdrawUnbonded,
   fabricateTerraswapSwapbLuna,
   OmitAddress,

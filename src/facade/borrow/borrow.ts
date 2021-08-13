@@ -22,14 +22,18 @@ interface UserCollateral {
   balance: string;
 }
 
-export type BorrowBorrowOption = OmitAddress<OptionType<typeof fabricateMarketBorrow>>;
-export type BorrowRepayOption = OmitAddress<OptionType<typeof fabricateMarketRepay>>;
-export type BorrowProvideCollateralOption = OmitAddress<OptionType<
-  typeof fabricateProvideCollateral
->>;
-export type BorrowWithdrawCollateralOption = OmitAddress<OptionType<
-  typeof fabricateRedeemCollateral
->>;
+export type BorrowBorrowOption = OmitAddress<
+  OptionType<typeof fabricateMarketBorrow>
+>;
+export type BorrowRepayOption = OmitAddress<
+  OptionType<typeof fabricateMarketRepay>
+>;
+export type BorrowProvideCollateralOption = OmitAddress<
+  OptionType<typeof fabricateProvideCollateral>
+>;
+export type BorrowWithdrawCollateralOption = OmitAddress<
+  OptionType<typeof fabricateRedeemCollateral>
+>;
 
 export interface BorrowQueriesOptions {
   market: MARKET_DENOMS;
@@ -82,7 +86,7 @@ export class Borrow {
   }
 
   async getCollateralValue(
-      getCollateralValueOption: BorrowQueriesOptions,
+    getCollateralValueOption: BorrowQueriesOptions,
   ): Promise<string> {
     // only bLuna is supported now, and the below requests are only about bLuna
     const oraclePrice = await queryOraclePrices({ lcd: this._lcd, limit: 30 })(
@@ -141,7 +145,7 @@ export class Borrow {
   }
 
   async getBorrowedValue(
-      getBorrowedValueOption: BorrowQueriesOptions,
+    getBorrowedValueOption: BorrowQueriesOptions,
   ): Promise<string> {
     const { block } = await this._lcd.tendermint.blockInfo();
     const loanAmount = await queryMarketBorrowerInfo({
@@ -155,7 +159,7 @@ export class Borrow {
   }
 
   async getBorrowLimit(
-      getBorrowLimitOption: BorrowQueriesOptions,
+    getBorrowLimitOption: BorrowQueriesOptions,
   ): Promise<string> {
     const { block } = await this._lcd.tendermint.blockInfo();
     const borrowLimitResponse = await queryOverseerBorrowLimit({

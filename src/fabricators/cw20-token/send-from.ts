@@ -26,8 +26,8 @@ export const fabricateCw20SendFrom = ({
 }: Option): MsgExecuteContract[] => {
   validateInput([
     validateAddress(address),
-    validateIsNumber(+amount),
-    validateIsGreaterThanZero(+amount),
+    validateIsNumber(amount),
+    validateIsGreaterThanZero(amount),
     validateAddress(owner),
     validateAddress(contract),
   ]);
