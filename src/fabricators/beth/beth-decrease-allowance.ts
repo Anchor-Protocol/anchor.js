@@ -37,7 +37,7 @@ export const fabricatebEthDecreaseAllowance = ({
     validateAddress(spender),
   ]);
 
-  const bEthTokenAddress = addressProvider.bEthReward();
+  const bEthTokenAddress = addressProvider.bEthToken();
 
   return [
     new MsgExecuteContract(address, bEthTokenAddress, {
