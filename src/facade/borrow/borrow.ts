@@ -88,7 +88,6 @@ export class Borrow {
   async getCollateralValue(
     getCollateralValueOption: BorrowQueriesOptions,
   ): Promise<string> {
-    // only bLuna is supported now, and the below requests are only about bLuna
     const oraclePrice = await queryOraclePrices({ lcd: this._lcd, limit: 30 })(
       this._addressProvider,
     );
@@ -128,10 +127,6 @@ export class Borrow {
             ...getCollateralsOption,
             custody: whitelist.custody_contract,
           })(this._addressProvider);
-
-          if (userBalance.balance === '0') {
-            return null;
-          }
 
           return {
             collateral: whitelist.collateral_token,
