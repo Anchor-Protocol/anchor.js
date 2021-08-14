@@ -126,7 +126,7 @@ export class Borrow {
           const userBalance = await queryCustodyBorrower({
             lcd: this._lcd,
             ...getCollateralsOption,
-            custody: getCollateralsOption.market,
+            custody: whitelist.custody_contract,
           })(this._addressProvider);
 
           if (userBalance.balance === '0') {
