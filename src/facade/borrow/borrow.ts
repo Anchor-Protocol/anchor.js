@@ -93,10 +93,6 @@ export class Borrow {
     );
     const collaterals = await this.getCollaterals(getCollateralValueOption);
 
-    if (collaterals.length === 1 && collaterals[0] === null) {
-      return new Dec(0).toString();
-    }
-
     const total = collaterals.reduce((sum, collateral) => {
       const collateralPrice = oraclePrice.prices.find(
         (p) => p.asset === collateral.collateral,
