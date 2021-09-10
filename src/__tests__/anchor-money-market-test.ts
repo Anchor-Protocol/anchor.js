@@ -28,6 +28,8 @@ import {
     fabricateOverseerWhitelist,
     fabricateProvideCollateral,
     fabricateRedeemCollateral,
+    fabricateOverseerLockBETHCollateral,
+    fabricateOverseerUnlockBETHCollateral,
     Pair,
 } from '../fabricators';
 import {COLLATERAL_DENOMS, MARKET_DENOMS} from '../address-provider';
@@ -159,6 +161,56 @@ describe('Money Market', () => {
         ],
       );
     });
+
+      it('lock-beth-collateral', async () => {
+          testFabricator(
+              expect,
+              fabricateOverseerLockBETHCollateral,
+              {
+                  address: 'address',
+                  market: MARKET_DENOMS.UUSD,
+                  amount: '1000',
+              },
+              addressProvider,
+              [
+                  new MsgExecuteContract('address', addressProvider.overseer(), {
+                      lock_collateral: {
+                          collaterals: [
+                              [
+                                  addressProvider.bEthToken(),
+                                  new Int(new Dec('1000').mul(1000000)).toString(),
+                              ],
+                          ],
+                      },
+                  }),
+              ],
+          );
+      });
+
+      it('unlock-beth-collateral', async () => {
+          testFabricator(
+              expect,
+              fabricateOverseerUnlockBETHCollateral,
+              {
+                  address: 'address',
+                  market: MARKET_DENOMS.UUSD,
+                  amount: '1000',
+              },
+              addressProvider,
+              [
+                  new MsgExecuteContract('address', addressProvider.overseer(), {
+                      unlock_collateral: {
+                          collaterals: [
+                              [
+                                  addressProvider.bEthToken(),
+                                  new Int(new Dec('1000').mul(1000000)).toString(),
+                              ],
+                          ],
+                      },
+                  }),
+              ],
+          );
+      });
 
     it('whitelist', async () => {
       testFabricator(

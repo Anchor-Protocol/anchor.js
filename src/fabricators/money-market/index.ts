@@ -25,3 +25,5 @@ export * from './oracle-register-feeder';
 export * from './oracle-update-config';
 export * from './liquidation-update-config';
 export * from './interest-update-config';
+export * from './overseer-lock-beth-collateral';
+export * from './overseer-unlock-beth-collateral';
