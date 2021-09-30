@@ -28,9 +28,9 @@ Anchor.js provides class wrapper facade for the usual operations available on [w
 
 ```ts
 import { LCDClient, MnemonicKey, StdFee, Wallet } from '@terra-money/terra.js'
-import { Anchor, columbus4, AddressProviderFromJson, MARKET_DENOMS, OperationGasParameters } from '@anchor-protocol/anchor.js'
+import { Anchor, columbus5, AddressProviderFromJson, MARKET_DENOMS, OperationGasParameters } from '@anchor-protocol/anchor.js'
 
-const addressProvider = new AddressProviderFromJson(columbus4)
+const addressProvider = new AddressProviderFromJson(columbus5)
 const lcd = new LCDClient({ URL: 'https://lcd.terra.dev', chainID: 'columbus-4' })
 const key = new MnemonicKey({
   mnemonic: 'your key'
@@ -122,7 +122,7 @@ main();
 
 ## List of contract addresses deployed to networks
 
-- `columbus-4`:
+- `columbus-5`:
   ```js
   {
     bLunaHub: 'terra1mtwph2juhj0rvjz7dy92gvl6xvukaxu8rfv8ts',
@@ -156,7 +156,7 @@ main();
   }
   ```
 
-- `tequila-0004`:
+- `bombay-12`:
    ```js
   {
     bLunaHub: 'terra1fflas6wv4snv8lsda9knvq2w0cyt493r8puh2e',
