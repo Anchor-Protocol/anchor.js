@@ -1,6 +1,6 @@
 import { BlockTxBroadcastResult, LCDClient, MnemonicKey, Msg, MsgExecuteContract, StdFee, StdTx, Wallet } from "@terra-money/terra.js"
 import { AddressProvider, MARKET_DENOMS } from ".."
-import { AddressProviderFromJson, columbus4 } from "../address-provider"
+import { AddressProviderFromJson, columbus5 } from "../address-provider"
 import { OperationImpl } from "./operation"
 
 interface TestOption {
@@ -27,7 +27,7 @@ describe('operation', () => {
     const testKey = new MnemonicKey()
     const testLCDClient = new LCDClient({ URL: 'https://lcd.terra.dev', chainID: 'columbus-4' })
     const testWallet = new Wallet(testLCDClient, testKey)
-    const addressProvider: AddressProvider = new AddressProviderFromJson(columbus4)
+    const addressProvider: AddressProvider = new AddressProviderFromJson(columbus5)
     const operation = new OperationImpl(
       testFabricator,
       {
