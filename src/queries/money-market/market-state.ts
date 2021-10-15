@@ -10,7 +10,7 @@ interface Option {
   block_height: number;
 }
 interface StateResponse {
-  total_liabilites: string;
+  total_liabilities: string;
   total_reserves: string;
   last_interest_updated: number;
   last_reward_updated: string;
