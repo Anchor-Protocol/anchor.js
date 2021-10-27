@@ -27,11 +27,11 @@ $ npm install -S @terra-money/terra.js @anchor-protocol/anchor.js
 Anchor.js provides class wrapper facade for the usual operations available on [webapp](https://app.anchorprotocol.com).
 
 ```ts
-import { LCDClient, MnemonicKey, StdFee, Wallet } from '@terra-money/terra.js'
+import { LCDClient, MnemonicKey, Fee, Wallet } from '@terra-money/terra.js'
 import { Anchor, columbus5, AddressProviderFromJson, MARKET_DENOMS, OperationGasParameters } from '@anchor-protocol/anchor.js'
 
 const addressProvider = new AddressProviderFromJson(columbus5)
-const lcd = new LCDClient({ URL: 'https://lcd.terra.dev', chainID: 'columbus-4' })
+const lcd = new LCDClient({ URL: 'https://lcd.terra.dev', chainID: 'columbus-5' })
 const key = new MnemonicKey({
   mnemonic: 'your key'
 })
@@ -52,7 +52,7 @@ const gasParameters: OperationGasParameters = {
   gasPrices: "0.15uusd",
 
   // or if you want to fixate gas, you can use `fee`
-  fee: new StdFee(gasToSpend, "100000uusd")
+  fee: new Fee(gasToSpend, "100000uusd")
 }
 const txResult = await anchor.earn.depositStable(MARKET_DENOMS.UUSD, "100.5000").execute(wallet, gasParameters)
 ```
@@ -74,7 +74,7 @@ To Use the message fabricators:
 import {fabricateRedeemStable, fabricateDepositStableCoin} from '@anchor-protocol/anchor.js';
 import {AddressProviderFromJson} from "@anchor-protocol/anchor.js"; 
 
-// default -- uses tequila core contract addresses
+// default -- uses bombay core contract addresses
 const addressMap = somehowGetAddresses();
 const addressProvider = new AddressProviderFromJson(addressMap);
     const redeemMsg = fabricateRedeemStable({
@@ -94,17 +94,16 @@ const addressProvider = new AddressProviderFromJson(addressMap);
 A message fabricator contains functions for generating proper `MsgExecuteContract` messages to be included in a transaction and broadcasted.
 
 ```ts
-import { LCDClient, Wallet, MnemonicKey, StdFee} from '@terra-money/terra.js';
+import { LCDClient, Wallet, MnemonicKey, Fee} from '@terra-money/terra.js';
 
-const anchor = new LCDClient({ URL: 'https://tequila-lcd.terra.dev', chainID:'tequila-0004' });
+const anchor = new LCDClient({ URL: 'https://bombay-lcd.terra.dev', chainID:'bombay-12' });
 const owner = new MnemonicKey({ mnemonic: "...."});
 const wallet = new Wallet(anchor, owner);
-
 
 async function depositStable() {
     const tx = await wallet.createAndSignTx({
         msgs: depositMsg,
-        fee: new StdFee(2_000_000, { uluna: 2_000_000 })
+        fee: new Fee(2_000_000, { uluna: 2_000_000 })
     });
     return await anchor.tx.broadcast(tx);
 }

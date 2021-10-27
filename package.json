@@ -29,7 +29,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@terra-money/terra.js": "^2.0.14"
+    "@terra-money/terra.js": "^2.1.19"
   },
   "devDependencies": {
     "@ssen/eslint-config": "^2.0.1",
