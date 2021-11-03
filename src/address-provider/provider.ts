@@ -23,6 +23,8 @@ export interface AddressProvider {
 
   liquidation(): string;
 
+  liquidationQueue(): string;
+
   terraswapblunaLunaPair(): string;
 
   terraswapblunaLunaLPToken(): string;

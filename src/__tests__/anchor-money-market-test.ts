@@ -31,6 +31,10 @@ import {
     fabricateOverseerLockBETHCollateral,
     fabricateOverseerUnlockBETHCollateral,
     Pair,
+    fabricateLiquidationQueueSubmitBid,
+    fabricateLiquidationQueueRetractBid,
+    fabricateLiquidationQueueActiveBids,
+    fabricateLiquidationQueueClaimLiquidation,
 } from '../fabricators';
 import {COLLATERAL_DENOMS, MARKET_DENOMS} from '../address-provider';
 import {createHookMsg} from '../utils/cw20/create-hook-msg';
@@ -747,6 +751,99 @@ describe('Money Market', () => {
       );
     });
   });
+
+    describe('liquidation-queue', () => {
+        it('submit-bid', async () => {
+            testFabricator(
+                expect,
+                fabricateLiquidationQueueSubmitBid,
+                {
+                    address: 'address',
+                    collateral_token: addressProvider.bLunaToken(),
+                    premium_slot: 3,
+                    amount: '1000',
+                    denom: MARKET_DENOMS.UUSD,
+                },
+                addressProvider,
+                [
+                    new MsgExecuteContract(
+                        'address',
+                        addressProvider.liquidationQueue(),
+                        {
+                            submit_bid: {
+                                collateral_token: addressProvider.bLunaToken(),
+                                premium_slot: 3,
+                            },
+                        },
+                        { uusd: new Int(new Dec('1000').mul(1000000)).toString() },
+                    ),
+                ],
+            );
+        });
+
+        it('retract-bid', async () => {
+            testFabricator(
+                expect,
+                fabricateLiquidationQueueRetractBid,
+                {
+                    address: 'address',
+                    bid_idx: '10',
+                    amount: '1000',
+                },
+                addressProvider,
+                [
+                    new MsgExecuteContract('address', addressProvider.liquidationQueue(), {
+                        retract_bid: {
+                            bid_idx: '10',
+                            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+                        },
+                    }),
+                ],
+            );
+        });
+
+        it('active-bids', async () => {
+            testFabricator(
+                expect,
+                fabricateLiquidationQueueActiveBids,
+                {
+                    address: 'address',
+                    bids_idx: undefined,
+                    collateral_token: addressProvider.bLunaToken(),
+                },
+                addressProvider,
+                [
+                    new MsgExecuteContract('address', addressProvider.liquidationQueue(), {
+                        active_bids: {
+                            bids_idx:undefined,
+                            collateral_token: addressProvider.bLunaToken(),
+                        },
+                    }),
+                ],
+            );
+        });
+
+        it('active-bids', async () => {
+            testFabricator(
+                expect,
+                fabricateLiquidationQueueClaimLiquidation,
+                {
+                    address: 'address',
+                    bids_idx: undefined,
+                    collateral_token: addressProvider.bLunaToken(),
+                },
+                addressProvider,
+                [
+                    new MsgExecuteContract('address', addressProvider.liquidationQueue(), {
+                        claim_liquidation: {
+                            bids_idx:undefined,
+                            collateral_token: addressProvider.bLunaToken(),
+                        },
+                    }),
+                ],
+            );
+        });
+    });
 
   it('provide-liquidity', async () => {
     testFabricator(
