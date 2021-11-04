@@ -12,26 +12,28 @@ interface LiquidationAmountResponse {
   collaterals: Array<[string, string]>;
 }
 
-export const queryLiquidationLiquidationAmount = ({
-  lcd,
-  borrow_amount,
-  borrow_limit,
-  collaterals,
-  collateral_prices,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<LiquidationAmountResponse> => {
-  const liquidationContractAddress = addressProvider.liquidation();
-  const response: LiquidationAmountResponse = await lcd.wasm.contractQuery(
-    liquidationContractAddress,
-    {
-      liquidation_amount: {
-        borrow_amount: borrow_amount,
-        borrow_limit: borrow_limit,
-        collaterals: collaterals,
-        collateral_prices: collateral_prices,
+export const queryLiquidationLiquidationAmount =
+  ({
+    lcd,
+    borrow_amount,
+    borrow_limit,
+    collaterals,
+    collateral_prices,
+  }: Option) =>
+  async (
+    addressProvider: AddressProvider,
+  ): Promise<LiquidationAmountResponse> => {
+    const liquidationContractAddress = addressProvider.liquidation();
+    const response: LiquidationAmountResponse = await lcd.wasm.contractQuery(
+      liquidationContractAddress,
+      {
+        liquidation_amount: {
+          borrow_amount: borrow_amount,
+          borrow_limit: borrow_limit,
+          collaterals: collaterals,
+          collateral_prices: collateral_prices,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

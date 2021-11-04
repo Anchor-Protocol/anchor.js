@@ -13,28 +13,27 @@ interface Option {
   amount: string;
 }
 
-export const fabricateTerraswapWithdrawLiquiditybLuna = ({
-  address,
-  amount,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateIsNumber(amount),
-    validateIsGreaterThanZero(amount),
-  ]);
+export const fabricateTerraswapWithdrawLiquiditybLuna =
+  ({ address, amount }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsNumber(amount),
+      validateIsGreaterThanZero(amount),
+    ]);
 
-  const lpToken = addressProvider.terraswapblunaLunaLPToken();
-  const pairAddress = addressProvider.terraswapblunaLunaPair();
+    const lpToken = addressProvider.terraswapblunaLunaLPToken();
+    const pairAddress = addressProvider.terraswapblunaLunaPair();
 
-  return [
-    new MsgExecuteContract(address, lpToken, {
-      send: {
-        contract: pairAddress,
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-        msg: createHookMsg({
-          withdraw_liquidity: {},
-        }),
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, lpToken, {
+        send: {
+          contract: pairAddress,
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          msg: createHookMsg({
+            withdraw_liquidity: {},
+          }),
+        },
+      }),
+    ];
+  };

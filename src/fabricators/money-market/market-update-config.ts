@@ -16,34 +16,36 @@ interface Option {
   max_borrow_factor?: string;
 }
 
-export const fabricateMarketUpdateConfig = ({
-  address,
-  owner_addr,
-  interest_model,
-  distribution_model,
-  reserve_factor,
-  max_borrow_factor,
-  market,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    owner_addr ? validateAddress(owner_addr) : validateTrue,
-    interest_model ? validateAddress(interest_model) : validateTrue,
-    reserve_factor ? validateIsNumber(reserve_factor) : validateTrue,
-    max_borrow_factor ? validateIsNumber(max_borrow_factor) : validateTrue,
-  ]);
+export const fabricateMarketUpdateConfig =
+  ({
+    address,
+    owner_addr,
+    interest_model,
+    distribution_model,
+    reserve_factor,
+    max_borrow_factor,
+    market,
+  }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      owner_addr ? validateAddress(owner_addr) : validateTrue,
+      interest_model ? validateAddress(interest_model) : validateTrue,
+      reserve_factor ? validateIsNumber(reserve_factor) : validateTrue,
+      max_borrow_factor ? validateIsNumber(max_borrow_factor) : validateTrue,
+    ]);
 
-  const mmMarket = addressProvider.market(market);
+    const mmMarket = addressProvider.market(market);
 
-  return [
-    new MsgExecuteContract(address, mmMarket, {
-      update_config: {
-        owner_addr,
-        interest_model,
-        distribution_model,
-        reserve_factor,
-        max_borrow_factor,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmMarket, {
+        update_config: {
+          owner_addr,
+          interest_model,
+          distribution_model,
+          reserve_factor,
+          max_borrow_factor,
+        },
+      }),
+    ];
+  };

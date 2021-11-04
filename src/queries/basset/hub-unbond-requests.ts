@@ -11,17 +11,17 @@ export interface UnbondResponse {
   requests: Array<[number, string]>;
 }
 
-export const queryHubUnbond = ({ lcd, address }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<UnbondResponse> => {
-  const bAssetContractAddress = addressProvider.bLunaHub();
-  const response: UnbondResponse = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
-    {
-      unbond_requests: {
-        address: address,
+export const queryHubUnbond =
+  ({ lcd, address }: Option) =>
+  async (addressProvider: AddressProvider): Promise<UnbondResponse> => {
+    const bAssetContractAddress = addressProvider.bLunaHub();
+    const response: UnbondResponse = await lcd.wasm.contractQuery(
+      bAssetContractAddress,
+      {
+        unbond_requests: {
+          address: address,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

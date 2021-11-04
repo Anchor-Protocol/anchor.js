@@ -17,38 +17,40 @@ interface Option {
   price_timeframe?: number;
 }
 
-export const fabricateLiquidationUpdateConfig = ({
-  address,
-  owner,
-  oracle_contract,
-  stable_denom,
-  safe_ratio,
-  bid_fee,
-  max_premium_rate,
-  liquidation_threshold,
-  price_timeframe,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    owner ? validateAddress(owner) : validateTrue,
-    oracle_contract ? validateAddress(oracle_contract) : validateTrue,
-    price_timeframe ? validateIsNumber(price_timeframe) : validateTrue,
-  ]);
+export const fabricateLiquidationUpdateConfig =
+  ({
+    address,
+    owner,
+    oracle_contract,
+    stable_denom,
+    safe_ratio,
+    bid_fee,
+    max_premium_rate,
+    liquidation_threshold,
+    price_timeframe,
+  }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      owner ? validateAddress(owner) : validateTrue,
+      oracle_contract ? validateAddress(oracle_contract) : validateTrue,
+      price_timeframe ? validateIsNumber(price_timeframe) : validateTrue,
+    ]);
 
-  const mmContractAddress = addressProvider.liquidation();
+    const mmContractAddress = addressProvider.liquidation();
 
-  return [
-    new MsgExecuteContract(address, mmContractAddress, {
-      update_config: {
-        owner: owner,
-        oracle_contract: oracle_contract,
-        stable_denom: stable_denom,
-        safe_ratio: safe_ratio,
-        bid_fee: bid_fee,
-        max_premium_rate: max_premium_rate,
-        liquidation_threshold: liquidation_threshold,
-        price_timeframe: price_timeframe,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmContractAddress, {
+        update_config: {
+          owner: owner,
+          oracle_contract: oracle_contract,
+          stable_denom: stable_denom,
+          safe_ratio: safe_ratio,
+          bid_fee: bid_fee,
+          max_premium_rate: max_premium_rate,
+          liquidation_threshold: liquidation_threshold,
+          price_timeframe: price_timeframe,
+        },
+      }),
+    ];
+  };

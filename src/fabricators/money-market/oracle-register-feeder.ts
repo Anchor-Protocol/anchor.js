@@ -9,21 +9,19 @@ interface Option {
   feeder: string;
 }
 
-export const fabricateOracleRegisterFeeder = ({
-  address,
-  asset,
-  feeder,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address), validateAddress(feeder)]);
+export const fabricateOracleRegisterFeeder =
+  ({ address, asset, feeder }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address), validateAddress(feeder)]);
 
-  const mmOracle = addressProvider.oracle();
+    const mmOracle = addressProvider.oracle();
 
-  return [
-    new MsgExecuteContract(address, mmOracle, {
-      register_feeder: {
-        asset: asset,
-        feeder: feeder,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmOracle, {
+        register_feeder: {
+          asset: asset,
+          feeder: feeder,
+        },
+      }),
+    ];
+  };

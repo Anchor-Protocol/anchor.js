@@ -13,31 +13,31 @@ interface Option {
   validator: string; // validator address
 }
 
-export const fabricatebAssetBond = ({ address, amount, validator }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateValAddress(validator),
-    validateIsGreaterThanZero(amount),
-  ]);
+export const fabricatebAssetBond =
+  ({ address, amount, validator }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateValAddress(validator),
+      validateIsGreaterThanZero(amount),
+    ]);
 
-  const bAssetContractAddress = addressProvider.bLunaHub();
+    const bAssetContractAddress = addressProvider.bLunaHub();
 
-  return [
-    new MsgExecuteContract(
-      address,
-      bAssetContractAddress,
-      {
-        bond: {
-          validator, // validator must be whitelisted
+    return [
+      new MsgExecuteContract(
+        address,
+        bAssetContractAddress,
+        {
+          bond: {
+            validator, // validator must be whitelisted
+          },
         },
-      },
 
-      // send native token
-      {
-        uluna: new Int(new Dec(amount).mul(1000000)).toString(),
-      },
-    ),
-  ];
-};
+        // send native token
+        {
+          uluna: new Int(new Dec(amount).mul(1000000)).toString(),
+        },
+      ),
+    ];
+  };

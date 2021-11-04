@@ -9,17 +9,17 @@ interface AccruedReward {
   rewards: string;
 }
 
-export const queryRewardAccrued = ({ lcd, address }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<AccruedReward> => {
-  const bAssetContractAddress = addressProvider.bLunaReward();
-  const response: AccruedReward = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
-    {
-      accrued_rewards: {
-        address: address,
+export const queryRewardAccrued =
+  ({ lcd, address }: Option) =>
+  async (addressProvider: AddressProvider): Promise<AccruedReward> => {
+    const bAssetContractAddress = addressProvider.bLunaReward();
+    const response: AccruedReward = await lcd.wasm.contractQuery(
+      bAssetContractAddress,
+      {
+        accrued_rewards: {
+          address: address,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

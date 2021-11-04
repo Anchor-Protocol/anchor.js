@@ -10,22 +10,21 @@ interface Option {
   reward_factor?: string;
 }
 
-export const fabricateCollectorUpdateConfig = ({
-  address,
-  reward_factor,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    reward_factor ? validateIsNumber(reward_factor) : validateTrue,
-  ]);
+export const fabricateCollectorUpdateConfig =
+  ({ address, reward_factor }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      reward_factor ? validateIsNumber(reward_factor) : validateTrue,
+    ]);
 
-  const collector = addressProvider.collector();
+    const collector = addressProvider.collector();
 
-  return [
-    new MsgExecuteContract(address, collector, {
-      update_config: {
-        reward_factor,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, collector, {
+        update_config: {
+          reward_factor,
+        },
+      }),
+    ];
+  };

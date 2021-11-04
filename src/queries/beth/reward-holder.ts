@@ -7,13 +7,13 @@ interface Option {
   address: string;
 }
 
-export const querybEthRewardHolder = ({ lcd, address }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<Holder> => {
-  const bAssetContractAddress = addressProvider.bEthReward();
-  return lcd.wasm.contractQuery(bAssetContractAddress, {
-    holder: {
-      address: address,
-    },
-  });
-};
+export const querybEthRewardHolder =
+  ({ lcd, address }: Option) =>
+  async (addressProvider: AddressProvider): Promise<Holder> => {
+    const bAssetContractAddress = addressProvider.bEthReward();
+    return lcd.wasm.contractQuery(bAssetContractAddress, {
+      holder: {
+        address: address,
+      },
+    });
+  };

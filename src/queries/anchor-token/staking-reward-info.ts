@@ -12,12 +12,12 @@ export interface RewardInfoResponse {
   pending_reward: string;
 }
 
-export const queryStakingRewardInfo = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<RewardInfoResponse> => {
-  const staking = addressProvider.staking();
-  const response: RewardInfoResponse = await lcd.wasm.contractQuery(staking, {
-    reward_info: {},
-  });
-  return response;
-};
+export const queryStakingRewardInfo =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<RewardInfoResponse> => {
+    const staking = addressProvider.staking();
+    const response: RewardInfoResponse = await lcd.wasm.contractQuery(staking, {
+      reward_info: {},
+    });
+    return response;
+  };

@@ -8,22 +8,21 @@ interface Option {
   vesting_accounts: string[];
 }
 
-export const fabricateTeamVestingRegisterAccounts = ({
-  address,
-  vesting_accounts,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  vesting_accounts.forEach((account) => {
-    validateInput([validateAddress(account)]);
-  });
-  validateInput([validateAddress(address)]);
+export const fabricateTeamVestingRegisterAccounts =
+  ({ address, vesting_accounts }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    vesting_accounts.forEach((account) => {
+      validateInput([validateAddress(account)]);
+    });
+    validateInput([validateAddress(address)]);
 
-  const team = addressProvider.teamLock();
+    const team = addressProvider.teamLock();
 
-  return [
-    new MsgExecuteContract(address, team, {
-      register_vesting_accounts: {
-        vesting_accounts,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, team, {
+        register_vesting_accounts: {
+          vesting_accounts,
+        },
+      }),
+    ];
+  };

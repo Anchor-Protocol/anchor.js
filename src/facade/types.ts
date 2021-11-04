@@ -1,4 +1,4 @@
 export interface SlippageToleranceConfig {
-  beliefPrice: string,
-  maxSpread: string,
+  beliefPrice: string;
+  maxSpread: string;
 }

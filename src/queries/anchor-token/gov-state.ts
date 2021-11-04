@@ -10,12 +10,12 @@ interface StateResponse {
   total_deposit: string;
 }
 
-export const queryGovState = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<StateResponse> => {
-  const gov = addressProvider.gov();
-  const response: StateResponse = await lcd.wasm.contractQuery(gov, {
-    state: {},
-  });
-  return response;
-};
+export const queryGovState =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<StateResponse> => {
+    const gov = addressProvider.gov();
+    const response: StateResponse = await lcd.wasm.contractQuery(gov, {
+      state: {},
+    });
+    return response;
+  };

@@ -13,12 +13,12 @@ export interface ConfigResponse {
   reward_factor: string;
 }
 
-export const queryCollectorConfig = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const collector = addressProvider.collector();
-  const response: ConfigResponse = await lcd.wasm.contractQuery(collector, {
-    config: {},
-  });
-  return response;
-};
+export const queryCollectorConfig =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const collector = addressProvider.collector();
+    const response: ConfigResponse = await lcd.wasm.contractQuery(collector, {
+      config: {},
+    });
+    return response;
+  };

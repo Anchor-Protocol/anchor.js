@@ -5,7 +5,7 @@ export function testFabricator<
   T,
   FabricatorType extends (
     option: T,
-  ) => (addressProvider: AddressProvider) => Msg[]
+  ) => (addressProvider: AddressProvider) => Msg[],
 >(
   expect: jest.Expect,
   fabricator: FabricatorType,
@@ -20,7 +20,7 @@ export function testFabricator<
 
 export function testCw20Fabricator<
   T,
-  FabricatorType extends (option: T) => Msg[]
+  FabricatorType extends (option: T) => Msg[],
 >(
   expect: jest.Expect,
   fabricator: FabricatorType,

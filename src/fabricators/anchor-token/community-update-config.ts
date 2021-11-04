@@ -10,22 +10,21 @@ interface Option {
   spend_limit?: string;
 }
 
-export const fabricateCommunityUpdateConfig = ({
-  address,
-  spend_limit,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    spend_limit ? validateIsNumber(spend_limit) : validateTrue,
-  ]);
+export const fabricateCommunityUpdateConfig =
+  ({ address, spend_limit }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      spend_limit ? validateIsNumber(spend_limit) : validateTrue,
+    ]);
 
-  const community = addressProvider.community();
+    const community = addressProvider.community();
 
-  return [
-    new MsgExecuteContract(address, community, {
-      update_config: {
-        spend_limit,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, community, {
+        update_config: {
+          spend_limit,
+        },
+      }),
+    ];
+  };

@@ -14,19 +14,15 @@ export interface StakerInfoResponse {
   pending_reward: string;
 }
 
-export const queryStakingStaker = ({
-  lcd,
-  staker,
-  block_height,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<StakerInfoResponse> => {
-  const staking = addressProvider.staking();
-  const response: StakerInfoResponse = await lcd.wasm.contractQuery(staking, {
-    staker_info: {
-      staker,
-      block_height,
-    },
-  });
-  return response;
-};
+export const queryStakingStaker =
+  ({ lcd, staker, block_height }: Option) =>
+  async (addressProvider: AddressProvider): Promise<StakerInfoResponse> => {
+    const staking = addressProvider.staking();
+    const response: StakerInfoResponse = await lcd.wasm.contractQuery(staking, {
+      staker_info: {
+        staker,
+        block_height,
+      },
+    });
+    return response;
+  };

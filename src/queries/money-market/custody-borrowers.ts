@@ -17,24 +17,18 @@ interface BorrowersResponse {
   borrowers: BorrowerResponse[];
 }
 
-export const queryCustodyBorrowers = ({
-  lcd,
-  market,
-  collateral,
-  start_after,
-  limit,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<BorrowersResponse> => {
-  const custodyContractAddress = addressProvider.custody(market, collateral);
-  const response: BorrowersResponse = await lcd.wasm.contractQuery(
-    custodyContractAddress,
-    {
-      borrowers: {
-        start_after: start_after,
-        limit: limit,
+export const queryCustodyBorrowers =
+  ({ lcd, market, collateral, start_after, limit }: Option) =>
+  async (addressProvider: AddressProvider): Promise<BorrowersResponse> => {
+    const custodyContractAddress = addressProvider.custody(market, collateral);
+    const response: BorrowersResponse = await lcd.wasm.contractQuery(
+      custodyContractAddress,
+      {
+        borrowers: {
+          start_after: start_after,
+          limit: limit,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

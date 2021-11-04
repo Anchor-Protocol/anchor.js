@@ -7,16 +7,16 @@ interface Option {
   address: string;
 }
 
-export const fabricateTeamVestingClaim = ({ address }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricateTeamVestingClaim =
+  ({ address }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const team = addressProvider.teamLock();
+    const team = addressProvider.teamLock();
 
-  return [
-    new MsgExecuteContract(address, team, {
-      claim: {},
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, team, {
+        claim: {},
+      }),
+    ];
+  };

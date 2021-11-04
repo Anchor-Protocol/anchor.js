@@ -10,23 +10,20 @@ interface Option {
   proof: string[];
 }
 
-export const fabricateAirdropClaim = ({
-  address,
-  stage,
-  amount,
-  proof,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricateAirdropClaim =
+  ({ address, stage, amount, proof }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const airdrop = addressProvider.airdrop();
+    const airdrop = addressProvider.airdrop();
 
-  return [
-    new MsgExecuteContract(address, airdrop, {
-      claim: {
-        stage,
-        amount,
-        proof,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, airdrop, {
+        claim: {
+          stage,
+          amount,
+          proof,
+        },
+      }),
+    ];
+  };

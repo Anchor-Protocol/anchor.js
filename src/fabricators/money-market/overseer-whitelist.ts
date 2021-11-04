@@ -16,32 +16,34 @@ interface Option {
   max_ltv?: string;
 }
 
-export const fabricateOverseerWhitelist = ({
-  address,
-  overseer,
-  name,
-  symbol,
-  collateral_token,
-  custody_contract,
-  max_ltv,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateAddress(collateral_token),
-    validateAddress(custody_contract),
-  ]);
+export const fabricateOverseerWhitelist =
+  ({
+    address,
+    overseer,
+    name,
+    symbol,
+    collateral_token,
+    custody_contract,
+    max_ltv,
+  }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateAddress(collateral_token),
+      validateAddress(custody_contract),
+    ]);
 
-  const mmOverseer = addressProvider.overseer(overseer);
+    const mmOverseer = addressProvider.overseer(overseer);
 
-  return [
-    new MsgExecuteContract(address, mmOverseer, {
-      whitelist: {
-        name: name,
-        symbol: symbol,
-        collateral_token: collateral_token,
-        custody_contract: custody_contract,
-        max_ltv: max_ltv,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmOverseer, {
+        whitelist: {
+          name: name,
+          symbol: symbol,
+          collateral_token: collateral_token,
+          custody_contract: custody_contract,
+          max_ltv: max_ltv,
+        },
+      }),
+    ];
+  };

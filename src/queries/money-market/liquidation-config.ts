@@ -15,15 +15,15 @@ interface ConfigResponse {
   price_timeframe: number;
 }
 
-export const queryLiquidationConfig = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const liquidationContractAddress = addressProvider.liquidation();
-  const response: ConfigResponse = await lcd.wasm.contractQuery(
-    liquidationContractAddress,
-    {
-      config: {},
-    },
-  );
-  return response;
-};
+export const queryLiquidationConfig =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const liquidationContractAddress = addressProvider.liquidation();
+    const response: ConfigResponse = await lcd.wasm.contractQuery(
+      liquidationContractAddress,
+      {
+        config: {},
+      },
+    );
+    return response;
+  };

@@ -8,19 +8,18 @@ interface Option {
   airdrop_hooks?: string[];
 }
 
-export const fabricatebAssetUpdateGlobalIndex = ({
-  address,
-  airdrop_hooks,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricatebAssetUpdateGlobalIndex =
+  ({ address, airdrop_hooks }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const bAssetHubAddress = addressProvider.bLunaHub();
+    const bAssetHubAddress = addressProvider.bLunaHub();
 
-  return [
-    new MsgExecuteContract(address, bAssetHubAddress, {
-      update_global_index: {
-        airdrop_hooks,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bAssetHubAddress, {
+        update_global_index: {
+          airdrop_hooks,
+        },
+      }),
+    ];
+  };

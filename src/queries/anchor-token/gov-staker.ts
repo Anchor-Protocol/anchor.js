@@ -19,14 +19,14 @@ export interface StakerResponse {
   locked_share: Array<[number, VoterInfo]>;
 }
 
-export const queryGovStaker = ({ lcd, address }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<StakerResponse> => {
-  const gov = addressProvider.gov();
-  const response: StakerResponse = await lcd.wasm.contractQuery(gov, {
-    staker: {
-      address,
-    },
-  });
-  return response;
-};
+export const queryGovStaker =
+  ({ lcd, address }: Option) =>
+  async (addressProvider: AddressProvider): Promise<StakerResponse> => {
+    const gov = addressProvider.gov();
+    const response: StakerResponse = await lcd.wasm.contractQuery(gov, {
+      staker: {
+        address,
+      },
+    });
+    return response;
+  };

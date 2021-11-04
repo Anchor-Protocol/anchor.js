@@ -17,25 +17,26 @@ interface Option {
  * @param symbol Symbol of stablecoin to redeem, or its aToken equivalent.
  * @param amount Amount of a stablecoin to redeem, or amount of an aToken (aTerra) to redeem (specified by market).
  */
-export const fabricateMarketRedeemStable = ({
-  address,
-  market,
-  amount,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address), validateIsGreaterThanZero(amount)]);
+export const fabricateMarketRedeemStable =
+  ({ address, market, amount }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsGreaterThanZero(amount),
+    ]);
 
-  const marketAddress = addressProvider.market(market);
-  const aTokenAddress = addressProvider.aTerra(market);
+    const marketAddress = addressProvider.market(market);
+    const aTokenAddress = addressProvider.aTerra(market);
 
-  return [
-    new MsgExecuteContract(address, aTokenAddress, {
-      send: {
-        contract: marketAddress,
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-        msg: createHookMsg({
-          redeem_stable: {},
-        }),
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, aTokenAddress, {
+        send: {
+          contract: marketAddress,
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          msg: createHookMsg({
+            redeem_stable: {},
+          }),
+        },
+      }),
+    ];
+  };

@@ -17,32 +17,32 @@ interface Option {
   amount: string;
 }
 
-export const fabricateCustodyDepositCollateral = ({
-  address,
-  market,
-  collateral,
-  amount,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address), validateIsGreaterThanZero(amount)]);
+export const fabricateCustodyDepositCollateral =
+  ({ address, market, collateral, amount }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsGreaterThanZero(amount),
+    ]);
 
-  let bAssetTokenContract = addressProvider.bLunaToken();
+    let bAssetTokenContract = addressProvider.bLunaToken();
 
-  if (collateral == COLLATERAL_DENOMS.UBETH) {
-    bAssetTokenContract = addressProvider.bEthToken();
-  }
-  const custodyContract = addressProvider.custody(market, collateral);
+    if (collateral == COLLATERAL_DENOMS.UBETH) {
+      bAssetTokenContract = addressProvider.bEthToken();
+    }
+    const custodyContract = addressProvider.custody(market, collateral);
 
-  // cw20 send + provide_collateral hook
-  return [
-    // provide_collateral call
-    new MsgExecuteContract(address, bAssetTokenContract, {
-      send: {
-        contract: custodyContract,
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-        msg: createHookMsg({
-          deposit_collateral: {},
-        }),
-      },
-    }),
-  ];
-};
+    // cw20 send + provide_collateral hook
+    return [
+      // provide_collateral call
+      new MsgExecuteContract(address, bAssetTokenContract, {
+        send: {
+          contract: custodyContract,
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          msg: createHookMsg({
+            deposit_collateral: {},
+          }),
+        },
+      }),
+    ];
+  };

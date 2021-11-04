@@ -23,15 +23,15 @@ interface ConfigResponse {
   price_timeframe: number;
 }
 
-export const queryOverseerConfig = ({ lcd, overseer }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const overseerContractAddress = addressProvider.overseer(overseer);
-  const response: ConfigResponse = await lcd.wasm.contractQuery(
-    overseerContractAddress,
-    {
-      config: {},
-    },
-  );
-  return response;
-};
+export const queryOverseerConfig =
+  ({ lcd, overseer }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const overseerContractAddress = addressProvider.overseer(overseer);
+    const response: ConfigResponse = await lcd.wasm.contractQuery(
+      overseerContractAddress,
+      {
+        config: {},
+      },
+    );
+    return response;
+  };

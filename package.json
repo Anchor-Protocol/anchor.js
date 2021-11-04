@@ -16,7 +16,7 @@
     "build": "tsc --module commonjs",
     "test": "jest",
     "doc": "typedoc",
-    "precommit": "npm run format && auto-changelog",
+    "precommit": "auto-changelog",
     "format": "prettier --write ./src/**/**/*.ts",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "prepublishOnly": "npm run build",

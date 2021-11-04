@@ -12,28 +12,25 @@ interface Option {
   genesis_time?: string;
 }
 
-export const fabricateTeamVestingUpdateConfig = ({
-  address,
-  owner,
-  anchor_token,
-  genesis_time,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    owner ? validateAddress(owner) : validateTrue,
-    anchor_token ? validateAddress(anchor_token) : validateTrue,
-    genesis_time ? validateIsNumber(genesis_time) : validateTrue,
-  ]);
+export const fabricateTeamVestingUpdateConfig =
+  ({ address, owner, anchor_token, genesis_time }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      owner ? validateAddress(owner) : validateTrue,
+      anchor_token ? validateAddress(anchor_token) : validateTrue,
+      genesis_time ? validateIsNumber(genesis_time) : validateTrue,
+    ]);
 
-  const team = addressProvider.teamLock();
+    const team = addressProvider.teamLock();
 
-  return [
-    new MsgExecuteContract(address, team, {
-      update_config: {
-        owner,
-        anchor_token,
-        genesis_time,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, team, {
+        update_config: {
+          owner,
+          anchor_token,
+          genesis_time,
+        },
+      }),
+    ];
+  };

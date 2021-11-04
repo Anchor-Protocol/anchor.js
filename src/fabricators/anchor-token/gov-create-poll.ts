@@ -19,32 +19,27 @@ interface Option {
   execute_msgs?: ExecuteMsg[];
 }
 
-export const fabricateGovCreatePoll = ({
-  address,
-  amount,
-  title,
-  description,
-  link,
-  execute_msgs,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricateGovCreatePoll =
+  ({ address, amount, title, description, link, execute_msgs }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const anchorToken = addressProvider.ANC();
+    const anchorToken = addressProvider.ANC();
 
-  return [
-    new MsgExecuteContract(address, anchorToken, {
-      send: {
-        contract: addressProvider.gov(),
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-        msg: createHookMsg({
-          create_poll: {
-            title,
-            description,
-            link,
-            execute_msgs,
-          },
-        }),
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, anchorToken, {
+        send: {
+          contract: addressProvider.gov(),
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          msg: createHookMsg({
+            create_poll: {
+              title,
+              description,
+              link,
+              execute_msgs,
+            },
+          }),
+        },
+      }),
+    ];
+  };

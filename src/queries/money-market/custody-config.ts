@@ -27,19 +27,15 @@ interface BAssetInfo {
   decimals: string;
 }
 
-export const queryCustodyConfig = ({
-  lcd,
-  market,
-  collateral,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const custodyContractAddress = addressProvider.custody(market, collateral);
-  const response: ConfigResponse = await lcd.wasm.contractQuery(
-    custodyContractAddress,
-    {
-      config: {},
-    },
-  );
-  return response;
-};
+export const queryCustodyConfig =
+  ({ lcd, market, collateral }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const custodyContractAddress = addressProvider.custody(market, collateral);
+    const response: ConfigResponse = await lcd.wasm.contractQuery(
+      custodyContractAddress,
+      {
+        config: {},
+      },
+    );
+    return response;
+  };

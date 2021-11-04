@@ -9,21 +9,21 @@ interface Option {
   owner?: string;
 }
 
-export const fabricateOracleUpdateConfig = ({ address, owner }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    owner ? validateAddress(owner) : validateTrue,
-  ]);
+export const fabricateOracleUpdateConfig =
+  ({ address, owner }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      owner ? validateAddress(owner) : validateTrue,
+    ]);
 
-  const mmOracle = addressProvider.oracle();
+    const mmOracle = addressProvider.oracle();
 
-  return [
-    new MsgExecuteContract(address, mmOracle, {
-      update_config: {
-        owner: owner,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmOracle, {
+        update_config: {
+          owner: owner,
+        },
+      }),
+    ];
+  };

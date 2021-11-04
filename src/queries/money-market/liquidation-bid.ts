@@ -14,19 +14,15 @@ export interface BidResponse {
   premium_rate: string;
 }
 
-export const queryLiquidationBid = ({
-  lcd,
-  collateral_token,
-  bidder,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<BidResponse> => {
-  const liquidationContractAddress = addressProvider.liquidation();
-  const response: BidResponse = await lcd.wasm.contractQuery(
-    liquidationContractAddress,
-    {
-      bid: { collateral_token: collateral_token, bidder: bidder },
-    },
-  );
-  return response;
-};
+export const queryLiquidationBid =
+  ({ lcd, collateral_token, bidder }: Option) =>
+  async (addressProvider: AddressProvider): Promise<BidResponse> => {
+    const liquidationContractAddress = addressProvider.liquidation();
+    const response: BidResponse = await lcd.wasm.contractQuery(
+      liquidationContractAddress,
+      {
+        bid: { collateral_token: collateral_token, bidder: bidder },
+      },
+    );
+    return response;
+  };

@@ -13,18 +13,18 @@ interface Option {
   owner?: string;
 }
 
-export const fabricatebEthUpdateConfig = ({ address, owner }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricatebEthUpdateConfig =
+  ({ address, owner }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const bEthRewardAddress = addressProvider.bEthReward();
+    const bEthRewardAddress = addressProvider.bEthReward();
 
-  return [
-    new MsgExecuteContract(address, bEthRewardAddress, {
-      update_config: {
-        owner,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bEthRewardAddress, {
+        update_config: {
+          owner,
+        },
+      }),
+    ];
+  };

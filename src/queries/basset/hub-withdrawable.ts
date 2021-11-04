@@ -11,22 +11,18 @@ interface WithdrableResponse {
   withdrawable: string;
 }
 
-export const queryHubWithdrawable = ({
-  lcd,
-  address,
-  block_time,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<WithdrableResponse> => {
-  const bAssetContractAddress = addressProvider.bLunaHub();
-  const response: WithdrableResponse = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
-    {
-      withdrawable_unbonded: {
-        address: address,
-        block_time: +block_time,
+export const queryHubWithdrawable =
+  ({ lcd, address, block_time }: Option) =>
+  async (addressProvider: AddressProvider): Promise<WithdrableResponse> => {
+    const bAssetContractAddress = addressProvider.bLunaHub();
+    const response: WithdrableResponse = await lcd.wasm.contractQuery(
+      bAssetContractAddress,
+      {
+        withdrawable_unbonded: {
+          address: address,
+          block_time: +block_time,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

@@ -11,24 +11,19 @@ interface BorrowRateResponse {
   rate: string;
 }
 
-export const queryInterestModelBorrowRate = ({
-  lcd,
-  market_balance,
-  total_liabilities,
-  total_reserves,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<BorrowRateResponse> => {
-  const interestModelContractAddress = addressProvider.interest();
-  const response: BorrowRateResponse = await lcd.wasm.contractQuery(
-    interestModelContractAddress,
-    {
-      borrow_rate: {
-        market_balance: market_balance,
-        total_liabilities: total_liabilities,
-        total_reserves: total_reserves,
+export const queryInterestModelBorrowRate =
+  ({ lcd, market_balance, total_liabilities, total_reserves }: Option) =>
+  async (addressProvider: AddressProvider): Promise<BorrowRateResponse> => {
+    const interestModelContractAddress = addressProvider.interest();
+    const response: BorrowRateResponse = await lcd.wasm.contractQuery(
+      interestModelContractAddress,
+      {
+        borrow_rate: {
+          market_balance: market_balance,
+          total_liabilities: total_liabilities,
+          total_reserves: total_reserves,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

@@ -11,15 +11,15 @@ interface StateResponse {
   prev_reward_balance: string;
 }
 
-export const queryRewardState = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<StateResponse> => {
-  const bAssetContractAddress = addressProvider.bLunaReward();
-  const response: StateResponse = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
-    {
-      state: {},
-    },
-  );
-  return response;
-};
+export const queryRewardState =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<StateResponse> => {
+    const bAssetContractAddress = addressProvider.bLunaReward();
+    const response: StateResponse = await lcd.wasm.contractQuery(
+      bAssetContractAddress,
+      {
+        state: {},
+      },
+    );
+    return response;
+  };

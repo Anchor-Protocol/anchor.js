@@ -23,25 +23,19 @@ interface WhitelistResponseElem {
   collateral_token: string;
 }
 
-export const queryOverseerWhitelist = ({
-  lcd,
-  market,
-  collateral_token,
-  start_after,
-  limit,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<WhitelistResponse> => {
-  const overseerContractAddress = addressProvider.overseer(market);
-  const response: WhitelistResponse = await lcd.wasm.contractQuery(
-    overseerContractAddress,
-    {
-      whitelist: {
-        collateral_token: collateral_token,
-        start_after: start_after,
-        limit: limit,
+export const queryOverseerWhitelist =
+  ({ lcd, market, collateral_token, start_after, limit }: Option) =>
+  async (addressProvider: AddressProvider): Promise<WhitelistResponse> => {
+    const overseerContractAddress = addressProvider.overseer(market);
+    const response: WhitelistResponse = await lcd.wasm.contractQuery(
+      overseerContractAddress,
+      {
+        whitelist: {
+          collateral_token: collateral_token,
+          start_after: start_after,
+          limit: limit,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };
