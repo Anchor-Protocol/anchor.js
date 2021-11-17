@@ -20,18 +20,18 @@ interface UnbondHistory {
   released: boolean;
 }
 
-export const queryHubHistory = ({ lcd, start_from, limit }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<HistoryResponse> => {
-  const bAssetContractAddress = addressProvider.bLunaHub();
-  const response: HistoryResponse = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
-    {
-      all_history: {
-        start_from: start_from || undefined,
-        limit: limit || undefined,
+export const queryHubHistory =
+  ({ lcd, start_from, limit }: Option) =>
+  async (addressProvider: AddressProvider): Promise<HistoryResponse> => {
+    const bAssetContractAddress = addressProvider.bLunaHub();
+    const response: HistoryResponse = await lcd.wasm.contractQuery(
+      bAssetContractAddress,
+      {
+        all_history: {
+          start_from: start_from || undefined,
+          limit: limit || undefined,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

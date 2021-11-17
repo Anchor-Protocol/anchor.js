@@ -13,27 +13,24 @@ interface SimulationResponse {
   commission_amount: string;
 }
 
-export const queryTerraswapSimulation = ({
-  lcd,
-  contractAddr,
-  amount,
-  pair_contract_address,
-}: // eslint-disable-next-line @typescript-eslint/no-unused-vars
-Option) => async (_: AddressProvider): Promise<SimulationResponse> => {
-  const response: SimulationResponse = await lcd.wasm.contractQuery(
-    pair_contract_address,
-    {
-      simulation: {
-        offer_asset: {
-          info: {
-            ANC: {
-              contract_addr: contractAddr,
+export const queryTerraswapSimulation =
+  ({ lcd, contractAddr, amount, pair_contract_address }: Option) =>
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async (_: AddressProvider): Promise<SimulationResponse> => {
+    const response: SimulationResponse = await lcd.wasm.contractQuery(
+      pair_contract_address,
+      {
+        simulation: {
+          offer_asset: {
+            info: {
+              ANC: {
+                contract_addr: contractAddr,
+              },
             },
+            amount: new Int(new Dec(amount).mul(1000000)).toString(),
           },
-          amount: new Int(new Dec(amount).mul(1000000)).toString(),
         },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

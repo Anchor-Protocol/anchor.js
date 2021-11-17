@@ -15,12 +15,12 @@ interface ConfigResponse {
   snapshot_period: number;
 }
 
-export const queryGovConfig = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const gov = addressProvider.gov();
-  const response: ConfigResponse = await lcd.wasm.contractQuery(gov, {
-    config: {},
-  });
-  return response;
-};
+export const queryGovConfig =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const gov = addressProvider.gov();
+    const response: ConfigResponse = await lcd.wasm.contractQuery(gov, {
+      config: {},
+    });
+    return response;
+  };

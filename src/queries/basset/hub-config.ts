@@ -11,15 +11,15 @@ interface ConfigResponse {
   airdrop_registry_contract?: string;
 }
 
-export const queryHubConfig = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const bAssetContractAddress = addressProvider.bLunaHub();
-  const response: ConfigResponse = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
-    {
-      config: {},
-    },
-  );
-  return response;
-};
+export const queryHubConfig =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const bAssetContractAddress = addressProvider.bLunaHub();
+    const response: ConfigResponse = await lcd.wasm.contractQuery(
+      bAssetContractAddress,
+      {
+        config: {},
+      },
+    );
+    return response;
+  };

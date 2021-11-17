@@ -19,26 +19,24 @@ interface Option {
   recipient: string;
 }
 
-export const fabricatebEthTransfer = ({
-  address,
-  amount,
-  recipient,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateIsNumber(amount),
-    validateIsGreaterThanZero(amount),
-    validateAddress(recipient),
-  ]);
+export const fabricatebEthTransfer =
+  ({ address, amount, recipient }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsNumber(amount),
+      validateIsGreaterThanZero(amount),
+      validateAddress(recipient),
+    ]);
 
-  const bAssetTokenAddress = addressProvider.bEthToken();
+    const bAssetTokenAddress = addressProvider.bEthToken();
 
-  return [
-    new MsgExecuteContract(address, bAssetTokenAddress, {
-      transfer: {
-        recipient: recipient,
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bAssetTokenAddress, {
+        transfer: {
+          recipient: recipient,
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+        },
+      }),
+    ];
+  };

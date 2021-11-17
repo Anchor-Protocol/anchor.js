@@ -14,28 +14,33 @@ interface Option {
   distributor_contract: string;
 }
 
-export const fabricatebMarketRegisterContracts = ({
-  address,
-  overseer_contract,
-  market,
-  interest_model,
-  distribution_model,
-  collector_contract,
-  distributor_contract,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address), validateAddress(overseer_contract)]);
+export const fabricatebMarketRegisterContracts =
+  ({
+    address,
+    overseer_contract,
+    market,
+    interest_model,
+    distribution_model,
+    collector_contract,
+    distributor_contract,
+  }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateAddress(overseer_contract),
+    ]);
 
-  const mmMarket = addressProvider.market(market);
+    const mmMarket = addressProvider.market(market);
 
-  return [
-    new MsgExecuteContract(address, mmMarket, {
-      register_contracts: {
-        overseer_contract: overseer_contract,
-        interest_model: interest_model,
-        distribution_model: distribution_model,
-        collector_contract: collector_contract,
-        distributor_contract: distributor_contract,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmMarket, {
+        register_contracts: {
+          overseer_contract: overseer_contract,
+          interest_model: interest_model,
+          distribution_model: distribution_model,
+          collector_contract: collector_contract,
+          distributor_contract: distributor_contract,
+        },
+      }),
+    ];
+  };

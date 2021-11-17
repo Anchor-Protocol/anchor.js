@@ -17,21 +17,16 @@ export interface BorrowerResponse {
   spendable: string;
 }
 
-export const queryCustodyBorrower = ({
-  lcd,
-  market,
-  custody,
-  address,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<BorrowerResponse> => {
-  const custodyAddress = custody.startsWith('terra1')
-    ? custody
-    : addressProvider.custody(market, custody as COLLATERAL_DENOMS);
+export const queryCustodyBorrower =
+  ({ lcd, market, custody, address }: Option) =>
+  async (addressProvider: AddressProvider): Promise<BorrowerResponse> => {
+    const custodyAddress = custody.startsWith('terra1')
+      ? custody
+      : addressProvider.custody(market, custody as COLLATERAL_DENOMS);
 
-  return lcd.wasm.contractQuery<BorrowerResponse>(custodyAddress, {
-    borrower: {
-      address: address,
-    },
-  });
-};
+    return lcd.wasm.contractQuery<BorrowerResponse>(custodyAddress, {
+      borrower: {
+        address: address,
+      },
+    });
+  };

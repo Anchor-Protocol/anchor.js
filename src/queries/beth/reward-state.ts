@@ -11,11 +11,11 @@ interface StateResponse {
   prev_reward_balance: string;
 }
 
-export const querybEthRewardState = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<StateResponse> => {
-  const bAssetContractAddress = addressProvider.bEthReward();
-  return lcd.wasm.contractQuery(bAssetContractAddress, {
-    state: {},
-  });
-};
+export const querybEthRewardState =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<StateResponse> => {
+    const bAssetContractAddress = addressProvider.bEthReward();
+    return lcd.wasm.contractQuery(bAssetContractAddress, {
+      state: {},
+    });
+  };

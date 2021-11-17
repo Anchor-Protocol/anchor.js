@@ -12,12 +12,12 @@ interface ConfigResponse {
   spend_limit: string;
 }
 
-export const queryDistributortConfig = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const distributor = addressProvider.distributor();
-  const response: ConfigResponse = await lcd.wasm.contractQuery(distributor, {
-    config: {},
-  });
-  return response;
-};
+export const queryDistributortConfig =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const distributor = addressProvider.distributor();
+    const response: ConfigResponse = await lcd.wasm.contractQuery(distributor, {
+      config: {},
+    });
+    return response;
+  };

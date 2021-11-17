@@ -8,18 +8,18 @@ interface Option {
   denom: string;
 }
 
-export const fabricateCollectorSweep = ({ address, denom }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricateCollectorSweep =
+  ({ address, denom }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const collector = addressProvider.collector();
+    const collector = addressProvider.collector();
 
-  return [
-    new MsgExecuteContract(address, collector, {
-      sweep: {
-        denom,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, collector, {
+        sweep: {
+          denom,
+        },
+      }),
+    ];
+  };

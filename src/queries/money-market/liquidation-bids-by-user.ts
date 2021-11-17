@@ -12,20 +12,19 @@ interface BidsByUserResponse {
   bids: BidResponse[];
 }
 
-export const queryLiquidationBidsByUser = ({
-  lcd,
-  bidder,
-  start_after,
-  limit,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<BidsByUserResponse> => {
-  const liquidationContractAddress = addressProvider.liquidation();
-  const response: BidsByUserResponse = await lcd.wasm.contractQuery(
-    liquidationContractAddress,
-    {
-      bids_by_user: { bidder: bidder, start_after: start_after, limit: limit },
-    },
-  );
-  return response;
-};
+export const queryLiquidationBidsByUser =
+  ({ lcd, bidder, start_after, limit }: Option) =>
+  async (addressProvider: AddressProvider): Promise<BidsByUserResponse> => {
+    const liquidationContractAddress = addressProvider.liquidation();
+    const response: BidsByUserResponse = await lcd.wasm.contractQuery(
+      liquidationContractAddress,
+      {
+        bids_by_user: {
+          bidder: bidder,
+          start_after: start_after,
+          limit: limit,
+        },
+      },
+    );
+    return response;
+  };

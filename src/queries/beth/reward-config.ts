@@ -9,11 +9,11 @@ interface ConfigResponse {
   reward_denom: string;
 }
 
-export const querybEthRewardConfig = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const bAssetContractAddress = addressProvider.bEthReward();
-  return lcd.wasm.contractQuery(bAssetContractAddress, {
-    config: {},
-  });
-};
+export const querybEthRewardConfig =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const bAssetContractAddress = addressProvider.bEthReward();
+    return lcd.wasm.contractQuery(bAssetContractAddress, {
+      config: {},
+    });
+  };

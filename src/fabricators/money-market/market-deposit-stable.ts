@@ -18,28 +18,29 @@ interface Option {
  * @param symbol Symbol of a stablecoin to deposit.
  * @param amount Amount of a stablecoin to deposit.
  */
-export const fabricateMarketDepositStableCoin = ({
-  address,
-  market,
-  amount,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address), validateIsGreaterThanZero(amount)]);
+export const fabricateMarketDepositStableCoin =
+  ({ address, market, amount }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsGreaterThanZero(amount),
+    ]);
 
-  const mmContractAddress = addressProvider.market(market);
+    const mmContractAddress = addressProvider.market(market);
 
-  return [
-    new MsgExecuteContract(
-      address,
-      mmContractAddress,
-      {
-        // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/market/src/msg.rs#L65
-        deposit_stable: {},
-      },
+    return [
+      new MsgExecuteContract(
+        address,
+        mmContractAddress,
+        {
+          // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/market/src/msg.rs#L65
+          deposit_stable: {},
+        },
 
-      // coins
-      {
-        [`${market}`]: new Int(new Dec(amount).mul(1000000)).toString(),
-      },
-    ),
-  ];
-};
+        // coins
+        {
+          [`${market}`]: new Int(new Dec(amount).mul(1000000)).toString(),
+        },
+      ),
+    ];
+  };

@@ -14,21 +14,17 @@ interface EpochStateResponse {
   aterra_supply: string;
 }
 
-export const queryMarketEpochState = ({
-  lcd,
-  market,
-  block_height,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<EpochStateResponse> => {
-  const marketContractAddress = addressProvider.market(market);
-  const response: EpochStateResponse = await lcd.wasm.contractQuery(
-    marketContractAddress,
-    {
-      epoch_state: {
-        block_height: block_height,
+export const queryMarketEpochState =
+  ({ lcd, market, block_height }: Option) =>
+  async (addressProvider: AddressProvider): Promise<EpochStateResponse> => {
+    const marketContractAddress = addressProvider.market(market);
+    const response: EpochStateResponse = await lcd.wasm.contractQuery(
+      marketContractAddress,
+      {
+        epoch_state: {
+          block_height: block_height,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

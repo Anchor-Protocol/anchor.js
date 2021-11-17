@@ -20,19 +20,15 @@ interface AllowanceResponse {
   expires: Expire;
 }
 
-export const queryTokenAllowances = ({
-  lcd,
-  owner,
-  token_address,
-  start_after,
-  lim,
-}: Option) => async (_: AddressProvider): Promise<AllAllowance> => {
-  const response: AllAllowance = await lcd.wasm.contractQuery(token_address, {
-    all_allowances: {
-      owner: owner,
-      start_after: start_after,
-      limit: lim,
-    },
-  });
-  return response;
-};
+export const queryTokenAllowances =
+  ({ lcd, owner, token_address, start_after, lim }: Option) =>
+  async (_: AddressProvider): Promise<AllAllowance> => {
+    const response: AllAllowance = await lcd.wasm.contractQuery(token_address, {
+      all_allowances: {
+        owner: owner,
+        start_after: start_after,
+        limit: lim,
+      },
+    });
+    return response;
+  };

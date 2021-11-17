@@ -22,31 +22,29 @@ interface Option {
  * @param symbol Symbol of collateral to redeem.
  * @param amount Amount of collateral to redeem.
  */
-export const fabricateOverseerUnlockCollateral = ({
-  address,
-  market,
-  amount,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    amount ? validateIsGreaterThanZero(amount) : validateTrue,
-  ]);
+export const fabricateOverseerUnlockCollateral =
+  ({ address, market, amount }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      amount ? validateIsGreaterThanZero(amount) : validateTrue,
+    ]);
 
-  const mmOverseerContract = addressProvider.overseer(market);
-  const bAssetTokenContract = addressProvider.bLunaToken();
+    const mmOverseerContract = addressProvider.overseer(market);
+    const bAssetTokenContract = addressProvider.bLunaToken();
 
-  return [
-    // unlock collateral
-    new MsgExecuteContract(address, mmOverseerContract, {
-      // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L78
-      unlock_collateral: {
-        collaterals: [
-          [
-            bAssetTokenContract,
-            new Int(new Dec(amount).mul(1000000)).toString(),
+    return [
+      // unlock collateral
+      new MsgExecuteContract(address, mmOverseerContract, {
+        // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L78
+        unlock_collateral: {
+          collaterals: [
+            [
+              bAssetTokenContract,
+              new Int(new Dec(amount).mul(1000000)).toString(),
+            ],
           ],
-        ],
-      },
-    }),
-  ];
-};
+        },
+      }),
+    ];
+  };

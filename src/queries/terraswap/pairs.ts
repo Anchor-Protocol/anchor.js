@@ -16,16 +16,15 @@ interface PairInfo {
   liquidityToken: string;
 }
 
-export const queryTerrasawpPair = ({
-  lcd,
-  pair_contract_address,
-}: // eslint-disable-next-line @typescript-eslint/no-unused-vars
-Option) => async (_: AddressProvider): Promise<PairInfo> => {
-  const response: PairInfo = await lcd.wasm.contractQuery(
-    pair_contract_address,
-    {
-      pair: {},
-    },
-  );
-  return response;
-};
+export const queryTerrasawpPair =
+  ({ lcd, pair_contract_address }: Option) =>
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async (_: AddressProvider): Promise<PairInfo> => {
+    const response: PairInfo = await lcd.wasm.contractQuery(
+      pair_contract_address,
+      {
+        pair: {},
+      },
+    );
+    return response;
+  };

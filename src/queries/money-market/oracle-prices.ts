@@ -21,20 +21,16 @@ interface PricesResponseElem {
   last_update_time: number;
 }
 
-export const queryOraclePrices = ({
-  lcd,
-  start_after,
-  limit,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<PricesResponse> => {
-  const oracleContractAddress = addressProvider.oracle();
-  return await lcd.wasm
-    .contractQuery<PriceResponseInterim>(oracleContractAddress, {
-      prices: {
-        start_after: start_after,
-        limit: limit,
-      },
-    })
-    .then((data) => data.Ok);
-};
+export const queryOraclePrices =
+  ({ lcd, start_after, limit }: Option) =>
+  async (addressProvider: AddressProvider): Promise<PricesResponse> => {
+    const oracleContractAddress = addressProvider.oracle();
+    return await lcd.wasm
+      .contractQuery<PriceResponseInterim>(oracleContractAddress, {
+        prices: {
+          start_after: start_after,
+          limit: limit,
+        },
+      })
+      .then((data) => data.Ok);
+  };

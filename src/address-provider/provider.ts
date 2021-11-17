@@ -23,6 +23,8 @@ export interface AddressProvider {
 
   liquidation(): string;
 
+  liquidationQueue(): string;
+
   terraswapblunaLunaPair(): string;
 
   terraswapblunaLunaLPToken(): string;
@@ -52,11 +54,10 @@ export interface AddressProvider {
 
 export enum MARKET_DENOMS {
   UUSD = 'uusd',
-  UKRW = 'ukrw'
+  UKRW = 'ukrw',
 }
 
 export enum COLLATERAL_DENOMS {
   UBLUNA = 'ubluna',
-  UBETH = 'ubeth'
+  UBETH = 'ubeth',
 }
-

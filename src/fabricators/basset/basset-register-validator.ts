@@ -11,19 +11,18 @@ interface Option {
 /**
  * @param address Client’s Terra address.
  */
-export const fabricatebAssetRegisterValidator = ({
-  address,
-  validator,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateValAddress(validator)]);
+export const fabricatebAssetRegisterValidator =
+  ({ address, validator }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateValAddress(validator)]);
 
-  const bAssetHubAddress = addressProvider.bLunaHub();
+    const bAssetHubAddress = addressProvider.bLunaHub();
 
-  return [
-    new MsgExecuteContract(address, bAssetHubAddress, {
-      register_validator: {
-        validator: validator,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bAssetHubAddress, {
+        register_validator: {
+          validator: validator,
+        },
+      }),
+    ];
+  };

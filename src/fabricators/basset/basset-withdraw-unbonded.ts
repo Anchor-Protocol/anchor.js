@@ -7,16 +7,16 @@ interface Option {
   address: string;
 }
 
-export const fabricatebAssetWithdrawUnbonded = ({ address }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricatebAssetWithdrawUnbonded =
+  ({ address }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const bAssetHubAddress = addressProvider.bLunaHub();
+    const bAssetHubAddress = addressProvider.bLunaHub();
 
-  return [
-    new MsgExecuteContract(address, bAssetHubAddress, {
-      withdraw_unbonded: {},
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bAssetHubAddress, {
+        withdraw_unbonded: {},
+      }),
+    ];
+  };

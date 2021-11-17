@@ -21,21 +21,16 @@ export interface VotersResponse {
   voters: Array<VotersResponseItem>;
 }
 
-export const queryGovVoters = ({
-  lcd,
-  poll_id,
-  start_after,
-  limit,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<VotersResponse> => {
-  const gov = addressProvider.gov();
-  const response: VotersResponse = await lcd.wasm.contractQuery(gov, {
-    voters: {
-      poll_id,
-      start_after,
-      limit,
-    },
-  });
-  return response;
-};
+export const queryGovVoters =
+  ({ lcd, poll_id, start_after, limit }: Option) =>
+  async (addressProvider: AddressProvider): Promise<VotersResponse> => {
+    const gov = addressProvider.gov();
+    const response: VotersResponse = await lcd.wasm.contractQuery(gov, {
+      voters: {
+        poll_id,
+        start_after,
+        limit,
+      },
+    });
+    return response;
+  };

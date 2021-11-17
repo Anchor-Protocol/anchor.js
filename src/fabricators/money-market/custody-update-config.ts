@@ -16,27 +16,25 @@ interface Option {
   liquidation_contract?: string;
 }
 
-export const fabricateCustodyUpdateConfig = ({
-  address,
-  market,
-  collateral,
-  liquidation_contract,
-  owner,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    owner ? validateAddress(owner) : validateTrue,
-    liquidation_contract ? validateAddress(liquidation_contract) : validateTrue,
-  ]);
+export const fabricateCustodyUpdateConfig =
+  ({ address, market, collateral, liquidation_contract, owner }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      owner ? validateAddress(owner) : validateTrue,
+      liquidation_contract
+        ? validateAddress(liquidation_contract)
+        : validateTrue,
+    ]);
 
-  const mmCustody = addressProvider.custody(market, collateral);
+    const mmCustody = addressProvider.custody(market, collateral);
 
-  return [
-    new MsgExecuteContract(address, mmCustody, {
-      update_config: {
-        owner: owner,
-        liquidation_contract: liquidation_contract,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmCustody, {
+        update_config: {
+          owner: owner,
+          liquidation_contract: liquidation_contract,
+        },
+      }),
+    ];
+  };

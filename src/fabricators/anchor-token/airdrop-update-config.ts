@@ -9,21 +9,21 @@ interface Option {
   owner?: string;
 }
 
-export const fabricateAirdropUpdateConfig = ({ address, owner }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    owner ? validateAddress(owner) : validateTrue,
-  ]);
+export const fabricateAirdropUpdateConfig =
+  ({ address, owner }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      owner ? validateAddress(owner) : validateTrue,
+    ]);
 
-  const airdrop = addressProvider.airdrop();
+    const airdrop = addressProvider.airdrop();
 
-  return [
-    new MsgExecuteContract(address, airdrop, {
-      update_config: {
-        owner,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, airdrop, {
+        update_config: {
+          owner,
+        },
+      }),
+    ];
+  };

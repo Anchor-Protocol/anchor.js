@@ -11,17 +11,15 @@ interface Balance {
   balance: string;
 }
 
-export const queryTokenBalance = ({
-  lcd,
-  address,
-  token_address,
-}: Option) => async (
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _: AddressProvider,
-): Promise<Balance> => {
-  return lcd.wasm.contractQuery<Balance>(token_address, {
-    balance: {
-      address: address,
-    },
-  });
-};
+export const queryTokenBalance =
+  ({ lcd, address, token_address }: Option) =>
+  async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _: AddressProvider,
+  ): Promise<Balance> => {
+    return lcd.wasm.contractQuery<Balance>(token_address, {
+      balance: {
+        address: address,
+      },
+    });
+  };

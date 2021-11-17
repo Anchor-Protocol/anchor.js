@@ -18,27 +18,24 @@ interface Option {
   amount?: string;
 }
 
-export const fabricateCustodyWithdrawCollateral = ({
-  address,
-  market,
-  collateral,
-  amount = undefined,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    amount ? validateIsGreaterThanZero(amount) : validateTrue,
-  ]);
+export const fabricateCustodyWithdrawCollateral =
+  ({ address, market, collateral, amount = undefined }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      amount ? validateIsGreaterThanZero(amount) : validateTrue,
+    ]);
 
-  const custodyContract = addressProvider.custody(market, collateral);
+    const custodyContract = addressProvider.custody(market, collateral);
 
-  return [
-    new MsgExecuteContract(address, custodyContract, {
-      // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/custody/src/msg.rs#L69
-      withdraw_collateral: {
-        amount: isAmountSet(amount)
-          ? new Int(new Dec(amount).mul(1000000)).toString()
-          : undefined,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, custodyContract, {
+        // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/custody/src/msg.rs#L69
+        withdraw_collateral: {
+          amount: isAmountSet(amount)
+            ? new Int(new Dec(amount).mul(1000000)).toString()
+            : undefined,
+        },
+      }),
+    ];
+  };

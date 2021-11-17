@@ -7,16 +7,16 @@ interface Option {
   address: string;
 }
 
-export const fabricatebAssetCheckSlashing = ({ address }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricatebAssetCheckSlashing =
+  ({ address }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const bAssetHubAddress = addressProvider.bLunaHub();
+    const bAssetHubAddress = addressProvider.bLunaHub();
 
-  return [
-    new MsgExecuteContract(address, bAssetHubAddress, {
-      check_slashing: {},
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bAssetHubAddress, {
+        check_slashing: {},
+      }),
+    ];
+  };

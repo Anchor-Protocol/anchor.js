@@ -15,23 +15,18 @@ interface BorrowLimitResponse {
   borrow_limit: string;
 }
 
-export const queryOverseerBorrowLimit = ({
-  lcd,
-  overseer,
-  borrower,
-  block_time,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<BorrowLimitResponse> => {
-  const overseerContractAddress = addressProvider.overseer(overseer);
-  const response: BorrowLimitResponse = await lcd.wasm.contractQuery(
-    overseerContractAddress,
-    {
-      borrow_limit: {
-        borrower: borrower,
-        block_time: block_time || undefined,
+export const queryOverseerBorrowLimit =
+  ({ lcd, overseer, borrower, block_time }: Option) =>
+  async (addressProvider: AddressProvider): Promise<BorrowLimitResponse> => {
+    const overseerContractAddress = addressProvider.overseer(overseer);
+    const response: BorrowLimitResponse = await lcd.wasm.contractQuery(
+      overseerContractAddress,
+      {
+        borrow_limit: {
+          borrower: borrower,
+          block_time: block_time || undefined,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

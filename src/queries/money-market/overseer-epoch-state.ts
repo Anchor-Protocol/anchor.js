@@ -15,15 +15,15 @@ interface EpochStateResponse {
   last_executed_height: number;
 }
 
-export const queryOverseerEpochState = ({ lcd, market }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<EpochStateResponse> => {
-  const overseerContractAddress = addressProvider.overseer(market);
-  const response: EpochStateResponse = await lcd.wasm.contractQuery(
-    overseerContractAddress,
-    {
-      epoch_state: {},
-    },
-  );
-  return response;
-};
+export const queryOverseerEpochState =
+  ({ lcd, market }: Option) =>
+  async (addressProvider: AddressProvider): Promise<EpochStateResponse> => {
+    const overseerContractAddress = addressProvider.overseer(market);
+    const response: EpochStateResponse = await lcd.wasm.contractQuery(
+      overseerContractAddress,
+      {
+        epoch_state: {},
+      },
+    );
+    return response;
+  };

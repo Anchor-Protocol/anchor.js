@@ -16,15 +16,15 @@ interface StateResponse {
   last_processed_batch: number;
 }
 
-export const queryHubState = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<StateResponse> => {
-  const bAssetContractAddress = addressProvider.bLunaHub();
-  const response: StateResponse = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
-    {
-      state: {},
-    },
-  );
-  return response;
-};
+export const queryHubState =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<StateResponse> => {
+    const bAssetContractAddress = addressProvider.bLunaHub();
+    const response: StateResponse = await lcd.wasm.contractQuery(
+      bAssetContractAddress,
+      {
+        state: {},
+      },
+    );
+    return response;
+  };

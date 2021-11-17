@@ -12,18 +12,18 @@ interface PriceResponse {
   last_updated_quote: number;
 }
 
-export const queryOraclePrice = ({ lcd, base, quote }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<PriceResponse> => {
-  const oracleContractAddress = addressProvider.oracle();
-  const response: PriceResponse = await lcd.wasm.contractQuery(
-    oracleContractAddress,
-    {
-      price: {
-        base: base,
-        quote: quote,
+export const queryOraclePrice =
+  ({ lcd, base, quote }: Option) =>
+  async (addressProvider: AddressProvider): Promise<PriceResponse> => {
+    const oracleContractAddress = addressProvider.oracle();
+    const response: PriceResponse = await lcd.wasm.contractQuery(
+      oracleContractAddress,
+      {
+        price: {
+          base: base,
+          quote: quote,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

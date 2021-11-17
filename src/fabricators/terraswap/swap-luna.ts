@@ -22,43 +22,38 @@ interface Option {
   max_spread?: string;
 }
 
-export const fabricateTerraswapSwapLuna = ({
-  address,
-  amount,
-  to,
-  belief_price,
-  max_spread,
-  denom,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateIsNumber(amount),
-    validateIsGreaterThanZero(amount),
-  ]);
-  const coins = new Coins([
-    new Coin(denom, new Int(new Dec(amount).mul(1000000)).toString()),
-  ]);
-  const pairAddress = addressProvider.terraswapblunaLunaPair();
-  return [
-    new MsgExecuteContract(
-      address,
-      pairAddress,
-      {
-        swap: {
-          offer_asset: {
-            info: {
-              native_token: {
-                denom: denom,
+export const fabricateTerraswapSwapLuna =
+  ({ address, amount, to, belief_price, max_spread, denom }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsNumber(amount),
+      validateIsGreaterThanZero(amount),
+    ]);
+    const coins = new Coins([
+      new Coin(denom, new Int(new Dec(amount).mul(1000000)).toString()),
+    ]);
+    const pairAddress = addressProvider.terraswapblunaLunaPair();
+    return [
+      new MsgExecuteContract(
+        address,
+        pairAddress,
+        {
+          swap: {
+            offer_asset: {
+              info: {
+                native_token: {
+                  denom: denom,
+                },
               },
+              amount: new Int(new Dec(amount).mul(1000000)).toString(),
             },
-            amount: new Int(new Dec(amount).mul(1000000)).toString(),
+            belief_price: belief_price,
+            max_spread: max_spread,
+            to: to,
           },
-          belief_price: belief_price,
-          max_spread: max_spread,
-          to: to,
         },
-      },
-      coins,
-    ),
-  ];
-};
+        coins,
+      ),
+    ];
+  };

@@ -16,35 +16,31 @@ interface Option {
   max_spread?: string;
 }
 
-export const fabricateTerraswapSwapbLuna = ({
-  address,
-  amount,
-  to,
-  belief_price,
-  max_spread,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    validateIsNumber(amount),
-    validateIsGreaterThanZero(amount),
-  ]);
+export const fabricateTerraswapSwapbLuna =
+  ({ address, amount, to, belief_price, max_spread }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsNumber(amount),
+      validateIsGreaterThanZero(amount),
+    ]);
 
-  const bAssetTokenAddress = addressProvider.bLunaToken();
-  const pairAddress = addressProvider.terraswapblunaLunaPair();
+    const bAssetTokenAddress = addressProvider.bLunaToken();
+    const pairAddress = addressProvider.terraswapblunaLunaPair();
 
-  return [
-    new MsgExecuteContract(address, bAssetTokenAddress, {
-      send: {
-        contract: pairAddress,
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-        msg: createHookMsg({
-          swap: {
-            belief_price: belief_price,
-            max_spread: max_spread,
-            to: to,
-          },
-        }),
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bAssetTokenAddress, {
+        send: {
+          contract: pairAddress,
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          msg: createHookMsg({
+            swap: {
+              belief_price: belief_price,
+              max_spread: max_spread,
+              to: to,
+            },
+          }),
+        },
+      }),
+    ];
+  };

@@ -8,19 +8,18 @@ interface Option {
   distributor: string;
 }
 
-export const fabricateDistributorAddDistributor = ({
-  address,
-  distributor,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricateDistributorAddDistributor =
+  ({ address, distributor }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const distributorAdd = addressProvider.distributor();
+    const distributorAdd = addressProvider.distributor();
 
-  return [
-    new MsgExecuteContract(address, distributorAdd, {
-      add_distributor: {
-        distributor,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, distributorAdd, {
+        add_distributor: {
+          distributor,
+        },
+      }),
+    ];
+  };

@@ -14,15 +14,15 @@ interface ParamsResponse {
   reward_denom: string;
 }
 
-export const queryHubParams = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ParamsResponse> => {
-  const bAssetContractAddress = addressProvider.bLunaHub();
-  const response: ParamsResponse = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
-    {
-      parameters: {},
-    },
-  );
-  return response;
-};
+export const queryHubParams =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ParamsResponse> => {
+    const bAssetContractAddress = addressProvider.bLunaHub();
+    const response: ParamsResponse = await lcd.wasm.contractQuery(
+      bAssetContractAddress,
+      {
+        parameters: {},
+      },
+    );
+    return response;
+  };

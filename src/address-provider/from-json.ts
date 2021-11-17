@@ -1,4 +1,4 @@
-import {AddressProvider, COLLATERAL_DENOMS, MARKET_DENOMS} from './provider';
+import { AddressProvider, COLLATERAL_DENOMS, MARKET_DENOMS } from './provider';
 
 export interface AddressMap {
   bLunaHub: string;
@@ -15,6 +15,7 @@ export interface AddressMap {
   mmCustody: string;
   mmCustodyBEth: string;
   mmLiquidation: string;
+  mmLiquidationQueue: string;
   mmDistributionModel: string;
   aTerra: string;
   terraswapblunaLunaPair: string;
@@ -64,10 +65,10 @@ export class AddressProviderFromJson implements AddressProvider {
   custody(_denom: MARKET_DENOMS, collateral: COLLATERAL_DENOMS): string {
     switch (collateral) {
       case COLLATERAL_DENOMS.UBLUNA: {
-        return this.data.mmCustody
+        return this.data.mmCustody;
       }
       case COLLATERAL_DENOMS.UBETH: {
-        return this.data.mmCustodyBEth
+        return this.data.mmCustodyBEth;
       }
     }
   }
@@ -90,6 +91,10 @@ export class AddressProviderFromJson implements AddressProvider {
 
   liquidation(): string {
     return this.data.mmLiquidation;
+  }
+
+  liquidationQueue(): string {
+    return this.data.mmLiquidationQueue;
   }
 
   terraswapblunaLunaPair(): string {

@@ -14,21 +14,17 @@ interface CollateralResponse {
   collaterals: Array<[string, string]>;
 }
 
-export const queryOverseerCollaterals = ({
-  lcd,
-  overseer,
-  borrower,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<CollateralResponse> => {
-  const overseerContractAddress = addressProvider.overseer(overseer);
-  const response: CollateralResponse = await lcd.wasm.contractQuery(
-    overseerContractAddress,
-    {
-      collaterals: {
-        borrower: borrower,
+export const queryOverseerCollaterals =
+  ({ lcd, overseer, borrower }: Option) =>
+  async (addressProvider: AddressProvider): Promise<CollateralResponse> => {
+    const overseerContractAddress = addressProvider.overseer(overseer);
+    const response: CollateralResponse = await lcd.wasm.contractQuery(
+      overseerContractAddress,
+      {
+        collaterals: {
+          borrower: borrower,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

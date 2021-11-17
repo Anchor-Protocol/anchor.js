@@ -11,26 +11,23 @@ interface Option {
   interest_multiplier?: string;
 }
 
-export const fabricateInterestUpdateConfig = ({
-  address,
-  owner,
-  base_rate,
-  interest_multiplier,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    owner ? validateAddress(owner) : validateTrue,
-  ]);
+export const fabricateInterestUpdateConfig =
+  ({ address, owner, base_rate, interest_multiplier }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      owner ? validateAddress(owner) : validateTrue,
+    ]);
 
-  const mmInterest = addressProvider.interest();
+    const mmInterest = addressProvider.interest();
 
-  return [
-    new MsgExecuteContract(address, mmInterest, {
-      update_config: {
-        owner: owner,
-        base_rate: base_rate,
-        interest_multiplier: interest_multiplier,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmInterest, {
+        update_config: {
+          owner: owner,
+          base_rate: base_rate,
+          interest_multiplier: interest_multiplier,
+        },
+      }),
+    ];
+  };

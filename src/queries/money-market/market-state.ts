@@ -19,21 +19,17 @@ interface StateResponse {
   anc_emission_rate: string;
 }
 
-export const queryMarketState = ({
-  lcd,
-  market,
-  block_height,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<StateResponse> => {
-  const marketContractAddress = addressProvider.market(market);
-  const response: StateResponse = await lcd.wasm.contractQuery(
-    marketContractAddress,
-    {
-      state: {
-        block_height: block_height,
+export const queryMarketState =
+  ({ lcd, market, block_height }: Option) =>
+  async (addressProvider: AddressProvider): Promise<StateResponse> => {
+    const marketContractAddress = addressProvider.market(market);
+    const response: StateResponse = await lcd.wasm.contractQuery(
+      marketContractAddress,
+      {
+        state: {
+          block_height: block_height,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

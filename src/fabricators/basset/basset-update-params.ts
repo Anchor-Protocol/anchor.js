@@ -13,30 +13,32 @@ interface Option {
   er_threshold?: string;
 }
 
-export const fabricatebAssetUpdateParams = ({
-  address,
-  epoch_period,
-  unbonding_period,
-  peg_recovery_fee,
-  er_threshold,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    epoch_period ? validateIsNumber(epoch_period) : validateTrue,
-    unbonding_period ? validateIsNumber(unbonding_period) : validateTrue,
-    //TODO: validate decimal and denom
-  ]);
+export const fabricatebAssetUpdateParams =
+  ({
+    address,
+    epoch_period,
+    unbonding_period,
+    peg_recovery_fee,
+    er_threshold,
+  }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      epoch_period ? validateIsNumber(epoch_period) : validateTrue,
+      unbonding_period ? validateIsNumber(unbonding_period) : validateTrue,
+      //TODO: validate decimal and denom
+    ]);
 
-  const bAssetContractAddress = addressProvider.bLunaHub();
+    const bAssetContractAddress = addressProvider.bLunaHub();
 
-  return [
-    new MsgExecuteContract(address, bAssetContractAddress, {
-      update_params: {
-        epoch_period: epoch_period,
-        unbonding_period: unbonding_period,
-        peg_recovery_fee: peg_recovery_fee,
-        er_threshold: er_threshold,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bAssetContractAddress, {
+        update_params: {
+          epoch_period: epoch_period,
+          unbonding_period: unbonding_period,
+          peg_recovery_fee: peg_recovery_fee,
+          er_threshold: er_threshold,
+        },
+      }),
+    ];
+  };

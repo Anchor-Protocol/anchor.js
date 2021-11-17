@@ -22,15 +22,15 @@ interface ConfigResponse {
   max_borrow_factor: string;
 }
 
-export const queryMarketConfig = ({ lcd, market }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const marketContractAddress = addressProvider.market(market);
-  const response: ConfigResponse = await lcd.wasm.contractQuery(
-    marketContractAddress,
-    {
-      config: {},
-    },
-  );
-  return response;
-};
+export const queryMarketConfig =
+  ({ lcd, market }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const marketContractAddress = addressProvider.market(market);
+    const response: ConfigResponse = await lcd.wasm.contractQuery(
+      marketContractAddress,
+      {
+        config: {},
+      },
+    );
+    return response;
+  };

@@ -13,18 +13,18 @@ interface Option {
   token_contract?: string;
 }
 
-export const fabricatebEthPostInit = ({ address, token_contract }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricatebEthPostInit =
+  ({ address, token_contract }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const bEthRewardAddress = addressProvider.bEthReward();
+    const bEthRewardAddress = addressProvider.bEthReward();
 
-  return [
-    new MsgExecuteContract(address, bEthRewardAddress, {
-      post_initialize: {
-        token_contract,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bEthRewardAddress, {
+        post_initialize: {
+          token_contract,
+        },
+      }),
+    ];
+  };

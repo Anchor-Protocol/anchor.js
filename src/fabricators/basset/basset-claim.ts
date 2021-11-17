@@ -8,20 +8,20 @@ interface Option {
   recipient?: string;
 }
 
-export const fabricatebAssetClaimRewards = ({ address, recipient }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricatebAssetClaimRewards =
+  ({ address, recipient }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const bAssetRewardAddress = addressProvider.bLunaReward();
+    const bAssetRewardAddress = addressProvider.bLunaReward();
 
-  return [
-    new MsgExecuteContract(address, bAssetRewardAddress, {
-      // @see https://github.com/Anchor-Protocol/anchor-bAsset-contracts/blob/master/contracts/anchor_basset_reward/src/msg.rs#L46
-      // @see https://github.com/Anchor-Protocol/anchor-bAsset-contracts/blob/master/contracts/anchor_basset_reward/src/user.rs#L16
-      claim_rewards: {
-        recipient, // always
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bAssetRewardAddress, {
+        // @see https://github.com/Anchor-Protocol/anchor-bAsset-contracts/blob/master/contracts/anchor_basset_reward/src/msg.rs#L46
+        // @see https://github.com/Anchor-Protocol/anchor-bAsset-contracts/blob/master/contracts/anchor_basset_reward/src/user.rs#L16
+        claim_rewards: {
+          recipient, // always
+        },
+      }),
+    ];
+  };

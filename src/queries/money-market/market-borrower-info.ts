@@ -18,23 +18,18 @@ export interface BorrowInfoResponse {
   pending_rewards: string;
 }
 
-export const queryMarketBorrowerInfo = ({
-  lcd,
-  market,
-  borrower,
-  block_height,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<BorrowInfoResponse> => {
-  const marketContractAddress = addressProvider.market(market);
-  const response: BorrowInfoResponse = await lcd.wasm.contractQuery(
-    marketContractAddress,
-    {
-      borrower_info: {
-        borrower: borrower,
-        block_height,
+export const queryMarketBorrowerInfo =
+  ({ lcd, market, borrower, block_height }: Option) =>
+  async (addressProvider: AddressProvider): Promise<BorrowInfoResponse> => {
+    const marketContractAddress = addressProvider.market(market);
+    const response: BorrowInfoResponse = await lcd.wasm.contractQuery(
+      marketContractAddress,
+      {
+        borrower_info: {
+          borrower: borrower,
+          block_height,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

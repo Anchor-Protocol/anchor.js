@@ -13,18 +13,18 @@ interface Option {
   recipient?: string;
 }
 
-export const fabricatebEthClaimRewards = ({ address, recipient }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricatebEthClaimRewards =
+  ({ address, recipient }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const bEthRewardAddress = addressProvider.bEthReward();
+    const bEthRewardAddress = addressProvider.bEthReward();
 
-  return [
-    new MsgExecuteContract(address, bEthRewardAddress, {
-      claim_rewards: {
-        recipient,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, bEthRewardAddress, {
+        claim_rewards: {
+          recipient,
+        },
+      }),
+    ];
+  };

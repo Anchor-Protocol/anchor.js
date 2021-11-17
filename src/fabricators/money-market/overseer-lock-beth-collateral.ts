@@ -20,28 +20,29 @@ interface Option {
  * @param market Type of stablecoin money market to deposit collateral. Currently only supports UST.
  * @param amount Amount of collateral to deposit.
  */
-export const fabricateOverseerLockBETHCollateral = ({
-  address,
-  market,
-  amount,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address), validateIsGreaterThanZero(amount)]);
+export const fabricateOverseerLockBETHCollateral =
+  ({ address, market, amount }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      validateIsGreaterThanZero(amount),
+    ]);
 
-  const mmOverseerContract = addressProvider.overseer(market);
-  const bAssetTokenContract = addressProvider.bEthToken();
+    const mmOverseerContract = addressProvider.overseer(market);
+    const bAssetTokenContract = addressProvider.bEthToken();
 
-  return [
-    // lock_collateral call
-    new MsgExecuteContract(address, mmOverseerContract, {
-      // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L75
-      lock_collateral: {
-        collaterals: [
-          [
-            bAssetTokenContract,
-            new Int(new Dec(amount).mul(1000000)).toString(),
+    return [
+      // lock_collateral call
+      new MsgExecuteContract(address, mmOverseerContract, {
+        // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L75
+        lock_collateral: {
+          collaterals: [
+            [
+              bAssetTokenContract,
+              new Int(new Dec(amount).mul(1000000)).toString(),
+            ],
           ],
-        ],
-      },
-    }),
-  ];
-};
+        },
+      }),
+    ];
+  };

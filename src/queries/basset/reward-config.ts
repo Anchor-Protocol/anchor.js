@@ -9,15 +9,15 @@ interface ConfigResponse {
   reward_denom: string;
 }
 
-export const queryRewardConfig = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const bAssetContractAddress = addressProvider.bLunaReward();
-  const response: ConfigResponse = await lcd.wasm.contractQuery(
-    bAssetContractAddress,
-    {
-      config: {},
-    },
-  );
-  return response;
-};
+export const queryRewardConfig =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const bAssetContractAddress = addressProvider.bLunaReward();
+    const response: ConfigResponse = await lcd.wasm.contractQuery(
+      bAssetContractAddress,
+      {
+        config: {},
+      },
+    );
+    return response;
+  };
