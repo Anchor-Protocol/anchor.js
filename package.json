@@ -1,6 +1,6 @@
 {
   "name": "@anchor-protocol/anchor.js",
-  "version": "1.4.0",
+  "version": "2.0.0-alpha1",
   "author": "Anchor Protocol",
   "license": "MIT",
   "repository": "github:Anchor-Protocol/anchor.js",
@@ -34,13 +34,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "@terra-money/terra.js": "^2.0.14"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@ssen/eslint-config": "^2.0.1",
     "@ssen/prettier-config": "^2.0.1",
-    "@terra-money/terra.js": "^2.0.14",
+    "@terra-money/terra.js": "^3.0.0",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.10.3",
     "@typescript-eslint/eslint-plugin": "^4.33.0",

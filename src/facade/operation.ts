@@ -3,14 +3,14 @@ import {
   Coins,
   Msg,
   Numeric,
-  StdFee,
+  Fee,
   Wallet,
 } from '@terra-money/terra.js';
 import { Fabricator, OmitAddress } from '..';
 import { AddressProvider } from '../address-provider';
 
 export interface OperationGasParameters {
-  fee?: StdFee;
+  fee?: Fee;
   gasPrices?: Coins.Input;
   gasAdjustment?: Numeric.Input;
 }

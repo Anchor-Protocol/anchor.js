@@ -4,8 +4,10 @@ import {
   MnemonicKey,
   Msg,
   MsgExecuteContract,
-  StdFee,
-  StdTx,
+  Fee,
+  Tx,
+  TxBody,
+  AuthInfo,
   Wallet,
 } from '@terra-money/terra.js';
 import { AddressProvider, MARKET_DENOMS } from '..';
@@ -34,7 +36,7 @@ describe('operation', () => {
     const testKey = new MnemonicKey();
     const testLCDClient = new LCDClient({
       URL: 'https://lcd.terra.dev',
-      chainID: 'columbus-4',
+      chainID: 'columbus-5',
     });
     const testWallet = new Wallet(testLCDClient, testKey);
     const addressProvider: AddressProvider = new AddressProviderFromJson(
@@ -61,9 +63,11 @@ describe('operation', () => {
     expect(operation.generateWithWallet(testWallet)).toStrictEqual(expected);
 
     testWallet.createAndSignTx = async ({ msgs }) =>
-      Promise.resolve(new StdTx(msgs, new StdFee(1, '1uluna'), []));
+      Promise.resolve(
+        new Tx(new TxBody(msgs), new AuthInfo([], new Fee(1, '1uluna')), []),
+      );
     testLCDClient.tx.broadcast = async (tx) => {
-      expect(tx.msg).toStrictEqual(expected);
+      expect(tx.body.messages).toStrictEqual(expected);
       return Promise.resolve({
         txhash: 'hash',
         code: 0,
