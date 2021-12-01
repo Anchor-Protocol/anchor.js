@@ -5,6 +5,7 @@ export interface AddressMap {
   bLunaToken: string;
   bLunaReward: string;
   bLunaAirdrop: string;
+  bLunaValidatorsRegistry: string;
   bEthReward: string;
   bEthToken: string;
   mmInterestModel: string;
@@ -52,6 +53,10 @@ export class AddressProviderFromJson implements AddressProvider {
 
   bEthReward(): string {
     return this.data.bEthReward;
+  }
+
+  bLunaValidatorsRegistry(): string {
+    return this.data.bLunaValidatorsRegistry;
   }
 
   bEthToken(): string {
