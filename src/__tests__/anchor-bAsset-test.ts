@@ -17,6 +17,8 @@ import {
   fabricatebAssetTransferFrom,
   fabricatebAssetBurnFrom,
   fabricatebAssetSendFrom,
+  fabricatebAssetRegisterValidator,
+  fabricatebAssetDeregisterValidator,
 } from '../fabricators';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
@@ -74,6 +76,40 @@ describe('bLuna', () => {
       [
         new MsgExecuteContract('address', addressProvider.bLunaHub(), {
           withdraw_unbonded: {},
+        }),
+      ],
+    );
+  });
+
+  it('register-validator', async () => {
+    testFabricator(
+      expect,
+      fabricatebAssetRegisterValidator,
+      {
+        address: 'address',
+        validator: 'validator',
+      },
+      addressProvider,
+      [
+        new MsgExecuteContract('address', addressProvider.bLunaHub(), {
+          register_validator: { validator: 'validator' },
+        }),
+      ],
+    );
+  });
+
+  it('deregister-validator', async () => {
+    testFabricator(
+      expect,
+      fabricatebAssetDeregisterValidator,
+      {
+        address: 'address',
+        validator: 'validator',
+      },
+      addressProvider,
+      [
+        new MsgExecuteContract('address', addressProvider.bLunaHub(), {
+          deregister_validator: { validator: 'validator' },
         }),
       ],
     );
