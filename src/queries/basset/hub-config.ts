@@ -7,7 +7,9 @@ interface Option {
 interface ConfigResponse {
   owner: string;
   reward_contract?: string;
-  token_contract?: string;
+  token_contract?: string; //deprecated
+  bluna_token_contract?: string;
+  stluna_token_contract?: string;
   airdrop_registry_contract?: string;
 }
 

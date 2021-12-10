@@ -8,7 +8,7 @@ interface Option {
 
 export interface UnbondResponse {
   address: string;
-  requests: Array<[number, string]>;
+  requests: Array<[number, string, string]>;
 }
 
 export const queryHubUnbond =
