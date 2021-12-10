@@ -3,8 +3,6 @@ import {
   fabricatebAssetBond,
   fabricatebAssetCheckSlashing,
   fabricatebAssetClaimRewards,
-  fabricatebAssetDeregisterValidator,
-  fabricatebAssetRegisterValidator,
   fabricatebAssetTransfer,
   fabricatebAssetUnbond,
   fabricatebAssetUpdateConfig,
@@ -32,7 +30,6 @@ describe('bLuna', () => {
       fabricatebAssetBond,
       {
         address: 'address',
-        validator: 'validator',
         amount: '1000',
       },
       addressProvider,
@@ -41,7 +38,7 @@ describe('bLuna', () => {
           'address',
           addressProvider.bLunaHub(),
           {
-            bond: { validator: 'validator' },
+            bond: {},
           },
           { uluna: new Int(new Dec('1000').mul(1000000)).toString() },
         ),
@@ -77,40 +74,6 @@ describe('bLuna', () => {
       [
         new MsgExecuteContract('address', addressProvider.bLunaHub(), {
           withdraw_unbonded: {},
-        }),
-      ],
-    );
-  });
-
-  it('register-validator', async () => {
-    testFabricator(
-      expect,
-      fabricatebAssetRegisterValidator,
-      {
-        address: 'address',
-        validator: 'validator',
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract('address', addressProvider.bLunaHub(), {
-          register_validator: { validator: 'validator' },
-        }),
-      ],
-    );
-  });
-
-  it('deregister-validator', async () => {
-    testFabricator(
-      expect,
-      fabricatebAssetDeregisterValidator,
-      {
-        address: 'address',
-        validator: 'validator',
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract('address', addressProvider.bLunaHub(), {
-          deregister_validator: { validator: 'validator' },
         }),
       ],
     );

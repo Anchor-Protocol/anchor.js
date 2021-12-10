@@ -1,24 +1,19 @@
 import { AddressProvider } from '../../address-provider/provider';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateInput } from '../../utils/validate-input';
-import {
-  validateAddress,
-  validateValAddress,
-} from '../../utils/validation/address';
+import { validateAddress } from '../../utils/validation/address';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 
 interface Option {
   address: string;
   amount: string;
-  validator: string; // validator address
 }
 
 export const fabricatebAssetBond =
-  ({ address, amount, validator }: Option) =>
+  ({ address, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
-      validateValAddress(validator),
       validateIsGreaterThanZero(amount),
     ]);
 
@@ -29,9 +24,7 @@ export const fabricatebAssetBond =
         address,
         bAssetContractAddress,
         {
-          bond: {
-            validator, // validator must be whitelisted
-          },
+          bond: {},
         },
 
         // send native token
