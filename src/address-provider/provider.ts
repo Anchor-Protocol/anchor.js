@@ -5,6 +5,8 @@ export interface AddressProvider {
 
   bLunaToken(): string;
 
+  bLunaValidatorsRegistry(): string;
+
   bEthReward(): string;
 
   bEthToken(): string;
