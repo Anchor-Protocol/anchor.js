@@ -14,9 +14,13 @@ interface HistoryResponse {
 interface UnbondHistory {
   batch_id: number;
   time: number;
-  amount: string;
+  amount: string; //deprecated
+  bluna_amount: string;
+  stluna_amount: string;
   applied_exchange_rate: string;
-  withdraw_rate: string;
+  withdraw_rate: string; //deprecated
+  bluna_withdraw_rate: string;
+  stluna_withdraw_rate: string;
   released: boolean;
 }
 

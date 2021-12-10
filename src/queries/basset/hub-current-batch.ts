@@ -7,7 +7,9 @@ interface Option {
 
 interface CurrentBatchResponse {
   id: number;
-  requested_with_fee: string;
+  requested_with_fee: string; //deprecated
+  requested_bluna_with_fee: string;
+  requested_stluna: string;
 }
 
 export const queryHubCurrentBatch =
