@@ -9,7 +9,7 @@ interface Option {
   bids_idx: string[] | undefined;
 }
 
-export const fabricateLiquidationQueueActiveBids =
+export const fabricateLiquidationQueueActivateBids =
   ({ address, bids_idx, collateral_token }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([validateAddress(address)]);
