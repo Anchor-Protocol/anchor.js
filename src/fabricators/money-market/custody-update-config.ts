@@ -27,7 +27,7 @@ export const fabricateCustodyUpdateConfig =
         : validateTrue,
     ]);
 
-    const mmCustody = addressProvider.custody(market, collateral);
+    const mmCustody = addressProvider.bAssetCustody(market, collateral);
 
     return [
       new MsgExecuteContract(address, mmCustody, {

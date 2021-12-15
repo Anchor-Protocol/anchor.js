@@ -7,7 +7,10 @@ import {
 } from '@terra-money/terra.js';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  COLLATERAL_DENOMS,
+} from '../../address-provider/provider';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 
 /* eslint-disable */
@@ -39,7 +42,7 @@ export const fabricateTerraswapProvideLiquiditybLuna =
     ]);
 
     const pairAddress = addressProvider.terraswapblunaLunaPair();
-    const tokenAddress = addressProvider.bLunaToken();
+    const tokenAddress = addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA);
 
     const coins = new Coins([
       new Coin(quote, new Int(new Dec(native_amount).mul(1000000)).toString()),

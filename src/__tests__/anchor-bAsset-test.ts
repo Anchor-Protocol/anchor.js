@@ -1,222 +1,43 @@
 import { testFabricator } from '../utils/test-fabricators/test-fabricator';
 import {
-  fabricatebAssetBond,
-  fabricatebAssetCheckSlashing,
   fabricatebAssetClaimRewards,
   fabricatebAssetTransfer,
-  fabricatebAssetUnbond,
-  fabricatebAssetUpdateConfig,
-  fabricatebAssetUpdateGlobalIndex,
-  fabricatebAssetUpdateParams,
-  fabricatebAssetWithdrawUnbonded,
   fabricatebAssetSend,
   fabricatebAssetIncreaseAllowance,
-  Expire,
   fabricatebAssetDecreaseAllowance,
   fabricatebAssetBurn,
   fabricatebAssetTransferFrom,
   fabricatebAssetBurnFrom,
   fabricatebAssetSendFrom,
-  fabricatebAssetRegisterValidator,
-  fabricatebAssetDeregisterValidator,
+  Expire,
+  fabricatebAssetConvertFromWormhole,
+  fabricatebAssetConvertToWormhole,
 } from '../fabricators';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
 import { addressProvider } from '../__tests__/common';
+import { COLLATERAL_DENOMS } from '..';
 
 /* eslint-disable */
-describe('bLuna', () => {
-  it('bond ', async () => {
-    testFabricator(
-      expect,
-      fabricatebAssetBond,
-      {
-        address: 'address',
-        amount: '1000',
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract(
-          'address',
-          addressProvider.bLunaHub(),
-          {
-            bond: {},
-          },
-          { uluna: new Int(new Dec('1000').mul(1000000)).toString() },
-        ),
-      ],
-    );
-  });
-
-  it('update-global-index', async () => {
-    testFabricator(
-      expect,
-      fabricatebAssetUpdateGlobalIndex,
-      {
-        address: 'address',
-        airdrop_hooks: undefined,
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract('address', addressProvider.bLunaHub(), {
-          update_global_index: { airdrop_hooks: undefined },
-        }),
-      ],
-    );
-  });
-
-  it('withdraw_unbonded', async () => {
-    testFabricator(
-      expect,
-      fabricatebAssetWithdrawUnbonded,
-      {
-        address: 'address',
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract('address', addressProvider.bLunaHub(), {
-          withdraw_unbonded: {},
-        }),
-      ],
-    );
-  });
-
-  it('register-validator', async () => {
-    testFabricator(
-      expect,
-      fabricatebAssetRegisterValidator,
-      {
-        address: 'address',
-        validator: 'validator',
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract('address', addressProvider.bLunaHub(), {
-          register_validator: { validator: 'validator' },
-        }),
-      ],
-    );
-  });
-
-  it('deregister-validator', async () => {
-    testFabricator(
-      expect,
-      fabricatebAssetDeregisterValidator,
-      {
-        address: 'address',
-        validator: 'validator',
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract('address', addressProvider.bLunaHub(), {
-          deregister_validator: { validator: 'validator' },
-        }),
-      ],
-    );
-  });
-
-  it('check-slashing', async () => {
-    testFabricator(
-      expect,
-      fabricatebAssetCheckSlashing,
-      {
-        address: 'address',
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract('address', addressProvider.bLunaHub(), {
-          check_slashing: {},
-        }),
-      ],
-    );
-  });
-
-  it('update-params', async () => {
-    testFabricator(
-      expect,
-      fabricatebAssetUpdateParams,
-      {
-        address: 'address',
-        epoch_period: 111111,
-        unbonding_period: 111111,
-        peg_recovery_fee: '0.5',
-        er_threshold: '1.0',
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract('address', addressProvider.bLunaHub(), {
-          update_params: {
-            epoch_period: 111111,
-            unbonding_period: 111111,
-            peg_recovery_fee: '0.5',
-            er_threshold: '1.0',
-          },
-        }),
-      ],
-    );
-  });
-
-  it('update-config', async () => {
-    testFabricator(
-      expect,
-      fabricatebAssetUpdateConfig,
-      {
-        address: 'address',
-        owner: 'new-owner',
-        reward_contract: 'reward',
-        token_contract: 'token',
-        airdrop_registry_contract: 'airdrop',
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract('address', addressProvider.bLunaHub(), {
-          update_config: {
-            owner: 'new-owner',
-            reward_contract: 'reward',
-            token_contract: 'token',
-            airdrop_registry_contract: 'airdrop',
-          },
-        }),
-      ],
-    );
-  });
-
-  it('unbond', async () => {
-    testFabricator(
-      expect,
-      fabricatebAssetUnbond,
-      {
-        address: 'address',
-        amount: '1000',
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
-          send: {
-            contract: addressProvider.bLunaHub(),
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
-            msg: createHookMsg({
-              unbond: {},
-            }),
-          },
-        }),
-      ],
-    );
-  });
-
+describe('bAsset', () => {
   it('claim-rewards', async () => {
     testFabricator(
       expect,
       fabricatebAssetClaimRewards,
       {
         address: 'address',
+        collateral: COLLATERAL_DENOMS.UBLUNA,
         recipient: undefined,
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaReward(), {
-          claim_rewards: { recipient: undefined },
-        }),
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetReward(COLLATERAL_DENOMS.UBLUNA),
+          {
+            claim_rewards: { recipient: undefined },
+          },
+        ),
       ],
     );
   });
@@ -227,17 +48,22 @@ describe('bLuna', () => {
       fabricatebAssetTransfer,
       {
         address: 'address',
+        collateral: COLLATERAL_DENOMS.UBLUNA,
         amount: '1000',
         recipient: 'recipient',
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
-          transfer: {
-            recipient: 'recipient',
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          {
+            transfer: {
+              recipient: 'recipient',
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+            },
           },
-        }),
+        ),
       ],
     );
   });
@@ -248,19 +74,24 @@ describe('bLuna', () => {
       fabricatebAssetTransferFrom,
       {
         address: 'address',
+        collateral: COLLATERAL_DENOMS.UBLUNA,
         owner: 'owner',
         amount: '1000',
         recipient: 'recipient',
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
-          transfer_from: {
-            owner: 'owner',
-            recipient: 'recipient',
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          {
+            transfer_from: {
+              owner: 'owner',
+              recipient: 'recipient',
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+            },
           },
-        }),
+        ),
       ],
     );
   });
@@ -271,15 +102,20 @@ describe('bLuna', () => {
       fabricatebAssetBurn,
       {
         address: 'address',
+        collateral: COLLATERAL_DENOMS.UBLUNA,
         amount: '1000',
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
-          burn: {
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          {
+            burn: {
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+            },
           },
-        }),
+        ),
       ],
     );
   });
@@ -290,17 +126,22 @@ describe('bLuna', () => {
       fabricatebAssetBurnFrom,
       {
         address: 'address',
+        collateral: COLLATERAL_DENOMS.UBLUNA,
         owner: 'owner',
         amount: '1000',
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
-          burn_from: {
-            owner: 'owner',
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          {
+            burn_from: {
+              owner: 'owner',
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+            },
           },
-        }),
+        ),
       ],
     );
   });
@@ -311,19 +152,24 @@ describe('bLuna', () => {
       fabricatebAssetSend,
       {
         address: 'address',
+        collateral: COLLATERAL_DENOMS.UBLUNA,
         amount: '1000',
         contract: 'contract',
         msg: { msg: {} },
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
-          send: {
-            contract: 'contract',
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
-            msg: createHookMsg({ msg: {} }),
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          {
+            send: {
+              contract: 'contract',
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+              msg: createHookMsg({ msg: {} }),
+            },
           },
-        }),
+        ),
       ],
     );
   });
@@ -334,6 +180,7 @@ describe('bLuna', () => {
       fabricatebAssetSendFrom,
       {
         address: 'address',
+        collateral: COLLATERAL_DENOMS.UBLUNA,
         amount: '1000',
         owner: 'owner',
         contract: 'contract',
@@ -341,14 +188,18 @@ describe('bLuna', () => {
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
-          send_from: {
-            owner: 'owner',
-            contract: 'contract',
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
-            msg: createHookMsg({ msg: {} }),
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          {
+            send_from: {
+              owner: 'owner',
+              contract: 'contract',
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+              msg: createHookMsg({ msg: {} }),
+            },
           },
-        }),
+        ),
       ],
     );
   });
@@ -359,19 +210,24 @@ describe('bLuna', () => {
       fabricatebAssetIncreaseAllowance,
       {
         address: 'address',
+        collateral: COLLATERAL_DENOMS.UBLUNA,
         amount: '1000',
         spender: 'spender',
         expires: { never: {} } as Expire,
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
-          increase_allowance: {
-            spender: 'spender',
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
-            expires: { never: {} },
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          {
+            increase_allowance: {
+              spender: 'spender',
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+              expires: { never: {} },
+            },
           },
-        }),
+        ),
       ],
     );
   });
@@ -382,19 +238,82 @@ describe('bLuna', () => {
       fabricatebAssetDecreaseAllowance,
       {
         address: 'address',
+        collateral: COLLATERAL_DENOMS.UBLUNA,
         amount: '1000',
         spender: 'spender',
         expires: { never: {} } as Expire,
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
-          decrease_allowance: {
-            spender: 'spender',
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
-            expires: { never: {} },
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          {
+            decrease_allowance: {
+              spender: 'spender',
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+              expires: { never: {} },
+            },
           },
-        }),
+        ),
+      ],
+    );
+  });
+
+  it('convert-from-wormhole', async () => {
+    testFabricator(
+      expect,
+      fabricatebAssetConvertFromWormhole,
+      {
+        address: 'address',
+        collateral: COLLATERAL_DENOMS.UBLUNA,
+        amount: '1000',
+        msg: { msg: {} },
+      },
+      addressProvider,
+      [
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          {
+            send: {
+              contract: addressProvider.bAssetConverter(
+                COLLATERAL_DENOMS.UBETH,
+              ),
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+              msg: createHookMsg({ convertWormholeToAnchor: {} }),
+            },
+          },
+        ),
+      ],
+    );
+  });
+
+  it('convert-to-wormhole', async () => {
+    testFabricator(
+      expect,
+      fabricatebAssetConvertToWormhole,
+      {
+        address: 'address',
+        collateral: COLLATERAL_DENOMS.UBLUNA,
+        amount: '1000',
+        msg: { msg: {} },
+      },
+      addressProvider,
+      [
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          {
+            send: {
+              contract: addressProvider.bAssetConverter(
+                COLLATERAL_DENOMS.UBETH,
+              ),
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+              msg: createHookMsg({ convertAnchorToWormhole: {} }),
+            },
+          },
+        ),
       ],
     );
   });

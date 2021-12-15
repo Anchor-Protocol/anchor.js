@@ -2,7 +2,6 @@ import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../../utils/cw20/create-hook-msg';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
-
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
@@ -35,14 +34,9 @@ export const fabricateProvideCollateral =
       validateIsGreaterThanZero(amount),
     ]);
 
-    let bAssetTokenContract = addressProvider.bLunaToken();
-
-    if (collateral == COLLATERAL_DENOMS.UBETH) {
-      bAssetTokenContract = addressProvider.bEthToken();
-    }
-
+    const bAssetTokenContract = addressProvider.bAssetToken(collateral);
     const mmOverseerContract = addressProvider.overseer(market);
-    const custodyContract = addressProvider.custody(market, collateral);
+    const custodyContract = addressProvider.bAssetCustody(market, collateral);
 
     // cw20 send + provide_collateral hook
     /* eslint-disable */

@@ -26,7 +26,7 @@ export const fabricateCustodyWithdrawCollateral =
       amount ? validateIsGreaterThanZero(amount) : validateTrue,
     ]);
 
-    const custodyContract = addressProvider.custody(market, collateral);
+    const custodyContract = addressProvider.bAssetCustody(market, collateral);
 
     return [
       new MsgExecuteContract(address, custodyContract, {

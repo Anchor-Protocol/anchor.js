@@ -30,7 +30,10 @@ interface BAssetInfo {
 export const queryCustodyConfig =
   ({ lcd, market, collateral }: Option) =>
   async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
-    const custodyContractAddress = addressProvider.custody(market, collateral);
+    const custodyContractAddress = addressProvider.bAssetCustody(
+      market,
+      collateral,
+    );
     const response: ConfigResponse = await lcd.wasm.contractQuery(
       custodyContractAddress,
       {
