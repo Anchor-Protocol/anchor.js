@@ -5,7 +5,7 @@ import {
   fabricatebAssetClaimRewards,
   fabricatebAssetUnbond,
   fabricatebAssetWithdrawUnbonded,
-  fabricateTerraswapSwapbLuna,
+  fabricateAstroportSwapbLuna,
   OmitAddress,
   OptionType,
 } from '../../fabricators';
@@ -20,7 +20,7 @@ import { Operation, OperationImpl } from '../operation';
 export type BlunaMintOption = OptionType<typeof fabricatebAssetBond>;
 export type BlunaBurnOption = OptionType<typeof fabricatebAssetUnbond>;
 export type BlunaInstantBurnOption = OptionType<
-  typeof fabricateTerraswapSwapbLuna
+  typeof fabricateAstroportSwapbLuna
 >;
 export type BlunaClaimRewardsOption = OptionType<
   typeof fabricatebAssetClaimRewards
@@ -59,7 +59,7 @@ export class BLuna {
     instantiateBurnOption: OmitAddress<BlunaInstantBurnOption>,
   ): Operation {
     return new OperationImpl(
-      fabricateTerraswapSwapbLuna,
+      fabricateAstroportSwapbLuna,
       instantiateBurnOption,
       this._addressProvider,
     );

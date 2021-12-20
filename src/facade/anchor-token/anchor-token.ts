@@ -11,10 +11,10 @@ import {
   fabricateStakingBond,
   fabricateStakingUnbond,
   fabricateStakingWithdraw,
-  fabricateTerraswapProvideLiquidityANC,
-  fabricateTerraswapSwapANC,
-  fabricateTerraswapSwapUSTANC,
-  fabricateTerraswapWithdrawLiquidityANC,
+  fabricateAstroportProvideLiquidityANC,
+  fabricateAstroportSwapANC,
+  fabricateAstroportSwapUSTANC,
+  fabricateAstroportWithdrawLiquidityANC,
   OmitAddress,
   OmitLCD,
   OptionType,
@@ -55,7 +55,7 @@ export type AnchorTokenStakeVotingTokensOption = OmitAddress<
   OptionType<typeof fabricateGovStakeVoting>
 >;
 export type AnchorTokenProvideLiquidityOption = OmitAddress<
-  Omit<OptionType<typeof fabricateTerraswapProvideLiquidityANC>, 'quote'>
+  Omit<OptionType<typeof fabricateAstroportProvideLiquidityANC>, 'quote'>
 >;
 export type AnchorTokenGetStakerOption = OmitLCD<
   QueryOptionType<typeof queryGovStaker>
@@ -100,7 +100,7 @@ export class AnchorToken {
     to?: string,
   ): Operation {
     return new OperationImpl(
-      fabricateTerraswapSwapUSTANC,
+      fabricateAstroportSwapUSTANC,
       {
         amount: ustAmount,
         denom: MARKET_DENOMS.UUSD,
@@ -118,7 +118,7 @@ export class AnchorToken {
     to?: string,
   ): Operation {
     return new OperationImpl(
-      fabricateTerraswapSwapANC,
+      fabricateAstroportSwapANC,
       {
         amount: tokenAmount,
         to,
@@ -131,7 +131,7 @@ export class AnchorToken {
 
   provideLiquidity(option: AnchorTokenProvideLiquidityOption): Operation {
     return new OperationImpl(
-      fabricateTerraswapProvideLiquidityANC,
+      fabricateAstroportProvideLiquidityANC,
       { ...option, quote: 'uusd' },
       this._addressProvider,
     );
@@ -139,7 +139,7 @@ export class AnchorToken {
 
   withdrawLiquidity(tokenAmount: string): Operation {
     return new OperationImpl(
-      fabricateTerraswapWithdrawLiquidityANC,
+      fabricateAstroportWithdrawLiquidityANC,
       {
         amount: tokenAmount,
       },
