@@ -16,7 +16,7 @@ interface PairInfo {
   liquidityToken: string;
 }
 
-export const queryTerrasawpPair =
+export const queryAstroportPair =
   ({ lcd, pair_contract_address }: Option) =>
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async (_: AddressProvider): Promise<PairInfo> => {

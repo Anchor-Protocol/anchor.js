@@ -27,7 +27,7 @@ import {
   queryStakingStaker,
   queryTokenBalance,
 } from '../../queries';
-import { queryTerraswapPool } from '../../queries/terraswap/pool';
+import { queryAstroportPool } from '../../queries/astroport/pool';
 import { QueryOptionType, QueryResponseType } from '../../queries/types';
 import { Operation, OperationImpl } from '../operation';
 import { SlippageToleranceConfig } from '../types';
@@ -194,7 +194,7 @@ export class AnchorToken {
   }
 
   async getANCPrice(): Promise<string> {
-    const poolInfo = await queryTerraswapPool({
+    const poolInfo = await queryAstroportPool({
       lcd: this._lcd,
       pair_contract_address: this._addressProvider.terraswapAncUstPair(),
     })(this._addressProvider);

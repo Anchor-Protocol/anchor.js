@@ -13,7 +13,7 @@ interface SimulationResponse {
   commission_amount: string;
 }
 
-export const queryTerraswapSimulation =
+export const queryAstroportSimulation =
   ({ lcd, contractAddr, amount, pair_contract_address }: Option) =>
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async (_: AddressProvider): Promise<SimulationResponse> => {

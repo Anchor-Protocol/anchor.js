@@ -13,7 +13,7 @@ interface SimulationResponse {
   commission_amount: string;
 }
 
-export const queryTerraswapReverseNativeSimulation =
+export const queryAstroportReverseNativeSimulation =
   ({ lcd, denom, amount, pair_contract_address }: Option) =>
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async (_: AddressProvider): Promise<SimulationResponse> => {
