@@ -31,11 +31,19 @@ export interface AddressProvider {
 
   terraswapblunaLunaLPToken(): string;
 
+  astroportbLunaLunaPair(): string;
+
+  astroportbLunaLunaLPToken(): string;
+
   gov(): string;
 
   terraswapAncUstPair(): string;
 
   terraswapAncUstLPToken(): string;
+
+  astroportAncUstPair(): string;
+
+  astroportAncUstLPToken(): string;
 
   ANC(): string;
 

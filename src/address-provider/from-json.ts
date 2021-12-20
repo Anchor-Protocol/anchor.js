@@ -23,6 +23,10 @@ export interface AddressMap {
   terraswapblunaLunaLPToken: string;
   terraswapAncUstPair: string;
   terraswapAncUstLPToken: string;
+  astroportbLunaLunaPair: string;
+  astroportbLunaLunaLPToken: string;
+  astroportAncUstPair: string;
+  astroportAncUstLPToken: string;
   gov: string;
   distributor: string;
   collector: string;
@@ -110,6 +114,14 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.terraswapblunaLunaLPToken;
   }
 
+  astroportbLunaLunaPair(): string {
+    return this.data.astroportbLunaLunaPair;
+  }
+
+  astroportbLunaLunaLPToken(): string {
+    return this.data.astroportbLunaLunaLPToken;
+  }
+
   gov(): string {
     return this.data.gov;
   }
@@ -120,6 +132,14 @@ export class AddressProviderFromJson implements AddressProvider {
 
   terraswapAncUstLPToken(): string {
     return this.data.terraswapAncUstLPToken;
+  }
+
+  astroportAncUstPair(): string {
+    return this.data.astroportAncUstPair;
+  }
+
+  astroportAncUstLPToken(): string {
+    return this.data.astroportAncUstLPToken;
   }
 
   collector(): string {
