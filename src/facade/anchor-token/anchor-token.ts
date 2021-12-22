@@ -11,10 +11,10 @@ import {
   fabricateStakingBond,
   fabricateStakingUnbond,
   fabricateStakingWithdraw,
-  fabricateAstroportProvideLiquidityANC,
-  fabricateAstroportSwapANC,
-  fabricateAstroportSwapUSTANC,
-  fabricateAstroportWithdrawLiquidityANC,
+  fabricateExchangeProvideLiquidityANC,
+  fabricateExchangeSwapANC,
+  fabricateExchangeSwapUSTANC,
+  fabricateExchangeWithdrawLiquidityANC,
   OmitAddress,
   OmitLCD,
   OptionType,
@@ -26,8 +26,8 @@ import {
   queryGovState,
   queryStakingStaker,
   queryTokenBalance,
+  queryExchangePool,
 } from '../../queries';
-import { queryAstroportPool } from '../../queries/astroport/pool';
 import { QueryOptionType, QueryResponseType } from '../../queries/types';
 import { Operation, OperationImpl } from '../operation';
 import { SlippageToleranceConfig } from '../types';
@@ -55,7 +55,7 @@ export type AnchorTokenStakeVotingTokensOption = OmitAddress<
   OptionType<typeof fabricateGovStakeVoting>
 >;
 export type AnchorTokenProvideLiquidityOption = OmitAddress<
-  Omit<OptionType<typeof fabricateAstroportProvideLiquidityANC>, 'quote'>
+  Omit<OptionType<typeof fabricateExchangeProvideLiquidityANC>, 'quote'>
 >;
 export type AnchorTokenGetStakerOption = OmitLCD<
   QueryOptionType<typeof queryGovStaker>
@@ -100,7 +100,7 @@ export class AnchorToken {
     to?: string,
   ): Operation {
     return new OperationImpl(
-      fabricateAstroportSwapUSTANC,
+      fabricateExchangeSwapUSTANC,
       {
         amount: ustAmount,
         denom: MARKET_DENOMS.UUSD,
@@ -118,7 +118,7 @@ export class AnchorToken {
     to?: string,
   ): Operation {
     return new OperationImpl(
-      fabricateAstroportSwapANC,
+      fabricateExchangeSwapANC,
       {
         amount: tokenAmount,
         to,
@@ -131,7 +131,7 @@ export class AnchorToken {
 
   provideLiquidity(option: AnchorTokenProvideLiquidityOption): Operation {
     return new OperationImpl(
-      fabricateAstroportProvideLiquidityANC,
+      fabricateExchangeProvideLiquidityANC,
       { ...option, quote: 'uusd' },
       this._addressProvider,
     );
@@ -139,7 +139,7 @@ export class AnchorToken {
 
   withdrawLiquidity(tokenAmount: string): Operation {
     return new OperationImpl(
-      fabricateAstroportWithdrawLiquidityANC,
+      fabricateExchangeWithdrawLiquidityANC,
       {
         amount: tokenAmount,
       },
@@ -180,7 +180,7 @@ export class AnchorToken {
     const balance = await queryTokenBalance({
       lcd: this._lcd,
       address,
-      token_address: this._addressProvider.terraswapAncUstLPToken(),
+      token_address: this._addressProvider.ancUstLPToken(),
     })(this._addressProvider);
     return new Dec(balance.balance).div(1000000).toString();
   }
@@ -194,9 +194,9 @@ export class AnchorToken {
   }
 
   async getANCPrice(): Promise<string> {
-    const poolInfo = await queryAstroportPool({
+    const poolInfo = await queryExchangePool({
       lcd: this._lcd,
-      pair_contract_address: this._addressProvider.terraswapAncUstPair(),
+      pair_contract_address: this._addressProvider.ancUstPair(),
     })(this._addressProvider);
     const anc = poolInfo.assets[0].amount;
     const uusd = poolInfo.assets[1].amount;

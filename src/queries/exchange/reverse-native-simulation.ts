@@ -1,9 +1,9 @@
 import { Dec, Int, LCDClient } from '@terra-money/terra.js';
-import { AddressProvider } from '../..';
+import { AddressProvider } from '../../';
 
 interface Option {
   lcd: LCDClient;
-  contractAddr: string;
+  denom: string;
   amount: string;
   pair_contract_address: string;
 }
@@ -13,8 +13,8 @@ interface SimulationResponse {
   commission_amount: string;
 }
 
-export const queryAstroportReverseTokenSimulation =
-  ({ lcd, contractAddr, amount, pair_contract_address }: Option) =>
+export const queryExchangeReverseNativeSimulation =
+  ({ lcd, denom, amount, pair_contract_address }: Option) =>
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async (_: AddressProvider): Promise<SimulationResponse> => {
     const response: SimulationResponse = await lcd.wasm.contractQuery(
@@ -23,8 +23,8 @@ export const queryAstroportReverseTokenSimulation =
         reverse_simulation: {
           ask_asset: {
             info: {
-              ANC: {
-                contract_addr: contractAddr,
+              native_token: {
+                denom: denom,
               },
             },
             amount: new Int(new Dec(amount).mul(1000000)).toString(),

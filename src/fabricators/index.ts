@@ -4,4 +4,4 @@ export * from './anchor-token';
 export * from './cw20-token';
 export * from './money-market';
 export * from './types';
-export * from './astroport';
+export * from './exchange';

@@ -22,7 +22,7 @@ interface Option {
   expires: Expire;
 }
 
-export const fabricateAstroportProvideLiquiditybLuna =
+export const fabricateExchangeProvideLiquiditybLuna =
   ({
     address,
     slippage_tolerance,
@@ -38,7 +38,7 @@ export const fabricateAstroportProvideLiquiditybLuna =
       validateIsGreaterThanZero(native_amount),
     ]);
 
-    const pairAddress = addressProvider.astroportbLunaLunaPair();
+    const pairAddress = addressProvider.bLunaLunaPair();
     const tokenAddress = addressProvider.bLunaToken();
 
     const coins = new Coins([

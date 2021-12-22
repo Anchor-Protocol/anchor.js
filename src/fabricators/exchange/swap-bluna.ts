@@ -16,7 +16,7 @@ interface Option {
   max_spread?: string;
 }
 
-export const fabricateAstroportSwapbLuna =
+export const fabricateExchangeSwapbLuna =
   ({ address, amount, to, belief_price, max_spread }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
@@ -26,7 +26,7 @@ export const fabricateAstroportSwapbLuna =
     ]);
 
     const bAssetTokenAddress = addressProvider.bLunaToken();
-    const pairAddress = addressProvider.astroportbLunaLunaPair();
+    const pairAddress = addressProvider.bLunaLunaPair();
 
     return [
       new MsgExecuteContract(address, bAssetTokenAddress, {

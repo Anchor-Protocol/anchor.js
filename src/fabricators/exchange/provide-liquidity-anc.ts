@@ -20,7 +20,7 @@ interface Option {
   expires?: Expire;
 }
 
-export const fabricateAstroportProvideLiquidityANC =
+export const fabricateExchangeProvideLiquidityANC =
   ({
     address,
     slippage_tolerance,
@@ -36,7 +36,7 @@ export const fabricateAstroportProvideLiquidityANC =
       validateIsGreaterThanZero(native_amount),
     ]);
 
-    const pairAddress = addressProvider.astroportAncUstPair();
+    const pairAddress = addressProvider.ancUstPair();
     const tokenAddress = addressProvider.ANC();
 
     const coins = new Coins([

@@ -1,13 +1,13 @@
 import { testFabricator } from '../utils/test-fabricators/test-fabricator';
 import {
-  fabricateAstroportProvideLiquidityANC,
-  fabricateAstroportProvideLiquiditybLuna,
-  fabricateAstroportSwapANC,
-  fabricateAstroportSwapbLuna,
-  fabricateAstroportSwapLuna,
-  fabricateAstroportSwapUSTANC,
-  fabricateAstroportWithdrawLiquidityANC,
-  fabricateAstroportWithdrawLiquiditybLuna,
+  fabricateExchangeProvideLiquidityANC,
+  fabricateExchangeProvideLiquiditybLuna,
+  fabricateExchangeSwapANC,
+  fabricateExchangeSwapbLuna,
+  fabricateExchangeSwapLuna,
+  fabricateExchangeSwapUSTANC,
+  fabricateExchangeWithdrawLiquidityANC,
+  fabricateExchangeWithdrawLiquiditybLuna,
 } from '../fabricators';
 import { addressProvider } from './common';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
@@ -15,11 +15,11 @@ import { createHookMsg } from '../utils/cw20/create-hook-msg';
 import { MARKET_DENOMS } from '..';
 
 /* eslint-disable */
-describe('astroport<>anchor', () => {
+describe('exchange<>anchor', () => {
   it('provide-liquidity-anc', async () => {
     testFabricator(
       expect,
-      fabricateAstroportProvideLiquidityANC,
+      fabricateExchangeProvideLiquidityANC,
       {
         address: 'address',
         slippage_tolerance: undefined,
@@ -32,14 +32,14 @@ describe('astroport<>anchor', () => {
       [
         new MsgExecuteContract('address', addressProvider.ANC(), {
           increase_allowance: {
-            spender: addressProvider.astroportAncUstPair(),
+            spender: addressProvider.ancUstPair(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             expires: { never: {} },
           },
         }),
         new MsgExecuteContract(
           'address',
-          addressProvider.astroportAncUstPair(),
+          addressProvider.ancUstPair(),
           {
             provide_liquidity: {
               assets: [
@@ -72,7 +72,7 @@ describe('astroport<>anchor', () => {
   it('provide-liquidity-anc', async () => {
     testFabricator(
       expect,
-      fabricateAstroportProvideLiquiditybLuna,
+      fabricateExchangeProvideLiquiditybLuna,
       {
         address: 'address',
         slippage_tolerance: undefined,
@@ -85,14 +85,14 @@ describe('astroport<>anchor', () => {
       [
         new MsgExecuteContract('address', addressProvider.bLunaToken(), {
           increase_allowance: {
-            spender: addressProvider.astroportbLunaLunaPair(),
+            spender: addressProvider.bLunaLunaPair(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             expires: { never: {} },
           },
         }),
         new MsgExecuteContract(
           'address',
-          addressProvider.astroportbLunaLunaPair(),
+          addressProvider.bLunaLunaPair(),
           {
             provide_liquidity: {
               assets: [
@@ -125,7 +125,7 @@ describe('astroport<>anchor', () => {
   it('swap-ANC', async () => {
     testFabricator(
       expect,
-      fabricateAstroportSwapANC,
+      fabricateExchangeSwapANC,
       {
         address: 'address',
         amount: '1000',
@@ -137,7 +137,7 @@ describe('astroport<>anchor', () => {
       [
         new MsgExecuteContract('address', addressProvider.ANC(), {
           send: {
-            contract: addressProvider.astroportAncUstPair(),
+            contract: addressProvider.ancUstPair(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             msg: createHookMsg({
               swap: {
@@ -155,7 +155,7 @@ describe('astroport<>anchor', () => {
   it('swap-bluna', async () => {
     testFabricator(
       expect,
-      fabricateAstroportSwapbLuna,
+      fabricateExchangeSwapbLuna,
       {
         address: 'address',
         amount: '1000',
@@ -167,7 +167,7 @@ describe('astroport<>anchor', () => {
       [
         new MsgExecuteContract('address', addressProvider.bLunaToken(), {
           send: {
-            contract: addressProvider.astroportbLunaLunaPair(),
+            contract: addressProvider.bLunaLunaPair(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             msg: createHookMsg({
               swap: {
@@ -185,7 +185,7 @@ describe('astroport<>anchor', () => {
   it('swap-luna', async () => {
     testFabricator(
       expect,
-      fabricateAstroportSwapLuna,
+      fabricateExchangeSwapLuna,
       {
         address: 'address',
         amount: '1000',
@@ -198,7 +198,7 @@ describe('astroport<>anchor', () => {
       [
         new MsgExecuteContract(
           'address',
-          addressProvider.astroportbLunaLunaPair(),
+          addressProvider.bLunaLunaPair(),
           {
             swap: {
               offer_asset: {
@@ -223,7 +223,7 @@ describe('astroport<>anchor', () => {
   it('swap-usd-ANC', async () => {
     testFabricator(
       expect,
-      fabricateAstroportSwapUSTANC,
+      fabricateExchangeSwapUSTANC,
       {
         address: 'address',
         amount: '1000',
@@ -236,7 +236,7 @@ describe('astroport<>anchor', () => {
       [
         new MsgExecuteContract(
           'address',
-          addressProvider.astroportAncUstPair(),
+          addressProvider.ancUstPair(),
           {
             swap: {
               offer_asset: {
@@ -261,26 +261,22 @@ describe('astroport<>anchor', () => {
   it('withdraw-liquidity', async () => {
     testFabricator(
       expect,
-      fabricateAstroportWithdrawLiquidityANC,
+      fabricateExchangeWithdrawLiquidityANC,
       {
         address: 'address',
         amount: '1000',
       },
       addressProvider,
       [
-        new MsgExecuteContract(
-          'address',
-          addressProvider.astroportAncUstLPToken(),
-          {
-            send: {
-              contract: addressProvider.astroportAncUstPair(),
-              amount: new Int(new Dec('1000').mul(1000000)).toString(),
-              msg: createHookMsg({
-                withdraw_liquidity: {},
-              }),
-            },
+        new MsgExecuteContract('address', addressProvider.ancUstLPToken(), {
+          send: {
+            contract: addressProvider.ancUstPair(),
+            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+            msg: createHookMsg({
+              withdraw_liquidity: {},
+            }),
           },
-        ),
+        }),
       ],
     );
   });
@@ -288,26 +284,22 @@ describe('astroport<>anchor', () => {
   it('withdraw-liquidity', async () => {
     testFabricator(
       expect,
-      fabricateAstroportWithdrawLiquiditybLuna,
+      fabricateExchangeWithdrawLiquiditybLuna,
       {
         address: 'address',
         amount: '1000',
       },
       addressProvider,
       [
-        new MsgExecuteContract(
-          'address',
-          addressProvider.astroportbLunaLunaLPToken(),
-          {
-            send: {
-              contract: addressProvider.astroportbLunaLunaPair(),
-              amount: new Int(new Dec('1000').mul(1000000)).toString(),
-              msg: createHookMsg({
-                withdraw_liquidity: {},
-              }),
-            },
+        new MsgExecuteContract('address', addressProvider.bLunaLunaLPToken(), {
+          send: {
+            contract: addressProvider.bLunaLunaPair(),
+            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+            msg: createHookMsg({
+              withdraw_liquidity: {},
+            }),
           },
-        ),
+        }),
       ],
     );
   });

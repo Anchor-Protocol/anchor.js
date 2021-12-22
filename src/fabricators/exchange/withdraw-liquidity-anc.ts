@@ -13,7 +13,7 @@ interface Option {
   amount: string;
 }
 
-export const fabricateAstroportWithdrawLiquiditybLuna =
+export const fabricateExchangeWithdrawLiquidityANC =
   ({ address, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
@@ -22,8 +22,8 @@ export const fabricateAstroportWithdrawLiquiditybLuna =
       validateIsGreaterThanZero(amount),
     ]);
 
-    const lpToken = addressProvider.astroportbLunaLunaLPToken();
-    const pairAddress = addressProvider.astroportbLunaLunaPair();
+    const lpToken = addressProvider.ancUstLPToken();
+    const pairAddress = addressProvider.ancUstPair();
 
     return [
       new MsgExecuteContract(address, lpToken, {

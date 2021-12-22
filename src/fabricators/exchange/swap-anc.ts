@@ -11,10 +11,13 @@ import { AddressProvider } from '../../address-provider/provider';
 interface Option {
   address: string;
   amount: string;
+  to?: string;
+  belief_price?: string;
+  max_spread?: string;
 }
 
-export const fabricateAstroportWithdrawLiquidityANC =
-  ({ address, amount }: Option) =>
+export const fabricateExchangeSwapANC =
+  ({ address, amount, to, belief_price, max_spread }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
@@ -22,16 +25,20 @@ export const fabricateAstroportWithdrawLiquidityANC =
       validateIsGreaterThanZero(amount),
     ]);
 
-    const lpToken = addressProvider.astroportAncUstLPToken();
-    const pairAddress = addressProvider.astroportAncUstPair();
+    const ancTokenAddress = addressProvider.ANC();
+    const pairAddress = addressProvider.ancUstPair();
 
     return [
-      new MsgExecuteContract(address, lpToken, {
+      new MsgExecuteContract(address, ancTokenAddress, {
         send: {
           contract: pairAddress,
           amount: new Int(new Dec(amount).mul(1000000)).toString(),
           msg: createHookMsg({
-            withdraw_liquidity: {},
+            swap: {
+              belief_price: belief_price,
+              max_spread: max_spread,
+              to: to,
+            },
           }),
         },
       }),

@@ -15,7 +15,7 @@ interface Asset {
   amount: string;
 }
 
-export const queryAstroportPool =
+export const queryExchangePool =
   ({ lcd, pair_contract_address }: Option) =>
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async (_: AddressProvider): Promise<PoolResponse> => {
