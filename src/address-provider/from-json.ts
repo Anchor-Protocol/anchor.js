@@ -12,14 +12,17 @@ export interface AddressMap {
   bEthReward: string;
   bEthConverter: string;
   bEthCustody: string;
+  bEthWormhole: string;
   bAtomToken: string;
   bAtomReward: string;
   bAtomConverter: string;
   bAtomCustody: string;
+  bAtomWormhole: string;
   bSolToken: string;
   bSolReward: string;
   bSolConverter: string;
   bSolCustody: string;
+  bSolWormhole: string;
   mmInterestModel: string;
   mmOracle: string;
   mmMarket: string;
@@ -105,6 +108,19 @@ export class AddressProviderFromJson implements AddressProvider {
         return this.data.bAtomCustody;
       case COLLATERAL_DENOMS.UBSOL:
         return this.data.bSolCustody;
+    }
+  }
+
+  bAssetWormhole(collateral: COLLATERAL_DENOMS): string {
+    switch (collateral) {
+      case COLLATERAL_DENOMS.UBLUNA:
+        throw Error('No Wormhole address for bLuna is supported.');
+      case COLLATERAL_DENOMS.UBETH:
+        return this.data.bEthWormhole;
+      case COLLATERAL_DENOMS.UBATOM:
+        return this.data.bAtomWormhole;
+      case COLLATERAL_DENOMS.UBSOL:
+        return this.data.bSolWormhole;
     }
   }
 

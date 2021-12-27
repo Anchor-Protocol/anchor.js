@@ -11,6 +11,8 @@ export interface AddressProvider {
 
   bAssetCustody(denom: MARKET_DENOMS, bAsset: COLLATERAL_DENOMS): string;
 
+  bAssetWormhole(bAsset: COLLATERAL_DENOMS): string;
+
   market(denom: MARKET_DENOMS): string;
 
   overseer(denom: MARKET_DENOMS): string;
