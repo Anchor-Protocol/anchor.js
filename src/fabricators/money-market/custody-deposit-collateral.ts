@@ -25,12 +25,8 @@ export const fabricateCustodyDepositCollateral =
       validateIsGreaterThanZero(amount),
     ]);
 
-    let bAssetTokenContract = addressProvider.bLunaToken();
-
-    if (collateral == COLLATERAL_DENOMS.UBETH) {
-      bAssetTokenContract = addressProvider.bEthToken();
-    }
-    const custodyContract = addressProvider.custody(market, collateral);
+    const bAssetTokenContract = addressProvider.bAssetToken(collateral);
+    const custodyContract = addressProvider.bAssetCustody(market, collateral);
 
     // cw20 send + provide_collateral hook
     return [

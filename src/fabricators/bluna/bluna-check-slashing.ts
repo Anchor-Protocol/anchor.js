@@ -7,7 +7,7 @@ interface Option {
   address: string;
 }
 
-export const fabricatebAssetCheckSlashing =
+export const fabricatebLunaCheckSlashing =
   ({ address }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([validateAddress(address)]);

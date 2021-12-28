@@ -12,7 +12,7 @@ import {
 import { addressProvider } from '../__tests__/common';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
-import { MARKET_DENOMS } from '..';
+import { COLLATERAL_DENOMS, MARKET_DENOMS } from '..';
 
 /* eslint-disable */
 describe('terraswap<>anchor', () => {
@@ -83,13 +83,17 @@ describe('terraswap<>anchor', () => {
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
-          increase_allowance: {
-            spender: addressProvider.terraswapblunaLunaPair(),
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
-            expires: { never: {} },
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          {
+            increase_allowance: {
+              spender: addressProvider.terraswapblunaLunaPair(),
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+              expires: { never: {} },
+            },
           },
-        }),
+        ),
         new MsgExecuteContract(
           'address',
           addressProvider.terraswapblunaLunaPair(),
@@ -99,7 +103,9 @@ describe('terraswap<>anchor', () => {
                 {
                   info: {
                     token: {
-                      contract_addr: addressProvider.bLunaToken(),
+                      contract_addr: addressProvider.bAssetToken(
+                        COLLATERAL_DENOMS.UBLUNA,
+                      ),
                     },
                   },
                   amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -165,19 +171,23 @@ describe('terraswap<>anchor', () => {
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
-          send: {
-            contract: addressProvider.terraswapblunaLunaPair(),
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
-            msg: createHookMsg({
-              swap: {
-                belief_price: '10',
-                max_spread: '1000',
-                to: 'recipient',
-              },
-            }),
+        new MsgExecuteContract(
+          'address',
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          {
+            send: {
+              contract: addressProvider.terraswapblunaLunaPair(),
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+              msg: createHookMsg({
+                swap: {
+                  belief_price: '10',
+                  max_spread: '1000',
+                  to: 'recipient',
+                },
+              }),
+            },
           },
-        }),
+        ),
       ],
     );
   });

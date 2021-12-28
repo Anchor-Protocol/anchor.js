@@ -1,10 +1,15 @@
 import { LCDClient } from '@terra-money/terra.js';
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  COLLATERAL_DENOMS,
+} from '../../address-provider/provider';
 
 interface Option {
   lcd: LCDClient;
   address: string;
+  collateral: COLLATERAL_DENOMS;
 }
+
 export interface Holder {
   address: string;
   balance: string;
@@ -12,17 +17,13 @@ export interface Holder {
   pending_rewards: string;
 }
 
-export const queryRewardHolder =
-  ({ lcd, address }: Option) =>
+export const querybAssetRewardHolder =
+  ({ lcd, address, collateral }: Option) =>
   async (addressProvider: AddressProvider): Promise<Holder> => {
-    const bAssetContractAddress = addressProvider.bLunaReward();
-    const response: Holder = await lcd.wasm.contractQuery(
-      bAssetContractAddress,
-      {
-        holder: {
-          address: address,
-        },
+    const bAssetContractAddress = addressProvider.bAssetReward(collateral);
+    return lcd.wasm.contractQuery(bAssetContractAddress, {
+      holder: {
+        address: address,
       },
-    );
-    return response;
+    });
   };

@@ -2,19 +2,31 @@ import { AddressProvider, COLLATERAL_DENOMS, MARKET_DENOMS } from './provider';
 
 export interface AddressMap {
   bLunaHub: string;
-  bLunaToken: string;
-  bLunaReward: string;
   bLunaAirdrop: string;
   bLunaValidatorsRegistry: string;
-  bEthReward: string;
+  bLunaToken: string;
+  bLunaReward: string;
+  bLunaConverter: string;
+  bLunaCustody: string;
   bEthToken: string;
+  bEthReward: string;
+  bEthConverter: string;
+  bEthCustody: string;
+  bEthWormhole: string;
+  bAtomToken: string;
+  bAtomReward: string;
+  bAtomConverter: string;
+  bAtomCustody: string;
+  bAtomWormhole: string;
+  bSolToken: string;
+  bSolReward: string;
+  bSolConverter: string;
+  bSolCustody: string;
+  bSolWormhole: string;
   mmInterestModel: string;
   mmOracle: string;
   mmMarket: string;
   mmOverseer: string;
-  // mmCustody is bluna custody
-  mmCustody: string;
-  mmCustodyBEth: string;
   mmLiquidation: string;
   mmLiquidationQueue: string;
   mmDistributionModel: string;
@@ -39,43 +51,81 @@ export type AllowedAddressKeys = keyof AddressMap;
 export class AddressProviderFromJson implements AddressProvider {
   constructor(private data: AddressMap) {}
 
-  bLunaReward(): string {
-    return this.data.bLunaReward;
-  }
-
   bLunaHub(): string {
     return this.data.bLunaHub;
-  }
-
-  bLunaToken(): string {
-    return this.data.bLunaToken;
-  }
-
-  bEthReward(): string {
-    return this.data.bEthReward;
   }
 
   bLunaValidatorsRegistry(): string {
     return this.data.bLunaValidatorsRegistry;
   }
 
-  bEthToken(): string {
-    return this.data.bEthToken;
+  bAssetToken(collateral: COLLATERAL_DENOMS): string {
+    switch (collateral) {
+      case COLLATERAL_DENOMS.UBLUNA:
+        return this.data.bLunaToken;
+      case COLLATERAL_DENOMS.UBETH:
+        return this.data.bEthToken;
+      case COLLATERAL_DENOMS.UBATOM:
+        return this.data.bAtomToken;
+      case COLLATERAL_DENOMS.UBSOL:
+        return this.data.bSolToken;
+    }
+  }
+
+  bAssetReward(collateral: COLLATERAL_DENOMS): string {
+    switch (collateral) {
+      case COLLATERAL_DENOMS.UBLUNA:
+        return this.data.bLunaReward;
+      case COLLATERAL_DENOMS.UBETH:
+        return this.data.bEthReward;
+      case COLLATERAL_DENOMS.UBATOM:
+        return this.data.bAtomReward;
+      case COLLATERAL_DENOMS.UBSOL:
+        return this.data.bSolReward;
+    }
+  }
+
+  bAssetConverter(collateral: COLLATERAL_DENOMS): string {
+    switch (collateral) {
+      case COLLATERAL_DENOMS.UBLUNA:
+        return this.data.bLunaConverter;
+      case COLLATERAL_DENOMS.UBETH:
+        return this.data.bEthConverter;
+      case COLLATERAL_DENOMS.UBATOM:
+        return this.data.bAtomConverter;
+      case COLLATERAL_DENOMS.UBSOL:
+        return this.data.bSolConverter;
+    }
+  }
+
+  bAssetCustody(_denom: MARKET_DENOMS, collateral: COLLATERAL_DENOMS): string {
+    switch (collateral) {
+      case COLLATERAL_DENOMS.UBLUNA:
+        return this.data.bLunaCustody;
+      case COLLATERAL_DENOMS.UBETH:
+        return this.data.bEthCustody;
+      case COLLATERAL_DENOMS.UBATOM:
+        return this.data.bAtomCustody;
+      case COLLATERAL_DENOMS.UBSOL:
+        return this.data.bSolCustody;
+    }
+  }
+
+  bAssetWormhole(collateral: COLLATERAL_DENOMS): string {
+    switch (collateral) {
+      case COLLATERAL_DENOMS.UBLUNA:
+        throw Error('No Wormhole address for bLuna is supported.');
+      case COLLATERAL_DENOMS.UBETH:
+        return this.data.bEthWormhole;
+      case COLLATERAL_DENOMS.UBATOM:
+        return this.data.bAtomWormhole;
+      case COLLATERAL_DENOMS.UBSOL:
+        return this.data.bSolWormhole;
+    }
   }
 
   market(): string {
     return this.data.mmMarket;
-  }
-
-  custody(_denom: MARKET_DENOMS, collateral: COLLATERAL_DENOMS): string {
-    switch (collateral) {
-      case COLLATERAL_DENOMS.UBLUNA: {
-        return this.data.mmCustody;
-      }
-      case COLLATERAL_DENOMS.UBETH: {
-        return this.data.mmCustodyBEth;
-      }
-    }
   }
 
   overseer(): string {

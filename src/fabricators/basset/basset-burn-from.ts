@@ -1,4 +1,7 @@
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  COLLATERAL_DENOMS,
+} from '../../address-provider/provider';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
@@ -7,14 +10,22 @@ import {
   validateIsNumber,
 } from '../../utils/validation/number';
 
+/**
+ * @param address Client’s Terra address (address of the message sender).
+ * @param collateral to burn.
+ * @param amount of burn.
+ * @param owner Client's Terra address (address of allowance owner).
+ */
+
 interface Option {
   address: string;
+  collateral: COLLATERAL_DENOMS;
   amount: string;
   owner: string;
 }
 
 export const fabricatebAssetBurnFrom =
-  ({ address, amount, owner }: Option) =>
+  ({ address, collateral, amount, owner }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
@@ -23,7 +34,7 @@ export const fabricatebAssetBurnFrom =
       validateAddress(owner),
     ]);
 
-    const bAssetTokenAddress = addressProvider.bLunaToken();
+    const bAssetTokenAddress = addressProvider.bAssetToken(collateral);
 
     return [
       new MsgExecuteContract(address, bAssetTokenAddress, {

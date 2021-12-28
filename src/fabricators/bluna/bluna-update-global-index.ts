@@ -8,7 +8,7 @@ interface Option {
   airdrop_hooks?: string[];
 }
 
-export const fabricatebAssetUpdateGlobalIndex =
+export const fabricatebLunaUpdateGlobalIndex =
   ({ address, airdrop_hooks }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([validateAddress(address)]);

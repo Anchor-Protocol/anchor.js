@@ -9,7 +9,7 @@ interface Option {
   amount: string;
 }
 
-export const fabricatebAssetBond =
+export const fabricatebLunaBond =
   ({ address, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([

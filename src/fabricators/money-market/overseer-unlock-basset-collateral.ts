@@ -6,11 +6,13 @@ import { validateTrue } from '../../utils/validation/true';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
+  COLLATERAL_DENOMS,
   MARKET_DENOMS,
 } from '../../address-provider/provider';
 
 interface Option {
   address: string;
+  collateral: COLLATERAL_DENOMS;
   market: MARKET_DENOMS;
   amount: string;
 }
@@ -22,8 +24,8 @@ interface Option {
  * @param symbol Symbol of collateral to redeem.
  * @param amount Amount of collateral to redeem.
  */
-export const fabricateOverseerUnlockBETHCollateral =
-  ({ address, market, amount }: Option) =>
+export const fabricateOverseerUnlockbAssetCollateral =
+  ({ address, collateral, market, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
@@ -31,7 +33,7 @@ export const fabricateOverseerUnlockBETHCollateral =
     ]);
 
     const mmOverseerContract = addressProvider.overseer(market);
-    const bAssetTokenContract = addressProvider.bEthToken();
+    const bAssetTokenContract = addressProvider.bAssetToken(collateral);
 
     return [
       // unlock collateral

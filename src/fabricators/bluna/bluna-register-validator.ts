@@ -9,9 +9,9 @@ interface Option {
 }
 
 /**
- * @param address Validator Terra address.
+ * @param address Client’s Terra address.
  */
-export const fabricatebAssetDeregisterValidator =
+export const fabricatebLunaRegisterValidator =
   ({ address, validator }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([validateValAddress(validator)]);
@@ -20,7 +20,7 @@ export const fabricatebAssetDeregisterValidator =
 
     return [
       new MsgExecuteContract(address, bAssetHubAddress, {
-        deregister_validator: {
+        register_validator: {
           validator: validator,
         },
       }),
