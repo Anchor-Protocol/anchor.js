@@ -5,18 +5,22 @@ import {
   validateIsGreaterThanZero,
   validateIsNumber,
 } from '../../utils/validation/number';
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  COLLATERAL_DENOMS,
+} from '../../address-provider/provider';
 import { Expire } from '../types';
 
 interface Option {
   address: string;
+  collateral: COLLATERAL_DENOMS;
   amount: string;
   spender: string;
   expires?: Expire;
 }
 
 export const fabricatebAssetIncreaseAllowance =
-  ({ address, amount, spender, expires }: Option) =>
+  ({ address, collateral, amount, spender, expires }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
@@ -25,7 +29,7 @@ export const fabricatebAssetIncreaseAllowance =
       validateAddress(spender),
     ]);
 
-    const bAssetTokenAddress = addressProvider.bLunaToken();
+    const bAssetTokenAddress = addressProvider.bAssetToken(collateral);
 
     return [
       new MsgExecuteContract(address, bAssetTokenAddress, {

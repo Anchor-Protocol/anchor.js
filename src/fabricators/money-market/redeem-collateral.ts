@@ -1,7 +1,6 @@
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateAddress } from '../../utils/validation/address';
 import { validateInput } from '../../utils/validate-input';
-
 import { validateTrue } from '../../utils/validation/true';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
@@ -26,14 +25,9 @@ export const fabricateRedeemCollateral =
       amount ? validateIsGreaterThanZero(amount) : validateTrue,
     ]);
 
-    let bAssetTokenContract = addressProvider.bLunaToken();
-
-    if (collateral == COLLATERAL_DENOMS.UBETH) {
-      bAssetTokenContract = addressProvider.bEthToken();
-    }
-
+    const bAssetTokenContract = addressProvider.bAssetToken(collateral);
     const mmOverseerContract = addressProvider.overseer(market);
-    const custodyContract = addressProvider.custody(market, collateral);
+    const custodyContract = addressProvider.bAssetCustody(market, collateral);
 
     return [
       // unlock collateral

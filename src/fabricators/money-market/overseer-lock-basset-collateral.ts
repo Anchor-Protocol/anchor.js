@@ -1,16 +1,16 @@
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
-import { validateAddress } from '../../utils/validation/address';
 import { validateInput } from '../../utils/validate-input';
-
-import { validateTrue } from '../../utils/validation/true';
+import { validateAddress } from '../../utils/validation/address';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
+  COLLATERAL_DENOMS,
   MARKET_DENOMS,
 } from '../../address-provider/provider';
 
 interface Option {
   address: string;
+  collateral: COLLATERAL_DENOMS;
   market: MARKET_DENOMS;
   amount: string;
 }
@@ -18,26 +18,25 @@ interface Option {
 /**
  *
  * @param address Client’s Terra address.
- * @param market Type of stablecoin money market to redeem collateral.
- * @param symbol Symbol of collateral to redeem.
- * @param amount Amount of collateral to redeem.
+ * @param market Type of stablecoin money market to deposit collateral. Currently only supports UST.
+ * @param amount Amount of collateral to deposit.
  */
-export const fabricateOverseerUnlockCollateral =
-  ({ address, market, amount }: Option) =>
+export const fabricateOverseerLockbAssetCollateral =
+  ({ address, collateral, market, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
-      amount ? validateIsGreaterThanZero(amount) : validateTrue,
+      validateIsGreaterThanZero(amount),
     ]);
 
     const mmOverseerContract = addressProvider.overseer(market);
-    const bAssetTokenContract = addressProvider.bLunaToken();
+    const bAssetTokenContract = addressProvider.bAssetToken(collateral);
 
     return [
-      // unlock collateral
+      // lock_collateral call
       new MsgExecuteContract(address, mmOverseerContract, {
-        // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L78
-        unlock_collateral: {
+        // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L75
+        lock_collateral: {
           collaterals: [
             [
               bAssetTokenContract,

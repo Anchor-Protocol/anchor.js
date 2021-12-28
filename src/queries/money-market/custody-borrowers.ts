@@ -20,7 +20,10 @@ interface BorrowersResponse {
 export const queryCustodyBorrowers =
   ({ lcd, market, collateral, start_after, limit }: Option) =>
   async (addressProvider: AddressProvider): Promise<BorrowersResponse> => {
-    const custodyContractAddress = addressProvider.custody(market, collateral);
+    const custodyContractAddress = addressProvider.bAssetCustody(
+      market,
+      collateral,
+    );
     const response: BorrowersResponse = await lcd.wasm.contractQuery(
       custodyContractAddress,
       {

@@ -7,14 +7,15 @@ interface Option {
 }
 
 interface ConfigResponse {
-  hub_contract: string;
-  reward_denom: string;
+  owner: string;
+  wormhole_token_address: string;
+  anchor_token_address: string;
 }
 
-export const querybAssetRewardConfig =
+export const querybAssetConverterConfig =
   ({ lcd, collateral }: Option) =>
   async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
-    const bAssetContractAddress = addressProvider.bAssetReward(collateral);
+    const bAssetContractAddress = addressProvider.bAssetConverter(collateral);
     return lcd.wasm.contractQuery(bAssetContractAddress, {
       config: {},
     });

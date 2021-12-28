@@ -22,7 +22,7 @@ export const queryCustodyBorrower =
   async (addressProvider: AddressProvider): Promise<BorrowerResponse> => {
     const custodyAddress = custody.startsWith('terra1')
       ? custody
-      : addressProvider.custody(market, custody as COLLATERAL_DENOMS);
+      : addressProvider.bAssetCustody(market, custody as COLLATERAL_DENOMS);
 
     return lcd.wasm.contractQuery<BorrowerResponse>(custodyAddress, {
       borrower: {

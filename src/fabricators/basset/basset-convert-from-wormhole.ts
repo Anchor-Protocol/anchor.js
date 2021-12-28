@@ -1,38 +1,43 @@
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
-import {
-  validateIsGreaterThanZero,
-  validateIsNumber,
-} from '../../utils/validation/number';
+import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import { createHookMsg } from '../../utils/cw20/create-hook-msg';
-import { AddressProvider } from '../../address-provider/provider';
+import {
+  AddressProvider,
+  COLLATERAL_DENOMS,
+} from '../../address-provider/provider';
+
+/**
+ * @param address Client’s Terra address (address of the message sender).
+ * @param collateral to convert.
+ * @param Client’s Terra address (address of reward recipient).
+ */
 
 interface Option {
   address: string;
+  collateral: COLLATERAL_DENOMS;
   amount: string;
 }
 
-export const fabricatebAssetUnbond =
-  ({ address, amount }: Option) =>
+export const fabricatebAssetConvertFromWormhole =
+  ({ address, collateral, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
-      validateIsNumber(amount),
       validateIsGreaterThanZero(amount),
     ]);
 
-    const bAssetTokenAddress = addressProvider.bLunaToken();
-    const bAssetHubAddress = addressProvider.bLunaHub();
+    const bAssetTokenAddress = addressProvider.bAssetToken(collateral);
+    const bAssetConverterAddress = addressProvider.bAssetConverter(collateral);
 
     return [
       new MsgExecuteContract(address, bAssetTokenAddress, {
-        // @see https://github.com/Anchor-Protocol/anchor-bAsset-contracts/blob/cce41e707c67ee2852c4929e17fb1472dbd2aa35/contracts/anchor_basset_token/src/handler.rs#L101
         send: {
-          contract: bAssetHubAddress,
+          contract: bAssetConverterAddress,
           amount: new Int(new Dec(amount).mul(1000000)).toString(),
           msg: createHookMsg({
-            unbond: {},
+            convertWormholeToAnchor: {},
           }),
         },
       }),

@@ -1,5 +1,5 @@
 export * from './basset';
-export * from './beth';
+export * from './bluna';
 export * from './anchor-token';
 export * from './cw20-token';
 export * from './money-market';
