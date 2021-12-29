@@ -60,68 +60,110 @@ export class AddressProviderFromJson implements AddressProvider {
   }
 
   bAssetToken(collateral: COLLATERAL_DENOMS): string {
+    let address = '';
     switch (collateral) {
       case COLLATERAL_DENOMS.UBLUNA:
-        return this.data.bLunaToken;
+        address = this.data.bLunaToken;
+        break;
       case COLLATERAL_DENOMS.UBETH:
-        return this.data.bEthToken;
+        address = this.data.bEthToken;
+        break;
       case COLLATERAL_DENOMS.UBATOM:
-        return this.data.bAtomToken;
+        address = this.data.bAtomToken;
+        break;
       case COLLATERAL_DENOMS.UBSOL:
-        return this.data.bSolToken;
+        address = this.data.bSolToken;
+        break;
     }
+    if (address.trim().length === 0) {
+      throw Error(`The collateral ${collateral} is not currently supported.`);
+    }
+    return address;
   }
 
   bAssetReward(collateral: COLLATERAL_DENOMS): string {
+    let address = '';
     switch (collateral) {
       case COLLATERAL_DENOMS.UBLUNA:
-        return this.data.bLunaReward;
+        address = this.data.bLunaReward;
+        break;
       case COLLATERAL_DENOMS.UBETH:
-        return this.data.bEthReward;
+        address = this.data.bEthReward;
+        break;
       case COLLATERAL_DENOMS.UBATOM:
-        return this.data.bAtomReward;
+        address = this.data.bAtomReward;
+        break;
       case COLLATERAL_DENOMS.UBSOL:
-        return this.data.bSolReward;
+        address = this.data.bSolReward;
+        break;
     }
+    if (address.trim().length === 0) {
+      throw Error(`The collateral ${collateral} is not currently supported.`);
+    }
+    return address;
   }
 
   bAssetConverter(collateral: COLLATERAL_DENOMS): string {
+    let address = '';
     switch (collateral) {
       case COLLATERAL_DENOMS.UBLUNA:
-        return this.data.bLunaConverter;
+        address = this.data.bLunaConverter;
+        break;
       case COLLATERAL_DENOMS.UBETH:
-        return this.data.bEthConverter;
+        address = this.data.bEthConverter;
+        break;
       case COLLATERAL_DENOMS.UBATOM:
-        return this.data.bAtomConverter;
+        address = this.data.bAtomConverter;
+        break;
       case COLLATERAL_DENOMS.UBSOL:
-        return this.data.bSolConverter;
+        address = this.data.bSolConverter;
+        break;
     }
+    if (address.trim().length === 0) {
+      throw Error(`The collateral ${collateral} is not currently supported.`);
+    }
+    return address;
   }
 
   bAssetCustody(_denom: MARKET_DENOMS, collateral: COLLATERAL_DENOMS): string {
+    let address = '';
     switch (collateral) {
       case COLLATERAL_DENOMS.UBLUNA:
-        return this.data.bLunaCustody;
+        address = this.data.bLunaCustody;
+        break;
       case COLLATERAL_DENOMS.UBETH:
-        return this.data.bEthCustody;
+        address = this.data.bEthCustody;
+        break;
       case COLLATERAL_DENOMS.UBATOM:
-        return this.data.bAtomCustody;
+        address = this.data.bAtomConverter;
+        break;
       case COLLATERAL_DENOMS.UBSOL:
-        return this.data.bSolCustody;
+        address = this.data.bSolCustody;
+        break;
     }
+    if (address.trim().length === 0) {
+      throw Error(`The collateral ${collateral} is not currently supported.`);
+    }
+    return address;
   }
 
   bAssetWormhole(collateral: COLLATERAL_DENOMS): string {
+    let address = '';
     switch (collateral) {
-      case COLLATERAL_DENOMS.UBLUNA:
-        throw Error('No Wormhole address for bLuna is supported.');
       case COLLATERAL_DENOMS.UBETH:
-        return this.data.bEthWormhole;
+        address = this.data.bEthWormhole;
+        break;
       case COLLATERAL_DENOMS.UBATOM:
-        return this.data.bAtomWormhole;
+        address = this.data.bAtomWormhole;
+        break;
       case COLLATERAL_DENOMS.UBSOL:
-        return this.data.bSolWormhole;
+        address = this.data.bSolWormhole;
+        break;
     }
+    if (address.trim().length === 0) {
+      throw Error(`The collateral ${collateral} is not currently supported.`);
+    }
+    return address;
   }
 
   market(): string {

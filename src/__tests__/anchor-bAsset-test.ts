@@ -266,7 +266,7 @@ describe('bAsset', () => {
       fabricatebAssetConvertFromWormhole,
       {
         address: 'address',
-        collateral: COLLATERAL_DENOMS.UBLUNA,
+        collateral: COLLATERAL_DENOMS.UBETH,
         amount: '1000',
         msg: { msg: {} },
       },
@@ -274,7 +274,7 @@ describe('bAsset', () => {
       [
         new MsgExecuteContract(
           'address',
-          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBETH),
           {
             send: {
               contract: addressProvider.bAssetConverter(
@@ -295,7 +295,7 @@ describe('bAsset', () => {
       fabricatebAssetConvertToWormhole,
       {
         address: 'address',
-        collateral: COLLATERAL_DENOMS.UBLUNA,
+        collateral: COLLATERAL_DENOMS.UBETH,
         amount: '1000',
         msg: { msg: {} },
       },
@@ -303,7 +303,7 @@ describe('bAsset', () => {
       [
         new MsgExecuteContract(
           'address',
-          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBETH),
           {
             send: {
               contract: addressProvider.bAssetConverter(
