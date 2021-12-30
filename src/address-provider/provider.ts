@@ -23,6 +23,8 @@ export interface AddressProvider {
 
   interest(): string;
 
+  distribution(): string;
+
   liquidation(): string;
 
   liquidationQueue(): string;
