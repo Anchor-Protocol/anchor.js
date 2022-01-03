@@ -5,7 +5,7 @@ import {
   validateIsGreaterThanZero,
   validateIsNumber,
 } from '../../utils/validation/number';
-import { AddressProvider, COLLATERAL_DENOMS } from '../../address-provider';
+import { BAssetAddressProvider } from '../../address-provider';
 
 /**
  * @param address Client’s Terra address (address of the message sender).
@@ -15,22 +15,19 @@ import { AddressProvider, COLLATERAL_DENOMS } from '../../address-provider';
 
 interface Option {
   address: string;
-  collateral: COLLATERAL_DENOMS;
   amount: string;
 }
 
 export const fabricatebAssetBurn =
-  ({ address, collateral, amount }: Option) =>
-  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+  ({ address, amount }: Option) =>
+  (addressProvider: BAssetAddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
       validateIsNumber(amount),
       validateIsGreaterThanZero(amount),
     ]);
-
-    const bAssetTokenAddress = addressProvider.bAssetToken(collateral);
     return [
-      new MsgExecuteContract(address, bAssetTokenAddress, {
+      new MsgExecuteContract(address, addressProvider.token(), {
         burn: {
           amount: new Int(new Dec(amount).mul(1000000)).toString(),
         },

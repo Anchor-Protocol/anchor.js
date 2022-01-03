@@ -3,10 +3,7 @@ import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import { createHookMsg } from '../../utils/cw20/create-hook-msg';
-import {
-  AddressProvider,
-  COLLATERAL_DENOMS,
-} from '../../address-provider/provider';
+import { BAssetAddressProvider } from '../../address-provider';
 
 /**
  * @param address Client’s Terra address (address of the message sender).
@@ -16,25 +13,20 @@ import {
 
 interface Option {
   address: string;
-  collateral: COLLATERAL_DENOMS;
   amount: string;
 }
 
 export const fabricatebAssetConvertFromWormhole =
-  ({ address, collateral, amount }: Option) =>
-  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+  ({ address, amount }: Option) =>
+  (addressProvider: BAssetAddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
       validateIsGreaterThanZero(amount),
     ]);
-
-    const bAssetTokenAddress = addressProvider.bAssetToken(collateral);
-    const bAssetConverterAddress = addressProvider.bAssetConverter(collateral);
-
     return [
-      new MsgExecuteContract(address, bAssetTokenAddress, {
+      new MsgExecuteContract(address, addressProvider.token(), {
         send: {
-          contract: bAssetConverterAddress,
+          contract: addressProvider.converter(),
           amount: new Int(new Dec(amount).mul(1000000)).toString(),
           msg: createHookMsg({
             convertWormholeToAnchor: {},

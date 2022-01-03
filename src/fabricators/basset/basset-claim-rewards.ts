@@ -1,7 +1,4 @@
-import {
-  AddressProvider,
-  COLLATERAL_DENOMS,
-} from '../../address-provider/provider';
+import { BAssetAddressProvider } from '../../address-provider';
 import { MsgExecuteContract } from '@terra-money/terra.js';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
@@ -14,19 +11,15 @@ import { validateAddress } from '../../utils/validation/address';
 
 interface Option {
   address: string;
-  collateral: COLLATERAL_DENOMS;
   recipient?: string;
 }
 
 export const fabricatebAssetClaimRewards =
-  ({ address, collateral, recipient }: Option) =>
-  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+  ({ address, recipient }: Option) =>
+  (addressProvider: BAssetAddressProvider): MsgExecuteContract[] => {
     validateInput([validateAddress(address)]);
-
-    const bAssetRewardAddress = addressProvider.bAssetReward(collateral);
-
     return [
-      new MsgExecuteContract(address, bAssetRewardAddress, {
+      new MsgExecuteContract(address, addressProvider.reward(), {
         claim_rewards: {
           recipient,
         },

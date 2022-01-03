@@ -1,7 +1,4 @@
-import {
-  AddressProvider,
-  COLLATERAL_DENOMS,
-} from '../../address-provider/provider';
+import { BAssetAddressProvider } from '../../address-provider';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
@@ -23,26 +20,22 @@ type Expire = { at_height: number } | { at_time: number } | { never: {} };
 
 interface Option {
   address: string;
-  collateral: COLLATERAL_DENOMS;
   amount: string;
   spender: string;
   expires?: Expire;
 }
 
 export const fabricatebAssetDecreaseAllowance =
-  ({ address, collateral, amount, spender, expires }: Option) =>
-  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+  ({ address, amount, spender, expires }: Option) =>
+  (addressProvider: BAssetAddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
       validateIsNumber(amount),
       validateIsGreaterThanZero(amount),
       validateAddress(spender),
     ]);
-
-    const bAssetTokenAddress = addressProvider.bAssetToken(collateral);
-
     return [
-      new MsgExecuteContract(address, bAssetTokenAddress, {
+      new MsgExecuteContract(address, addressProvider.token(), {
         // @see https://github.com/Anchor-Protocol/anchor-bAsset-contracts/blob/cce41e707c67ee2852c4929e17fb1472dbd2aa35/contracts/anchor_basset_reward/src/user.rs#L16
         decrease_allowance: {
           spender: spender,

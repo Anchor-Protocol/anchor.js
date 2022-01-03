@@ -1,6 +1,15 @@
 import { LCDClient } from '@terra-money/terra.js';
 import { BAsset } from '.';
-import { AddressProvider, MARKET_DENOMS } from '../address-provider';
+import {
+  AddressProvider,
+  BAssetAddressProviderImpl,
+} from '../address-provider';
+import {
+  querybAssetConverterConfig,
+  queryCustodyConfig,
+  queryTokenMinter,
+  WhitelistResponseElem,
+} from '../queries';
 import { AnchorToken } from './anchor-token/anchor-token';
 import { BLuna } from './bluna/bluna';
 import { Borrow } from './borrow/borrow';
@@ -29,19 +38,33 @@ export class Anchor {
     this.moneyMarket = new MoneyMarket(lcd, addressProvider);
   }
 
-  async bAsset(market: MARKET_DENOMS, tokenAddress: string): Promise<BAsset> {
-    const whitelist = await this.moneyMarket.getCollateralWhitelist({
-      market,
-      collateralToken: tokenAddress,
-    });
-    if (whitelist.length < 1) {
-      throw Error(`The collateral token ${tokenAddress} was not found.`);
-    }
+  async bAsset(collateral: WhitelistResponseElem): Promise<BAsset> {
+    const { collateral_token, custody_contract } = collateral;
+
+    const { minter } = await queryTokenMinter({
+      lcd: this._lcd,
+      token_address: collateral_token,
+    })(this._addressProvider);
+
+    const { reward_contract } = await queryCustodyConfig({
+      lcd: this._lcd,
+      custody_contract_address: custody_contract,
+    })(this._addressProvider);
+
+    const { wormhole_token_address } = await querybAssetConverterConfig({
+      lcd: this._lcd,
+      converter_contract_address: minter,
+    })(this._addressProvider);
+
     return new BAsset(
       this._lcd,
-      this._addressProvider,
-      whitelist[0].collateral_token,
-      whitelist[0].custody_contract,
+      new BAssetAddressProviderImpl({
+        token: collateral_token,
+        custody: custody_contract,
+        reward: reward_contract,
+        converter: minter,
+        wormhole: wormhole_token_address,
+      }),
     );
   }
 }

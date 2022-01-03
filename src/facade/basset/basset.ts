@@ -1,5 +1,5 @@
 import { Dec, Int, LCDClient } from '@terra-money/terra.js';
-import { AddressProvider, COLLATERAL_DENOMS } from '../../address-provider';
+import { BAssetAddressProvider } from '../../address-provider';
 import {
   fabricatebAssetClaimRewards,
   fabricatebAssetConvertToWormhole,
@@ -22,28 +22,16 @@ export type BAssetConvertFromWormholeOption = OptionType<
 
 export interface BAssetQueriesOption {
   address: string;
-  collateral: COLLATERAL_DENOMS;
 }
 
 export class BAsset {
-  private _lcd!: LCDClient;
-  private _addressProvider!: AddressProvider;
-  private _tokenContractAddress!: string;
-  private _custodyContractAddress!: string;
+  private readonly _lcd!: LCDClient;
+  private readonly _addressProvider!: BAssetAddressProvider;
 
-  constructor(
-    lcd: LCDClient,
-    addressProvider: AddressProvider,
-    tokenContractAddress: string,
-    custodyContractAddress: string,
-  ) {
+  constructor(lcd: LCDClient, addressProvider: BAssetAddressProvider) {
     this._lcd = lcd;
     this._addressProvider = addressProvider;
-    this._tokenContractAddress = tokenContractAddress;
-    this._custodyContractAddress = custodyContractAddress;
   }
-
-  async addressProvider(): Promise<BAssetAddressProvider> {}
 
   convertToWormhole(
     convertOptions: OmitAddress<BAssetConvertToWormholeOption>,
@@ -76,14 +64,12 @@ export class BAsset {
   async getClaimableRewards(
     getClaimableRewardsOption: BAssetQueriesOption,
   ): Promise<string> {
-    const { collateral } = getClaimableRewardsOption;
     const holder = await querybAssetRewardHolder({
       lcd: this._lcd,
       ...getClaimableRewardsOption,
     })(this._addressProvider);
     const rewardState = await querybAssetRewardState({
       lcd: this._lcd,
-      collateral,
     })(this._addressProvider);
 
     return new Int(

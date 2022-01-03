@@ -3,7 +3,7 @@ import { AddressProvider, COLLATERAL_DENOMS } from '../../address-provider';
 
 interface Option {
   lcd: LCDClient;
-  collateral: COLLATERAL_DENOMS;
+  converter_contract_address: string;
 }
 
 interface ConfigResponse {
@@ -13,10 +13,9 @@ interface ConfigResponse {
 }
 
 export const querybAssetConverterConfig =
-  ({ lcd, collateral }: Option) =>
-  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
-    const bAssetContractAddress = addressProvider.bAssetConverter(collateral);
-    return lcd.wasm.contractQuery(bAssetContractAddress, {
+  ({ lcd, converter_contract_address }: Option) =>
+  async (_: AddressProvider): Promise<ConfigResponse> => {
+    return lcd.wasm.contractQuery(converter_contract_address, {
       config: {},
     });
   };
