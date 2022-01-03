@@ -11,11 +11,12 @@ interface Option {
   start_after?: string;
   limit?: number;
 }
+
 interface WhitelistResponse {
   elems: WhitelistResponseElem[];
 }
 
-interface WhitelistResponseElem {
+export interface WhitelistResponseElem {
   name: string;
   symbol: string;
   max_ltv: string;

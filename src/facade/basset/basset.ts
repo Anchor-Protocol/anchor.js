@@ -28,11 +28,22 @@ export interface BAssetQueriesOption {
 export class BAsset {
   private _lcd!: LCDClient;
   private _addressProvider!: AddressProvider;
+  private _tokenContractAddress!: string;
+  private _custodyContractAddress!: string;
 
-  constructor(lcd: LCDClient, addressProvider: AddressProvider) {
+  constructor(
+    lcd: LCDClient,
+    addressProvider: AddressProvider,
+    tokenContractAddress: string,
+    custodyContractAddress: string,
+  ) {
     this._lcd = lcd;
     this._addressProvider = addressProvider;
+    this._tokenContractAddress = tokenContractAddress;
+    this._custodyContractAddress = custodyContractAddress;
   }
+
+  async addressProvider(): Promise<BAssetAddressProvider> {}
 
   convertToWormhole(
     convertOptions: OmitAddress<BAssetConvertToWormholeOption>,
