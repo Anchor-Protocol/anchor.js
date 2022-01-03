@@ -39,6 +39,8 @@ export interface AddressProvider {
 
   ancUstLPToken(): string;
 
+  ancGeneratorProxy(): string;
+
   ANC(): string;
 
   collector(): string;

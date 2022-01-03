@@ -5,3 +5,4 @@ export * from './cw20-token';
 export * from './money-market';
 export * from './types';
 export * from './exchange';
+export * from './generator-proxy';

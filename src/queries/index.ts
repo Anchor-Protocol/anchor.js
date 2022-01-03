@@ -4,3 +4,4 @@ export * from './money-market';
 export * from './anchor-token';
 export * from './exchange';
 export * from './cw20';
+export * from './generator-proxy';
