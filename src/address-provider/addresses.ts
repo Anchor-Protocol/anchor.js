@@ -85,7 +85,7 @@ export const bombay12: AddressMap = {
   ancGeneratorProxy: 'terra1x9qymk5hvhpgkhdz8c2x9n5klvn4k2w3na4end',
   gov: 'terra16ckeuu7c6ggu52a8se005mg5c0kd2kmuun63cu',
   distributor: 'terra1z7nxemcnm8kp7fs33cs7ge4wfuld307v80gypj',
-  collector: 'terra1n2q466gq8flc9aqe0jqjhapvq4rjmztlnu38rk',
+  collector: 'terra1hlctcrrhcl2azxzcsns467le876cfuzam6jty4',
   community: 'terra17g577z0pqt6tejhceh06y3lyeudfs3v90mzduy',
   staking: 'terra1q68gyyxqnlh58jacz5r6rxfmxqpmmjv583fzqq',
   ANC: 'terra1747mad58h0w4y589y3sk84r5efqdev9q4r02pc',
