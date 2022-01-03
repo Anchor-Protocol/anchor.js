@@ -23,6 +23,8 @@ export interface AddressProvider {
 
   interest(): string;
 
+  distribution(): string;
+
   liquidation(): string;
 
   liquidationQueue(): string;
@@ -36,6 +38,8 @@ export interface AddressProvider {
   ancUstPair(): string;
 
   ancUstLPToken(): string;
+
+  ancGeneratorProxy(): string;
 
   ANC(): string;
 

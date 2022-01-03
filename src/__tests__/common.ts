@@ -35,6 +35,7 @@ const contracts: AddressMap = {
   bLunaLunaLPToken: 'terra1tj4pavqjqjfm0wh73sh7yy9m4uq3m2cpmgva6n',
   ancUstPair: 'terra1wfvczps2865j0awnurk9m04u7wdmd6qv3fdnvz',
   ancUstLPToken: 'terra1vg0qyq92ky9z9dp0j9fv5rmr2s80sg605dah6f',
+  ancGeneratorProxy: 'terra1x9qymk5hvhpgkhdz8c2x9n5klvn4k2w3na4end',
   gov: 'terra16ckeuu7c6ggu52a8se005mg5c0kd2kmuun63cu',
   distributor: 'terra1z7nxemcnm8kp7fs33cs7ge4wfuld307v80gypj',
   collector: 'terra1hlctcrrhcl2azxzcsns467le876cfuzam6jty4',

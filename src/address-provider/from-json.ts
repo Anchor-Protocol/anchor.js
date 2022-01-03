@@ -35,6 +35,7 @@ export interface AddressMap {
   bLunaLunaLPToken: string;
   ancUstPair: string;
   ancUstLPToken: string;
+  ancGeneratorProxy: string;
   gov: string;
   distributor: string;
   collector: string;
@@ -186,6 +187,10 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.mmInterestModel;
   }
 
+  distribution(): string {
+    return this.data.mmDistributionModel;
+  }
+
   liquidation(): string {
     return this.data.mmLiquidation;
   }
@@ -212,6 +217,10 @@ export class AddressProviderFromJson implements AddressProvider {
 
   ancUstLPToken(): string {
     return this.data.ancUstLPToken;
+  }
+
+  ancGeneratorProxy(): string {
+    return this.data.ancGeneratorProxy;
   }
 
   collector(): string {
