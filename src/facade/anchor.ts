@@ -2,6 +2,7 @@ import { LCDClient } from '@terra-money/terra.js';
 import { BAsset } from '.';
 import {
   AddressProvider,
+  BAssetAddressMap,
   BAssetAddressProviderImpl,
 } from '../address-provider';
 import {
@@ -38,7 +39,15 @@ export class Anchor {
     this.moneyMarket = new MoneyMarket(lcd, addressProvider);
   }
 
-  async bAsset(collateral: WhitelistResponseElem): Promise<BAsset> {
+  async bAsset(
+    collateral: BAssetAddressMap | WhitelistResponseElem,
+  ): Promise<BAsset> {
+    // we are using an address map so can return just this
+    if ('token' in collateral) {
+      return new BAsset(this._lcd, new BAssetAddressProviderImpl(collateral));
+    }
+
+    // dynamically discover the contract addresses for the bAsset collateral
     const { collateral_token, custody_contract } = collateral;
 
     const { minter } = await queryTokenMinter({

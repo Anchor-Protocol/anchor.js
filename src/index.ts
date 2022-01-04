@@ -1,6 +1,7 @@
 import { LCDClient } from '@terra-money/terra.js';
 import {
   AddressProviderFromJson,
+  bAssetBombay12,
   bombay12,
   MARKET_DENOMS,
 } from './address-provider';
@@ -28,7 +29,7 @@ const main = async () => {
     (collateral) => collateral.symbol === 'BETH',
   );
 
-  const bAsset = await anchor.bAsset(collateral);
+  const bAsset = await anchor.bAsset(bAssetBombay12['bLUNA']);
 
   const operation = bAsset.claim({ recipient: 'terra1...' });
 };
