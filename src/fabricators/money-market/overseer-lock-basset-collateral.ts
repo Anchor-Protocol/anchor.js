@@ -4,13 +4,13 @@ import { validateAddress } from '../../utils/validation/address';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
-  COLLATERAL_DENOMS,
+  BAssetAddressProvider,
   MARKET_DENOMS,
-} from '../../address-provider/provider';
+} from '../../address-provider';
 
 interface Option {
   address: string;
-  collateral: COLLATERAL_DENOMS;
+  collateral: BAssetAddressProvider;
   market: MARKET_DENOMS;
   amount: string;
 }
@@ -30,7 +30,6 @@ export const fabricateOverseerLockbAssetCollateral =
     ]);
 
     const mmOverseerContract = addressProvider.overseer(market);
-    const bAssetTokenContract = addressProvider.bAssetToken(collateral);
 
     return [
       // lock_collateral call
@@ -39,7 +38,7 @@ export const fabricateOverseerLockbAssetCollateral =
         lock_collateral: {
           collaterals: [
             [
-              bAssetTokenContract,
+              collateral.token(),
               new Int(new Dec(amount).mul(1000000)).toString(),
             ],
           ],

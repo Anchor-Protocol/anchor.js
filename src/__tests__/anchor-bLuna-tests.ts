@@ -12,8 +12,7 @@ import {
 } from '../fabricators';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
-import { addressProvider } from '../__tests__/common';
-import { COLLATERAL_DENOMS } from '..';
+import { addressProvider, bLUNAAddressProvider } from '../__tests__/common';
 
 /* eslint-disable */
 describe('bLuna', () => {
@@ -182,19 +181,15 @@ describe('bLuna', () => {
       },
       addressProvider,
       [
-        new MsgExecuteContract(
-          'address',
-          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
-          {
-            send: {
-              contract: addressProvider.bLunaHub(),
-              amount: new Int(new Dec('1000').mul(1000000)).toString(),
-              msg: createHookMsg({
-                unbond: {},
-              }),
-            },
+        new MsgExecuteContract('address', bLUNAAddressProvider.token(), {
+          send: {
+            contract: addressProvider.bLunaHub(),
+            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+            msg: createHookMsg({
+              unbond: {},
+            }),
           },
-        ),
+        }),
       ],
     );
   });

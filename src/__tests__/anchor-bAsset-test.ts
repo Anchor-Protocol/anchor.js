@@ -15,15 +15,7 @@ import {
 } from '../fabricators';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
-import {
-  BAssetAddressProvider,
-  BAssetAddressProviderImpl,
-  bAssetBombay12,
-} from '..';
-
-const addressProvider: BAssetAddressProvider = new BAssetAddressProviderImpl(
-  bAssetBombay12['bETH'],
-);
+import { bETHAddressProvider } from './common';
 
 /* eslint-disable */
 describe('bAsset', () => {
@@ -35,9 +27,9 @@ describe('bAsset', () => {
         address: 'address',
         recipient: undefined,
       },
-      addressProvider,
+      bETHAddressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.reward(), {
+        new MsgExecuteContract('address', bETHAddressProvider.reward(), {
           claim_rewards: { recipient: undefined },
         }),
       ],
@@ -53,9 +45,9 @@ describe('bAsset', () => {
         amount: '1000',
         recipient: 'recipient',
       },
-      addressProvider,
+      bETHAddressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.token(), {
+        new MsgExecuteContract('address', bETHAddressProvider.token(), {
           transfer: {
             recipient: 'recipient',
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -75,9 +67,9 @@ describe('bAsset', () => {
         amount: '1000',
         recipient: 'recipient',
       },
-      addressProvider,
+      bETHAddressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.token(), {
+        new MsgExecuteContract('address', bETHAddressProvider.token(), {
           transfer_from: {
             owner: 'owner',
             recipient: 'recipient',
@@ -96,9 +88,9 @@ describe('bAsset', () => {
         address: 'address',
         amount: '1000',
       },
-      addressProvider,
+      bETHAddressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.token(), {
+        new MsgExecuteContract('address', bETHAddressProvider.token(), {
           burn: {
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
           },
@@ -116,9 +108,9 @@ describe('bAsset', () => {
         owner: 'owner',
         amount: '1000',
       },
-      addressProvider,
+      bETHAddressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.token(), {
+        new MsgExecuteContract('address', bETHAddressProvider.token(), {
           burn_from: {
             owner: 'owner',
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -138,9 +130,9 @@ describe('bAsset', () => {
         contract: 'contract',
         msg: { msg: {} },
       },
-      addressProvider,
+      bETHAddressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.token(), {
+        new MsgExecuteContract('address', bETHAddressProvider.token(), {
           send: {
             contract: 'contract',
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -162,9 +154,9 @@ describe('bAsset', () => {
         contract: 'contract',
         msg: { msg: {} },
       },
-      addressProvider,
+      bETHAddressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.token(), {
+        new MsgExecuteContract('address', bETHAddressProvider.token(), {
           send_from: {
             owner: 'owner',
             contract: 'contract',
@@ -186,9 +178,9 @@ describe('bAsset', () => {
         spender: 'spender',
         expires: { never: {} } as Expire,
       },
-      addressProvider,
+      bETHAddressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.token(), {
+        new MsgExecuteContract('address', bETHAddressProvider.token(), {
           increase_allowance: {
             spender: 'spender',
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -209,9 +201,9 @@ describe('bAsset', () => {
         spender: 'spender',
         expires: { never: {} } as Expire,
       },
-      addressProvider,
+      bETHAddressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.token(), {
+        new MsgExecuteContract('address', bETHAddressProvider.token(), {
           decrease_allowance: {
             spender: 'spender',
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -231,11 +223,11 @@ describe('bAsset', () => {
         amount: '1000',
         msg: { msg: {} },
       },
-      addressProvider,
+      bETHAddressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.token(), {
+        new MsgExecuteContract('address', bETHAddressProvider.token(), {
           send: {
-            contract: addressProvider.converter(),
+            contract: bETHAddressProvider.converter(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             msg: createHookMsg({ convertWormholeToAnchor: {} }),
           },
@@ -253,11 +245,11 @@ describe('bAsset', () => {
         amount: '1000',
         msg: { msg: {} },
       },
-      addressProvider,
+      bETHAddressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.token(), {
+        new MsgExecuteContract('address', bETHAddressProvider.token(), {
           send: {
-            contract: addressProvider.converter(),
+            contract: bETHAddressProvider.converter(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             msg: createHookMsg({ convertAnchorToWormhole: {} }),
           },

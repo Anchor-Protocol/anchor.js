@@ -33,6 +33,10 @@ export class BAsset {
     this._addressProvider = addressProvider;
   }
 
+  addresses(): BAssetAddressProvider {
+    return this._addressProvider;
+  }
+
   convertToWormhole(
     convertOptions: OmitAddress<BAssetConvertToWormholeOption>,
   ): Operation {

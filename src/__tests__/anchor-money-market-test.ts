@@ -1,5 +1,5 @@
 import { testFabricator } from '../utils/test-fabricators/test-fabricator';
-import { addressProvider } from '../__tests__/common';
+import { addressProvider, bLUNAAddressProvider } from '../__tests__/common';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import {
   fabricateCustodyDepositCollateral,
@@ -129,7 +129,7 @@ describe('Money Market', () => {
             lock_collateral: {
               collaterals: [
                 [
-                  addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+                  bLUNAAddressProvider.token(),
                   new Int(new Dec('1000').mul(1000000)).toString(),
                 ],
               ],
@@ -155,7 +155,7 @@ describe('Money Market', () => {
             unlock_collateral: {
               collaterals: [
                 [
-                  addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+                  bLUNAAddressProvider.token(),
                   new Int(new Dec('1000').mul(1000000)).toString(),
                 ],
               ],
@@ -373,22 +373,15 @@ describe('Money Market', () => {
         },
         addressProvider,
         [
-          new MsgExecuteContract(
-            'address',
-            addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
-            {
-              send: {
-                contract: addressProvider.bAssetCustody(
-                  MARKET_DENOMS.UUSD,
-                  COLLATERAL_DENOMS.UBLUNA,
-                ),
-                amount: new Int(new Dec('1000').mul(1000000)).toString(),
-                msg: createHookMsg({
-                  deposit_collateral: {},
-                }),
-              },
+          new MsgExecuteContract('address', bLUNAAddressProvider.token(), {
+            send: {
+              contract: bLUNAAddressProvider.custody(),
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+              msg: createHookMsg({
+                deposit_collateral: {},
+              }),
             },
-          ),
+          }),
         ],
       );
     });
@@ -405,18 +398,11 @@ describe('Money Market', () => {
         },
         addressProvider,
         [
-          new MsgExecuteContract(
-            'address',
-            addressProvider.bAssetCustody(
-              MARKET_DENOMS.UUSD,
-              COLLATERAL_DENOMS.UBLUNA,
-            ),
-            {
-              withdraw_collateral: {
-                amount: new Int(new Dec('1000').mul(1000000)).toString(),
-              },
+          new MsgExecuteContract('address', bLUNAAddressProvider.custody(), {
+            withdraw_collateral: {
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
             },
-          ),
+          }),
         ],
       );
     });
@@ -434,19 +420,12 @@ describe('Money Market', () => {
         },
         addressProvider,
         [
-          new MsgExecuteContract(
-            'address',
-            addressProvider.bAssetCustody(
-              MARKET_DENOMS.UUSD,
-              COLLATERAL_DENOMS.UBLUNA,
-            ),
-            {
-              update_config: {
-                owner: 'new-owner',
-                liquidation_contract: 'liquidation',
-              },
+          new MsgExecuteContract('address', bLUNAAddressProvider.custody(), {
+            update_config: {
+              owner: 'new-owner',
+              liquidation_contract: 'liquidation',
             },
-          ),
+          }),
         ],
       );
     });
@@ -607,9 +586,7 @@ describe('Money Market', () => {
         fabricateLiquidationRetractBid,
         {
           address: 'address',
-          collateral_token: addressProvider.bAssetToken(
-            COLLATERAL_DENOMS.UBLUNA,
-          ),
+          collateral_token: bLUNAAddressProvider.token(),
           amount: '1000',
         },
         addressProvider,
@@ -667,9 +644,7 @@ describe('Money Market', () => {
         fabricateLiquidationQueueSubmitBid,
         {
           address: 'address',
-          collateral_token: addressProvider.bAssetToken(
-            COLLATERAL_DENOMS.UBLUNA,
-          ),
+          collateral_token: bLUNAAddressProvider.token(),
           premium_slot: 3,
           amount: '1000',
           denom: MARKET_DENOMS.UUSD,
@@ -681,9 +656,7 @@ describe('Money Market', () => {
             addressProvider.liquidationQueue(),
             {
               submit_bid: {
-                collateral_token: addressProvider.bAssetToken(
-                  COLLATERAL_DENOMS.UBLUNA,
-                ),
+                collateral_token: bLUNAAddressProvider.token(),
                 premium_slot: 3,
               },
             },
@@ -725,9 +698,7 @@ describe('Money Market', () => {
         {
           address: 'address',
           bids_idx: undefined,
-          collateral_token: addressProvider.bAssetToken(
-            COLLATERAL_DENOMS.UBLUNA,
-          ),
+          collateral_token: bLUNAAddressProvider.token(),
         },
         addressProvider,
         [
@@ -737,9 +708,7 @@ describe('Money Market', () => {
             {
               active_bids: {
                 bids_idx: undefined,
-                collateral_token: addressProvider.bAssetToken(
-                  COLLATERAL_DENOMS.UBLUNA,
-                ),
+                collateral_token: bLUNAAddressProvider.token(),
               },
             },
           ),
@@ -754,9 +723,7 @@ describe('Money Market', () => {
         {
           address: 'address',
           bids_idx: undefined,
-          collateral_token: addressProvider.bAssetToken(
-            COLLATERAL_DENOMS.UBLUNA,
-          ),
+          collateral_token: bLUNAAddressProvider.token(),
         },
         addressProvider,
         [
@@ -766,9 +733,7 @@ describe('Money Market', () => {
             {
               claim_liquidation: {
                 bids_idx: undefined,
-                collateral_token: addressProvider.bAssetToken(
-                  COLLATERAL_DENOMS.UBLUNA,
-                ),
+                collateral_token: bLUNAAddressProvider.token(),
               },
             },
           ),
@@ -783,33 +748,25 @@ describe('Money Market', () => {
       fabricateProvideCollateral,
       {
         address: 'address',
-        collateral: COLLATERAL_DENOMS.UBLUNA,
         market: MARKET_DENOMS.UUSD,
         amount: '1000',
       },
       addressProvider,
       [
-        new MsgExecuteContract(
-          'address',
-          addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
-          {
-            send: {
-              contract: addressProvider.bAssetCustody(
-                MARKET_DENOMS.UUSD,
-                COLLATERAL_DENOMS.UBLUNA,
-              ),
-              amount: new Int(new Dec('1000').mul(1000000)).toString(),
-              msg: createHookMsg({
-                deposit_collateral: {},
-              }),
-            },
+        new MsgExecuteContract('address', bLUNAAddressProvider.token(), {
+          send: {
+            contract: bLUNAAddressProvider.custody(),
+            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+            msg: createHookMsg({
+              deposit_collateral: {},
+            }),
           },
-        ),
+        }),
         new MsgExecuteContract('address', addressProvider.overseer(), {
           lock_collateral: {
             collaterals: [
               [
-                addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+                bLUNAAddressProvider.token(),
                 new Int(new Dec('1000').mul(1000000)).toString(),
               ],
             ],
@@ -835,24 +792,17 @@ describe('Money Market', () => {
           unlock_collateral: {
             collaterals: [
               [
-                addressProvider.bAssetToken(COLLATERAL_DENOMS.UBLUNA),
+                bLUNAAddressProvider.token(),
                 new Int(new Dec('1000').mul(1000000)).toString(),
               ],
             ],
           },
         }),
-        new MsgExecuteContract(
-          'address',
-          addressProvider.bAssetCustody(
-            MARKET_DENOMS.UUSD,
-            COLLATERAL_DENOMS.UBLUNA,
-          ),
-          {
-            withdraw_collateral: {
-              amount: new Int(new Dec('1000').mul(1000000)).toString(),
-            },
+        new MsgExecuteContract('address', bLUNAAddressProvider.custody(), {
+          withdraw_collateral: {
+            amount: new Int(new Dec('1000').mul(1000000)).toString(),
           },
-        ),
+        }),
       ],
     );
   });

@@ -5,14 +5,14 @@ import { validateAddress } from '../../utils/validation/address';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
-  COLLATERAL_DENOMS,
+  BAssetAddressProvider,
   MARKET_DENOMS,
-} from '../../address-provider/provider';
+} from '../../address-provider';
 
 interface Option {
   address: string;
   market: MARKET_DENOMS;
-  collateral: COLLATERAL_DENOMS;
+  collateral: BAssetAddressProvider;
   amount: string;
 }
 
@@ -34,9 +34,9 @@ export const fabricateProvideCollateral =
       validateIsGreaterThanZero(amount),
     ]);
 
-    const bAssetTokenContract = addressProvider.bAssetToken(collateral);
+    const bAssetTokenContract = collateral.token();
     const mmOverseerContract = addressProvider.overseer(market);
-    const custodyContract = addressProvider.bAssetCustody(market, collateral);
+    const custodyContract = collateral.custody();
 
     // cw20 send + provide_collateral hook
     /* eslint-disable */

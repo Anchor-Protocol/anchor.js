@@ -1,18 +1,17 @@
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateAddress } from '../../utils/validation/address';
 import { validateInput } from '../../utils/validate-input';
-
 import { validateTrue } from '../../utils/validation/true';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
-  COLLATERAL_DENOMS,
+  BAssetAddressProvider,
   MARKET_DENOMS,
-} from '../../address-provider/provider';
+} from '../../address-provider';
 
 interface Option {
   address: string;
-  collateral: COLLATERAL_DENOMS;
+  collateral: BAssetAddressProvider;
   market: MARKET_DENOMS;
   amount: string;
 }
@@ -33,7 +32,6 @@ export const fabricateOverseerUnlockbAssetCollateral =
     ]);
 
     const mmOverseerContract = addressProvider.overseer(market);
-    const bAssetTokenContract = addressProvider.bAssetToken(collateral);
 
     return [
       // unlock collateral
@@ -42,7 +40,7 @@ export const fabricateOverseerUnlockbAssetCollateral =
         unlock_collateral: {
           collaterals: [
             [
-              bAssetTokenContract,
+              collateral.token(),
               new Int(new Dec(amount).mul(1000000)).toString(),
             ],
           ],

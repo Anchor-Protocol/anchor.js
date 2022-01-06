@@ -1,4 +1,9 @@
-import { AddressMap, AddressProviderFromJson } from '../address-provider';
+import {
+  AddressMap,
+  AddressProviderFromJson,
+  BAssetAddressProviderImpl,
+  bAssetBombay12,
+} from '../address-provider';
 
 const contracts: AddressMap = {
   bLunaHub: 'terra1fflas6wv4snv8lsda9knvq2w0cyt493r8puh2e',
@@ -47,3 +52,11 @@ const contracts: AddressMap = {
 };
 
 export const addressProvider = new AddressProviderFromJson(contracts);
+
+export const bLUNAAddressProvider = new BAssetAddressProviderImpl(
+  bAssetBombay12['bLUNA'],
+);
+
+export const bETHAddressProvider = new BAssetAddressProviderImpl(
+  bAssetBombay12['bETH'],
+);

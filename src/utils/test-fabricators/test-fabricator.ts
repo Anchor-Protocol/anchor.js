@@ -1,4 +1,3 @@
-import { AddressProvider, BAssetAddressProvider } from '../../address-provider';
 import { Msg } from '@terra-money/terra.js';
 
 export function testFabricator<
