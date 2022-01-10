@@ -27,15 +27,15 @@ export interface AddressProvider {
 
   liquidationQueue(): string;
 
-  terraswapblunaLunaPair(): string;
+  bLunaLunaPair(): string;
 
-  terraswapblunaLunaLPToken(): string;
+  bLunaLunaLPToken(): string;
 
   gov(): string;
 
-  terraswapAncUstPair(): string;
+  ancUstPair(): string;
 
-  terraswapAncUstLPToken(): string;
+  ancUstLPToken(): string;
 
   ANC(): string;
 

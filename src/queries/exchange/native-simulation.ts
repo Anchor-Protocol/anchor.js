@@ -7,13 +7,14 @@ interface Option {
   amount: string;
   pair_contract_address: string;
 }
+
 interface SimulationResponse {
   return_amount: string;
   spread_amount: string;
   commission_amount: string;
 }
 
-export const queryTerraswapNativeSimulation =
+export const queryExchangeNativeSimulation =
   ({ lcd, denom, amount, pair_contract_address }: Option) =>
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async (_: AddressProvider): Promise<SimulationResponse> => {

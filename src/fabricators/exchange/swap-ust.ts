@@ -22,7 +22,7 @@ interface Option {
   max_spread?: string;
 }
 
-export const fabricateTerraswapSwapLuna =
+export const fabricateExchangeSwapUSTANC =
   ({ address, amount, to, belief_price, max_spread, denom }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
@@ -33,7 +33,7 @@ export const fabricateTerraswapSwapLuna =
     const coins = new Coins([
       new Coin(denom, new Int(new Dec(amount).mul(1000000)).toString()),
     ]);
-    const pairAddress = addressProvider.terraswapblunaLunaPair();
+    const pairAddress = addressProvider.ancUstPair();
     return [
       new MsgExecuteContract(
         address,

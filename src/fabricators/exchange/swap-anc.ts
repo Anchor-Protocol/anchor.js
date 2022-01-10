@@ -16,7 +16,7 @@ interface Option {
   max_spread?: string;
 }
 
-export const fabricateTerraswapSwapANC =
+export const fabricateExchangeSwapANC =
   ({ address, amount, to, belief_price, max_spread }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
@@ -26,7 +26,7 @@ export const fabricateTerraswapSwapANC =
     ]);
 
     const ancTokenAddress = addressProvider.ANC();
-    const pairAddress = addressProvider.terraswapAncUstPair();
+    const pairAddress = addressProvider.ancUstPair();
 
     return [
       new MsgExecuteContract(address, ancTokenAddress, {
