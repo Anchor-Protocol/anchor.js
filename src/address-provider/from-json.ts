@@ -94,6 +94,10 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.mmInterestModel;
   }
 
+  distribution(): string {
+    return this.data.mmDistributionModel;
+  }
+
   liquidation(): string {
     return this.data.mmLiquidation;
   }
