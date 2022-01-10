@@ -9,7 +9,9 @@ import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
 import { AddressProvider } from '../../address-provider/provider';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
-import { Expire } from '../types';
+
+/* eslint-disable */
+type Expire = { at_height: number } | { at_time: number } | { never: {} };
 
 interface Option {
   address: string;
@@ -17,10 +19,10 @@ interface Option {
   native_amount: string;
   quote: string;
   slippage_tolerance?: string;
-  expires?: Expire;
+  expires: Expire;
 }
 
-export const fabricateTerraswapProvideLiquidityANC =
+export const fabricateExchangeProvideLiquiditybLuna =
   ({
     address,
     slippage_tolerance,
@@ -36,8 +38,8 @@ export const fabricateTerraswapProvideLiquidityANC =
       validateIsGreaterThanZero(native_amount),
     ]);
 
-    const pairAddress = addressProvider.terraswapAncUstPair();
-    const tokenAddress = addressProvider.ANC();
+    const pairAddress = addressProvider.bLunaLunaPair();
+    const tokenAddress = addressProvider.bLunaToken();
 
     const coins = new Coins([
       new Coin(quote, new Int(new Dec(native_amount).mul(1000000)).toString()),

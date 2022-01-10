@@ -487,19 +487,15 @@ describe('Anchor Token', () => {
         },
         addressProvider,
         [
-          new MsgExecuteContract(
-            'address',
-            addressProvider.terraswapAncUstLPToken(),
-            {
-              send: {
-                contract: addressProvider.staking(),
-                amount: new Int(new Dec('1000').mul(1000000)).toString(),
-                msg: createHookMsg({
-                  bond: {},
-                }),
-              },
+          new MsgExecuteContract('address', addressProvider.ancUstLPToken(), {
+            send: {
+              contract: addressProvider.staking(),
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+              msg: createHookMsg({
+                bond: {},
+              }),
             },
-          ),
+          }),
         ],
       );
     });

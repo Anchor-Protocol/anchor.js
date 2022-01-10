@@ -19,10 +19,10 @@ export interface AddressMap {
   mmLiquidationQueue: string;
   mmDistributionModel: string;
   aTerra: string;
-  terraswapblunaLunaPair: string;
-  terraswapblunaLunaLPToken: string;
-  terraswapAncUstPair: string;
-  terraswapAncUstLPToken: string;
+  bLunaLunaPair: string;
+  bLunaLunaLPToken: string;
+  ancUstPair: string;
+  ancUstLPToken: string;
   gov: string;
   distributor: string;
   collector: string;
@@ -94,6 +94,10 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.mmInterestModel;
   }
 
+  distribution(): string {
+    return this.data.mmDistributionModel;
+  }
+
   liquidation(): string {
     return this.data.mmLiquidation;
   }
@@ -102,24 +106,24 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.mmLiquidationQueue;
   }
 
-  terraswapblunaLunaPair(): string {
-    return this.data.terraswapblunaLunaPair;
+  bLunaLunaPair(): string {
+    return this.data.bLunaLunaPair;
   }
 
-  terraswapblunaLunaLPToken(): string {
-    return this.data.terraswapblunaLunaLPToken;
+  bLunaLunaLPToken(): string {
+    return this.data.bLunaLunaLPToken;
   }
 
   gov(): string {
     return this.data.gov;
   }
 
-  terraswapAncUstPair(): string {
-    return this.data.terraswapAncUstPair;
+  ancUstPair(): string {
+    return this.data.ancUstPair;
   }
 
-  terraswapAncUstLPToken(): string {
-    return this.data.terraswapAncUstLPToken;
+  ancUstLPToken(): string {
+    return this.data.ancUstLPToken;
   }
 
   collector(): string {

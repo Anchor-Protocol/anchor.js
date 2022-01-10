@@ -1,25 +1,25 @@
 import { testFabricator } from '../utils/test-fabricators/test-fabricator';
 import {
-  fabricateTerraswapProvideLiquidityANC,
-  fabricateTerraswapProvideLiquiditybLuna,
-  fabricateTerraswapSwapANC,
-  fabricateTerraswapSwapbLuna,
-  fabricateTerraswapSwapLuna,
-  fabricateTerraswapSwapUSTANC,
-  fabricateTerraswapWithdrawLiquidityANC,
-  fabricateTerraswapWithdrawLiquiditybLuna,
+  fabricateExchangeProvideLiquidityANC,
+  fabricateExchangeProvideLiquiditybLuna,
+  fabricateExchangeSwapANC,
+  fabricateExchangeSwapbLuna,
+  fabricateExchangeSwapLuna,
+  fabricateExchangeSwapUSTANC,
+  fabricateExchangeWithdrawLiquidityANC,
+  fabricateExchangeWithdrawLiquiditybLuna,
 } from '../fabricators';
-import { addressProvider } from '../__tests__/common';
+import { addressProvider } from './common';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
 import { MARKET_DENOMS } from '..';
 
 /* eslint-disable */
-describe('terraswap<>anchor', () => {
+describe('exchange<>anchor', () => {
   it('provide-liquidity-anc', async () => {
     testFabricator(
       expect,
-      fabricateTerraswapProvideLiquidityANC,
+      fabricateExchangeProvideLiquidityANC,
       {
         address: 'address',
         slippage_tolerance: undefined,
@@ -32,14 +32,14 @@ describe('terraswap<>anchor', () => {
       [
         new MsgExecuteContract('address', addressProvider.ANC(), {
           increase_allowance: {
-            spender: addressProvider.terraswapAncUstPair(),
+            spender: addressProvider.ancUstPair(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             expires: { never: {} },
           },
         }),
         new MsgExecuteContract(
           'address',
-          addressProvider.terraswapAncUstPair(),
+          addressProvider.ancUstPair(),
           {
             provide_liquidity: {
               assets: [
@@ -72,7 +72,7 @@ describe('terraswap<>anchor', () => {
   it('provide-liquidity-anc', async () => {
     testFabricator(
       expect,
-      fabricateTerraswapProvideLiquiditybLuna,
+      fabricateExchangeProvideLiquiditybLuna,
       {
         address: 'address',
         slippage_tolerance: undefined,
@@ -85,14 +85,14 @@ describe('terraswap<>anchor', () => {
       [
         new MsgExecuteContract('address', addressProvider.bLunaToken(), {
           increase_allowance: {
-            spender: addressProvider.terraswapblunaLunaPair(),
+            spender: addressProvider.bLunaLunaPair(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             expires: { never: {} },
           },
         }),
         new MsgExecuteContract(
           'address',
-          addressProvider.terraswapblunaLunaPair(),
+          addressProvider.bLunaLunaPair(),
           {
             provide_liquidity: {
               assets: [
@@ -125,7 +125,7 @@ describe('terraswap<>anchor', () => {
   it('swap-ANC', async () => {
     testFabricator(
       expect,
-      fabricateTerraswapSwapANC,
+      fabricateExchangeSwapANC,
       {
         address: 'address',
         amount: '1000',
@@ -137,7 +137,7 @@ describe('terraswap<>anchor', () => {
       [
         new MsgExecuteContract('address', addressProvider.ANC(), {
           send: {
-            contract: addressProvider.terraswapAncUstPair(),
+            contract: addressProvider.ancUstPair(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             msg: createHookMsg({
               swap: {
@@ -155,7 +155,7 @@ describe('terraswap<>anchor', () => {
   it('swap-bluna', async () => {
     testFabricator(
       expect,
-      fabricateTerraswapSwapbLuna,
+      fabricateExchangeSwapbLuna,
       {
         address: 'address',
         amount: '1000',
@@ -167,7 +167,7 @@ describe('terraswap<>anchor', () => {
       [
         new MsgExecuteContract('address', addressProvider.bLunaToken(), {
           send: {
-            contract: addressProvider.terraswapblunaLunaPair(),
+            contract: addressProvider.bLunaLunaPair(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             msg: createHookMsg({
               swap: {
@@ -185,7 +185,7 @@ describe('terraswap<>anchor', () => {
   it('swap-luna', async () => {
     testFabricator(
       expect,
-      fabricateTerraswapSwapLuna,
+      fabricateExchangeSwapLuna,
       {
         address: 'address',
         amount: '1000',
@@ -198,7 +198,7 @@ describe('terraswap<>anchor', () => {
       [
         new MsgExecuteContract(
           'address',
-          addressProvider.terraswapblunaLunaPair(),
+          addressProvider.bLunaLunaPair(),
           {
             swap: {
               offer_asset: {
@@ -223,7 +223,7 @@ describe('terraswap<>anchor', () => {
   it('swap-usd-ANC', async () => {
     testFabricator(
       expect,
-      fabricateTerraswapSwapUSTANC,
+      fabricateExchangeSwapUSTANC,
       {
         address: 'address',
         amount: '1000',
@@ -236,7 +236,7 @@ describe('terraswap<>anchor', () => {
       [
         new MsgExecuteContract(
           'address',
-          addressProvider.terraswapAncUstPair(),
+          addressProvider.ancUstPair(),
           {
             swap: {
               offer_asset: {
@@ -261,26 +261,22 @@ describe('terraswap<>anchor', () => {
   it('withdraw-liquidity', async () => {
     testFabricator(
       expect,
-      fabricateTerraswapWithdrawLiquidityANC,
+      fabricateExchangeWithdrawLiquidityANC,
       {
         address: 'address',
         amount: '1000',
       },
       addressProvider,
       [
-        new MsgExecuteContract(
-          'address',
-          addressProvider.terraswapAncUstLPToken(),
-          {
-            send: {
-              contract: addressProvider.terraswapAncUstPair(),
-              amount: new Int(new Dec('1000').mul(1000000)).toString(),
-              msg: createHookMsg({
-                withdraw_liquidity: {},
-              }),
-            },
+        new MsgExecuteContract('address', addressProvider.ancUstLPToken(), {
+          send: {
+            contract: addressProvider.ancUstPair(),
+            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+            msg: createHookMsg({
+              withdraw_liquidity: {},
+            }),
           },
-        ),
+        }),
       ],
     );
   });
@@ -288,26 +284,22 @@ describe('terraswap<>anchor', () => {
   it('withdraw-liquidity', async () => {
     testFabricator(
       expect,
-      fabricateTerraswapWithdrawLiquiditybLuna,
+      fabricateExchangeWithdrawLiquiditybLuna,
       {
         address: 'address',
         amount: '1000',
       },
       addressProvider,
       [
-        new MsgExecuteContract(
-          'address',
-          addressProvider.terraswapblunaLunaLPToken(),
-          {
-            send: {
-              contract: addressProvider.terraswapblunaLunaPair(),
-              amount: new Int(new Dec('1000').mul(1000000)).toString(),
-              msg: createHookMsg({
-                withdraw_liquidity: {},
-              }),
-            },
+        new MsgExecuteContract('address', addressProvider.bLunaLunaLPToken(), {
+          send: {
+            contract: addressProvider.bLunaLunaPair(),
+            amount: new Int(new Dec('1000').mul(1000000)).toString(),
+            msg: createHookMsg({
+              withdraw_liquidity: {},
+            }),
           },
-        ),
+        }),
       ],
     );
   });
