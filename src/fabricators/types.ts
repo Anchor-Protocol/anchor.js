@@ -1,5 +1,5 @@
 import { Msg } from '@terra-money/terra.js';
-import { AddressProvider, BAssetAddressProvider } from '..';
+import { AddressProvider } from '..';
 
 export type Expire =
   | { at_height: number }
@@ -7,15 +7,13 @@ export type Expire =
   // eslint-disable-next-line @typescript-eslint/ban-types
   | { never: {} };
 
-export type OptionType<T> = T extends Fabricator<infer Option, AddressProvider>
-  ? OmitAddress<Option>
-  : T extends Fabricator<infer Option, BAssetAddressProvider>
+export type OptionType<T> = T extends Fabricator<infer Option>
   ? OmitAddress<Option>
   : null;
 
-export type Fabricator<T, TAddressProvider> = (
+export type Fabricator<T> = (
   option: T,
-) => (addressProvider: TAddressProvider) => Msg[];
+) => (addressProvider: AddressProvider) => Msg[];
 
 export type OmitAddress<T> = Omit<T, 'address'>;
 

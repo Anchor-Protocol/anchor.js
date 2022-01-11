@@ -44,7 +44,11 @@ export class Anchor {
   ): Promise<BAsset> {
     // we are using an address map so can return just this
     if ('token' in collateral) {
-      return new BAsset(this._lcd, new BAssetAddressProviderImpl(collateral));
+      return new BAsset(
+        this._lcd,
+        this._addressProvider,
+        new BAssetAddressProviderImpl(collateral),
+      );
     }
 
     // dynamically discover the contract addresses for the bAsset collateral
@@ -67,6 +71,7 @@ export class Anchor {
 
     return new BAsset(
       this._lcd,
+      this._addressProvider,
       new BAssetAddressProviderImpl({
         token: collateral_token,
         custody: custody_contract,

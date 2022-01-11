@@ -6,13 +6,13 @@ import { AddressProvider, BAssetAddressProvider } from '../../address-provider';
 
 interface Option {
   address: string;
-  collateral: BAssetAddressProvider;
+  bAsset: BAssetAddressProvider;
   owner?: string;
   liquidation_contract?: string;
 }
 
 export const fabricateCustodyUpdateConfig =
-  ({ address, collateral, liquidation_contract, owner }: Option) =>
+  ({ address, bAsset, liquidation_contract, owner }: Option) =>
   (_: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
@@ -22,7 +22,7 @@ export const fabricateCustodyUpdateConfig =
         : validateTrue,
     ]);
     return [
-      new MsgExecuteContract(address, collateral.custody(), {
+      new MsgExecuteContract(address, bAsset.custody(), {
         update_config: {
           owner: owner,
           liquidation_contract: liquidation_contract,

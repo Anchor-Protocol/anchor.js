@@ -1,4 +1,4 @@
-import { BAssetAddressProvider } from '../../address-provider';
+import { BAssetAddressProvider, AddressProvider } from '../../address-provider';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
@@ -12,7 +12,7 @@ type Expire = { at_height: number } | { at_time: number } | { never: {} };
 
 /**
  * @param address Client’s Terra address (address of the message sender).
- * @param collateral asset to decrease.
+ * @param bAsset asset to decrease.
  * @param amount of allowance.
  * @param spends Client's Terra address (address of spender).
  * @param expire, at specific height e.g. {"at_height": 3_500_000}, at specific time {"at_time": 1624421015 }, or never
@@ -20,14 +20,15 @@ type Expire = { at_height: number } | { at_time: number } | { never: {} };
 
 interface Option {
   address: string;
+  bAsset: BAssetAddressProvider;
   amount: string;
   spender: string;
   expires?: Expire;
 }
 
 export const fabricatebAssetDecreaseAllowance =
-  ({ address, amount, spender, expires }: Option) =>
-  (addressProvider: BAssetAddressProvider): MsgExecuteContract[] => {
+  ({ address, bAsset, amount, spender, expires }: Option) =>
+  (_: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
       validateIsNumber(amount),
@@ -35,7 +36,7 @@ export const fabricatebAssetDecreaseAllowance =
       validateAddress(spender),
     ]);
     return [
-      new MsgExecuteContract(address, addressProvider.token(), {
+      new MsgExecuteContract(address, bAsset.token(), {
         // @see https://github.com/Anchor-Protocol/anchor-bAsset-contracts/blob/cce41e707c67ee2852c4929e17fb1472dbd2aa35/contracts/anchor_basset_reward/src/user.rs#L16
         decrease_allowance: {
           spender: spender,

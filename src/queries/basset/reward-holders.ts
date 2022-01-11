@@ -1,9 +1,10 @@
 import { LCDClient } from '@terra-money/terra.js';
 import { Holder } from '.';
-import { BAssetAddressProvider } from '../../address-provider';
+import { BAssetAddressProvider, AddressProvider } from '../../address-provider';
 
 interface Option {
   lcd: LCDClient;
+  bAsset: BAssetAddressProvider;
   start_after?: string;
   limit?: number;
 }
@@ -13,9 +14,9 @@ interface Holders {
 }
 
 export const querybAssetRewardHolders =
-  ({ lcd, start_after, limit }: Option) =>
-  async (addressProvider: BAssetAddressProvider): Promise<Holders> => {
-    return lcd.wasm.contractQuery(addressProvider.reward(), {
+  ({ lcd, bAsset, start_after, limit }: Option) =>
+  async (_: AddressProvider): Promise<Holders> => {
+    return lcd.wasm.contractQuery(bAsset.reward(), {
       holders: {
         start_after: start_after,
         limit: limit,

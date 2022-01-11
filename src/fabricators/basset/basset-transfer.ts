@@ -5,17 +5,18 @@ import {
   validateIsGreaterThanZero,
   validateIsNumber,
 } from '../../utils/validation/number';
-import { BAssetAddressProvider } from '../../address-provider';
+import { BAssetAddressProvider, AddressProvider } from '../../address-provider';
 
 interface Option {
   address: string;
+  bAsset: BAssetAddressProvider;
   amount: string;
   recipient: string;
 }
 
 export const fabricatebAssetTransfer =
-  ({ address, amount, recipient }: Option) =>
-  (addressProvider: BAssetAddressProvider): MsgExecuteContract[] => {
+  ({ address, bAsset, amount, recipient }: Option) =>
+  (_: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
       validateIsNumber(amount),
@@ -23,7 +24,7 @@ export const fabricatebAssetTransfer =
       validateAddress(recipient),
     ]);
     return [
-      new MsgExecuteContract(address, addressProvider.token(), {
+      new MsgExecuteContract(address, bAsset.token(), {
         // @see https://github.com/Anchor-Protocol/anchor-bAsset-contracts/blob/cce41e707c67ee2852c4929e17fb1472dbd2aa35/contracts/anchor_basset_token/src/handler.rs#L17
         transfer: {
           recipient: recipient,

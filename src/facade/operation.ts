@@ -24,19 +24,15 @@ export interface Operation {
   ): Promise<BlockTxBroadcastResult>;
 }
 
-export class OperationImpl<
-  FabricatorInputType,
-  AddressProviderType = AddressProvider,
-> implements Operation
-{
-  private _fabricator!: Fabricator<FabricatorInputType, AddressProviderType>;
+export class OperationImpl<FabricatorInputType> implements Operation {
+  private _fabricator!: Fabricator<FabricatorInputType>;
   private _option!: OmitAddress<FabricatorInputType>;
-  private _addressProvider!: AddressProviderType;
+  private _addressProvider!: AddressProvider;
 
   constructor(
-    fabricator: Fabricator<FabricatorInputType, AddressProviderType>,
+    fabricator: Fabricator<FabricatorInputType>,
     option: OmitAddress<FabricatorInputType>,
-    addressProvider: AddressProviderType,
+    addressProvider: AddressProvider,
   ) {
     this._fabricator = fabricator;
     this._option = option;

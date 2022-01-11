@@ -12,7 +12,7 @@ import {
 interface Option {
   address: string;
   market: MARKET_DENOMS;
-  collateral: BAssetAddressProvider;
+  bAsset: BAssetAddressProvider;
   amount: string;
 }
 
@@ -26,7 +26,7 @@ interface Option {
  * @param amount Amount of collateral to deposit.
  */
 export const fabricateProvideCollateral =
-  ({ address, market, collateral, amount }: Option) =>
+  ({ address, market, bAsset, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
@@ -34,9 +34,9 @@ export const fabricateProvideCollateral =
       validateIsGreaterThanZero(amount),
     ]);
 
-    const bAssetTokenContract = collateral.token();
+    const bAssetTokenContract = bAsset.token();
     const mmOverseerContract = addressProvider.overseer(market);
-    const custodyContract = collateral.custody();
+    const custodyContract = bAsset.custody();
 
     // cw20 send + provide_collateral hook
     /* eslint-disable */

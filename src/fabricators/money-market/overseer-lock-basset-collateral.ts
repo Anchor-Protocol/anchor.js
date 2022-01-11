@@ -10,7 +10,7 @@ import {
 
 interface Option {
   address: string;
-  collateral: BAssetAddressProvider;
+  bAsset: BAssetAddressProvider;
   market: MARKET_DENOMS;
   amount: string;
 }
@@ -22,7 +22,7 @@ interface Option {
  * @param amount Amount of collateral to deposit.
  */
 export const fabricateOverseerLockbAssetCollateral =
-  ({ address, collateral, market, amount }: Option) =>
+  ({ address, bAsset, market, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
@@ -37,10 +37,7 @@ export const fabricateOverseerLockbAssetCollateral =
         // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L75
         lock_collateral: {
           collaterals: [
-            [
-              collateral.token(),
-              new Int(new Dec(amount).mul(1000000)).toString(),
-            ],
+            [bAsset.token(), new Int(new Dec(amount).mul(1000000)).toString()],
           ],
         },
       }),

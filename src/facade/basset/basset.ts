@@ -1,5 +1,5 @@
 import { Dec, Int, LCDClient } from '@terra-money/terra.js';
-import { BAssetAddressProvider } from '../../address-provider';
+import { BAssetAddressProvider, AddressProvider } from '../../address-provider';
 import {
   fabricatebAssetClaimRewards,
   fabricatebAssetConvertToWormhole,
@@ -10,14 +10,16 @@ import {
 import { querybAssetRewardHolder, querybAssetRewardState } from '../../queries';
 import { Operation, OperationImpl } from '../operation';
 
-export type BAssetClaimRewardsOption = OptionType<
-  typeof fabricatebAssetClaimRewards
+type OmitbAsset<T> = Omit<T, 'bAsset'>;
+
+export type BAssetClaimRewardsOption = OmitbAsset<
+  OptionType<typeof fabricatebAssetClaimRewards>
 >;
-export type BAssetConvertToWormholeOption = OptionType<
-  typeof fabricatebAssetConvertToWormhole
+export type BAssetConvertToWormholeOption = OmitbAsset<
+  OptionType<typeof fabricatebAssetConvertToWormhole>
 >;
-export type BAssetConvertFromWormholeOption = OptionType<
-  typeof fabricatebAssetConvertFromWormhole
+export type BAssetConvertFromWormholeOption = OmitbAsset<
+  OptionType<typeof fabricatebAssetConvertFromWormhole>
 >;
 
 export interface BAssetQueriesOption {
@@ -26,15 +28,21 @@ export interface BAssetQueriesOption {
 
 export class BAsset {
   private readonly _lcd!: LCDClient;
-  private readonly _addressProvider!: BAssetAddressProvider;
+  private readonly _addressProvider!: AddressProvider;
+  private readonly _bAssetAddressProvider!: BAssetAddressProvider;
 
-  constructor(lcd: LCDClient, addressProvider: BAssetAddressProvider) {
+  constructor(
+    lcd: LCDClient,
+    addressProvider: AddressProvider,
+    bAssetAddressProvider: BAssetAddressProvider,
+  ) {
     this._lcd = lcd;
     this._addressProvider = addressProvider;
+    this._bAssetAddressProvider = bAssetAddressProvider;
   }
 
   addresses(): BAssetAddressProvider {
-    return this._addressProvider;
+    return this._bAssetAddressProvider;
   }
 
   convertToWormhole(
@@ -42,7 +50,7 @@ export class BAsset {
   ): Operation {
     return new OperationImpl(
       fabricatebAssetConvertToWormhole,
-      convertOptions,
+      { ...convertOptions, bAsset: this._bAssetAddressProvider },
       this._addressProvider,
     );
   }
@@ -52,7 +60,7 @@ export class BAsset {
   ): Operation {
     return new OperationImpl(
       fabricatebAssetConvertFromWormhole,
-      convertOptions,
+      { ...convertOptions, bAsset: this._bAssetAddressProvider },
       this._addressProvider,
     );
   }
@@ -60,7 +68,7 @@ export class BAsset {
   claim(claimOptions: OmitAddress<BAssetClaimRewardsOption>): Operation {
     return new OperationImpl(
       fabricatebAssetClaimRewards,
-      claimOptions,
+      { ...claimOptions, bAsset: this._bAssetAddressProvider },
       this._addressProvider,
     );
   }
@@ -70,10 +78,12 @@ export class BAsset {
   ): Promise<string> {
     const holder = await querybAssetRewardHolder({
       lcd: this._lcd,
+      bAsset: this._bAssetAddressProvider,
       ...getClaimableRewardsOption,
     })(this._addressProvider);
     const rewardState = await querybAssetRewardState({
       lcd: this._lcd,
+      bAsset: this._bAssetAddressProvider,
     })(this._addressProvider);
 
     return new Int(

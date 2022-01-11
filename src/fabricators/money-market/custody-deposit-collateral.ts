@@ -7,12 +7,12 @@ import { AddressProvider, BAssetAddressProvider } from '../../address-provider';
 
 interface Option {
   address: string;
-  collateral: BAssetAddressProvider;
+  bAsset: BAssetAddressProvider;
   amount: string;
 }
 
 export const fabricateCustodyDepositCollateral =
-  ({ address, collateral, amount }: Option) =>
+  ({ address, bAsset, amount }: Option) =>
   (_: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
@@ -22,9 +22,9 @@ export const fabricateCustodyDepositCollateral =
     // cw20 send + provide_collateral hook
     return [
       // provide_collateral call
-      new MsgExecuteContract(address, collateral.token(), {
+      new MsgExecuteContract(address, bAsset.token(), {
         send: {
-          contract: collateral.custody(),
+          contract: bAsset.custody(),
           amount: new Int(new Dec(amount).mul(1000000)).toString(),
           msg: createHookMsg({
             deposit_collateral: {},

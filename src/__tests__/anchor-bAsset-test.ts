@@ -15,7 +15,8 @@ import {
 } from '../fabricators';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
-import { bETHAddressProvider } from './common';
+import { addressProvider } from '../__tests__/common';
+import { bETH as bAsset } from './common';
 
 /* eslint-disable */
 describe('bAsset', () => {
@@ -25,11 +26,12 @@ describe('bAsset', () => {
       fabricatebAssetClaimRewards,
       {
         address: 'address',
+        bAsset,
         recipient: undefined,
       },
-      bETHAddressProvider,
+      addressProvider,
       [
-        new MsgExecuteContract('address', bETHAddressProvider.reward(), {
+        new MsgExecuteContract('address', bAsset.reward(), {
           claim_rewards: { recipient: undefined },
         }),
       ],
@@ -42,12 +44,13 @@ describe('bAsset', () => {
       fabricatebAssetTransfer,
       {
         address: 'address',
+        bAsset,
         amount: '1000',
         recipient: 'recipient',
       },
-      bETHAddressProvider,
+      addressProvider,
       [
-        new MsgExecuteContract('address', bETHAddressProvider.token(), {
+        new MsgExecuteContract('address', bAsset.token(), {
           transfer: {
             recipient: 'recipient',
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -63,13 +66,14 @@ describe('bAsset', () => {
       fabricatebAssetTransferFrom,
       {
         address: 'address',
+        bAsset,
         owner: 'owner',
         amount: '1000',
         recipient: 'recipient',
       },
-      bETHAddressProvider,
+      addressProvider,
       [
-        new MsgExecuteContract('address', bETHAddressProvider.token(), {
+        new MsgExecuteContract('address', bAsset.token(), {
           transfer_from: {
             owner: 'owner',
             recipient: 'recipient',
@@ -86,11 +90,12 @@ describe('bAsset', () => {
       fabricatebAssetBurn,
       {
         address: 'address',
+        bAsset,
         amount: '1000',
       },
-      bETHAddressProvider,
+      addressProvider,
       [
-        new MsgExecuteContract('address', bETHAddressProvider.token(), {
+        new MsgExecuteContract('address', bAsset.token(), {
           burn: {
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
           },
@@ -105,12 +110,13 @@ describe('bAsset', () => {
       fabricatebAssetBurnFrom,
       {
         address: 'address',
+        bAsset,
         owner: 'owner',
         amount: '1000',
       },
-      bETHAddressProvider,
+      addressProvider,
       [
-        new MsgExecuteContract('address', bETHAddressProvider.token(), {
+        new MsgExecuteContract('address', bAsset.token(), {
           burn_from: {
             owner: 'owner',
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -126,13 +132,14 @@ describe('bAsset', () => {
       fabricatebAssetSend,
       {
         address: 'address',
+        bAsset,
         amount: '1000',
         contract: 'contract',
         msg: { msg: {} },
       },
-      bETHAddressProvider,
+      addressProvider,
       [
-        new MsgExecuteContract('address', bETHAddressProvider.token(), {
+        new MsgExecuteContract('address', bAsset.token(), {
           send: {
             contract: 'contract',
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -149,14 +156,15 @@ describe('bAsset', () => {
       fabricatebAssetSendFrom,
       {
         address: 'address',
+        bAsset,
         amount: '1000',
         owner: 'owner',
         contract: 'contract',
         msg: { msg: {} },
       },
-      bETHAddressProvider,
+      addressProvider,
       [
-        new MsgExecuteContract('address', bETHAddressProvider.token(), {
+        new MsgExecuteContract('address', bAsset.token(), {
           send_from: {
             owner: 'owner',
             contract: 'contract',
@@ -174,13 +182,14 @@ describe('bAsset', () => {
       fabricatebAssetIncreaseAllowance,
       {
         address: 'address',
+        bAsset,
         amount: '1000',
         spender: 'spender',
         expires: { never: {} } as Expire,
       },
-      bETHAddressProvider,
+      addressProvider,
       [
-        new MsgExecuteContract('address', bETHAddressProvider.token(), {
+        new MsgExecuteContract('address', bAsset.token(), {
           increase_allowance: {
             spender: 'spender',
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -197,13 +206,14 @@ describe('bAsset', () => {
       fabricatebAssetDecreaseAllowance,
       {
         address: 'address',
+        bAsset,
         amount: '1000',
         spender: 'spender',
         expires: { never: {} } as Expire,
       },
-      bETHAddressProvider,
+      addressProvider,
       [
-        new MsgExecuteContract('address', bETHAddressProvider.token(), {
+        new MsgExecuteContract('address', bAsset.token(), {
           decrease_allowance: {
             spender: 'spender',
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -220,14 +230,15 @@ describe('bAsset', () => {
       fabricatebAssetConvertFromWormhole,
       {
         address: 'address',
+        bAsset,
         amount: '1000',
         msg: { msg: {} },
       },
-      bETHAddressProvider,
+      addressProvider,
       [
-        new MsgExecuteContract('address', bETHAddressProvider.token(), {
+        new MsgExecuteContract('address', bAsset.token(), {
           send: {
-            contract: bETHAddressProvider.converter(),
+            contract: bAsset.converter(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             msg: createHookMsg({ convertWormholeToAnchor: {} }),
           },
@@ -242,14 +253,15 @@ describe('bAsset', () => {
       fabricatebAssetConvertToWormhole,
       {
         address: 'address',
+        bAsset,
         amount: '1000',
         msg: { msg: {} },
       },
-      bETHAddressProvider,
+      addressProvider,
       [
-        new MsgExecuteContract('address', bETHAddressProvider.token(), {
+        new MsgExecuteContract('address', bAsset.token(), {
           send: {
-            contract: bETHAddressProvider.converter(),
+            contract: bAsset.converter(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
             msg: createHookMsg({ convertAnchorToWormhole: {} }),
           },

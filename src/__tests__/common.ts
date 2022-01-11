@@ -53,10 +53,6 @@ const contracts: AddressMap = {
 
 export const addressProvider = new AddressProviderFromJson(contracts);
 
-export const bLUNAAddressProvider = new BAssetAddressProviderImpl(
-  bAssetBombay12['bLUNA'],
-);
+export const bLUNA = new BAssetAddressProviderImpl(bAssetBombay12['bLUNA']);
 
-export const bETHAddressProvider = new BAssetAddressProviderImpl(
-  bAssetBombay12['bETH'],
-);
+export const bETH = new BAssetAddressProviderImpl(bAssetBombay12['bETH']);

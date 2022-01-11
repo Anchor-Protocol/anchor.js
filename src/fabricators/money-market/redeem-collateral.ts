@@ -13,21 +13,21 @@ import { isAmountSet } from '../../utils/validation/amount';
 interface Option {
   address: string;
   market: MARKET_DENOMS;
-  collateral: BAssetAddressProvider;
+  bAsset: BAssetAddressProvider;
   amount?: string;
 }
 
 export const fabricateRedeemCollateral =
-  ({ address, market, collateral, amount }: Option) =>
+  ({ address, market, bAsset, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
       amount ? validateIsGreaterThanZero(amount) : validateTrue,
     ]);
 
-    const bAssetTokenContract = collateral.token();
+    const bAssetTokenContract = bAsset.token();
     const mmOverseerContract = addressProvider.overseer(market);
-    const custodyContract = collateral.custody();
+    const custodyContract = bAsset.custody();
 
     return [
       // unlock collateral

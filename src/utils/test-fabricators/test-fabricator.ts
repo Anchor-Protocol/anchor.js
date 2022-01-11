@@ -1,16 +1,16 @@
 import { Msg } from '@terra-money/terra.js';
+import { AddressProvider } from '../../address-provider';
 
 export function testFabricator<
   T,
-  TAddressProvider,
   FabricatorType extends (
     option: T,
-  ) => (addressProvider: TAddressProvider) => Msg[],
+  ) => (addressProvider: AddressProvider) => Msg[],
 >(
   expect: jest.Expect,
   fabricator: FabricatorType,
   input: T,
-  address_provider: TAddressProvider,
+  address_provider: AddressProvider,
   expectedOutput: ReturnType<ReturnType<FabricatorType>>,
 ): void {
   const output = fabricator(input);
