@@ -12,7 +12,7 @@ import {
 import { addressProvider, bLUNA } from './common';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
-import { COLLATERAL_DENOMS, MARKET_DENOMS } from '..';
+import { MARKET_DENOMS } from '..';
 
 /* eslint-disable */
 describe('exchange<>anchor', () => {
