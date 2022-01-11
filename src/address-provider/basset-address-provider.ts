@@ -48,10 +48,10 @@ export class BAssetAddressProviderImpl implements BAssetAddressProvider {
 
 export const bAssetColumbus5 = {
   bLUNA: {
-    bLunaToken: 'terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp',
-    bLunaReward: 'terra17yap3mhph35pcwvhza38c2lkj7gzywzy05h7l0',
-    bLunaConverter: '',
-    bLunaCustody: 'terra1ptjp2vfjrwh0j0faj9r6katm640kgjxnwwq9kn',
+    token: 'terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp',
+    reward: 'terra17yap3mhph35pcwvhza38c2lkj7gzywzy05h7l0',
+    converter: '',
+    custody: 'terra1ptjp2vfjrwh0j0faj9r6katm640kgjxnwwq9kn',
   },
   bETH: {
     reward: 'terra1939tzfn4hn960ychpcsjshu8jds3zdwlp8jed9',

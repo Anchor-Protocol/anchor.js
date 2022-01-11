@@ -25,9 +25,7 @@ export const fabricatebLunaUnbond =
       validateIsGreaterThanZero(amount),
     ]);
 
-    const bAssetTokenAddress = addressProvider.bAssetToken(
-      COLLATERAL_DENOMS.UBLUNA,
-    );
+    const bAssetTokenAddress = addressProvider.bLunaToken();
     const bAssetHubAddress = addressProvider.bLunaHub();
 
     return [

@@ -6,10 +6,7 @@ import {
   validateIsNumber,
 } from '../../utils/validation/number';
 import { createHookMsg } from '../../utils/cw20/create-hook-msg';
-import {
-  AddressProvider,
-  COLLATERAL_DENOMS,
-} from '../../address-provider/provider';
+import { AddressProvider } from '../../address-provider/provider';
 
 interface Option {
   address: string;
@@ -28,9 +25,7 @@ export const fabricateExchangeSwapbLuna =
       validateIsGreaterThanZero(amount),
     ]);
 
-    const bAssetTokenAddress = addressProvider.bAssetToken(
-      COLLATERAL_DENOMS.UBLUNA,
-    );
+    const bAssetTokenAddress = addressProvider.bLunaToken();
     const pairAddress = addressProvider.bLunaLunaPair();
 
     return [

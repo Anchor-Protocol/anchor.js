@@ -15,9 +15,11 @@ type OmitbAsset<T> = Omit<T, 'bAsset'>;
 export type BAssetClaimRewardsOption = OmitbAsset<
   OptionType<typeof fabricatebAssetClaimRewards>
 >;
+
 export type BAssetConvertToWormholeOption = OmitbAsset<
   OptionType<typeof fabricatebAssetConvertToWormhole>
 >;
+
 export type BAssetConvertFromWormholeOption = OmitbAsset<
   OptionType<typeof fabricatebAssetConvertFromWormhole>
 >;

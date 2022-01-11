@@ -3,15 +3,7 @@ export interface AddressProvider {
 
   bLunaValidatorsRegistry(): string;
 
-  bAssetToken(bAsset: COLLATERAL_DENOMS): string;
-
-  bAssetReward(bAsset: COLLATERAL_DENOMS): string;
-
-  bAssetConverter(bAsset: COLLATERAL_DENOMS): string;
-
-  bAssetCustody(denom: MARKET_DENOMS, bAsset: COLLATERAL_DENOMS): string;
-
-  bAssetWormhole(bAsset: COLLATERAL_DENOMS): string;
+  bLunaToken(): string;
 
   market(denom: MARKET_DENOMS): string;
 
@@ -64,6 +56,4 @@ export enum MARKET_DENOMS {
 export enum COLLATERAL_DENOMS {
   UBLUNA = 'ubluna',
   UBETH = 'ubeth',
-  UBSOL = 'ubsol',
-  UBATOM = 'ubatom',
 }

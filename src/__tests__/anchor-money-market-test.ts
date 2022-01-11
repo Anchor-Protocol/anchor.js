@@ -1,5 +1,5 @@
 import { testFabricator } from '../utils/test-fabricators/test-fabricator';
-import { addressProvider, bLUNA as bAsset } from '../__tests__/common';
+import { addressProvider, bLUNA as bAsset, bLUNA } from '../__tests__/common';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import {
   fabricateCustodyDepositCollateral,
@@ -554,9 +554,7 @@ describe('Money Market', () => {
         fabricateLiquidationSubmitBid,
         {
           address: 'address',
-          collateral_token: addressProvider.bAssetToken(
-            COLLATERAL_DENOMS.UBLUNA,
-          ),
+          collateral_token: bLUNA.token(),
           premium_rate: '0.3',
           denom: MARKET_DENOMS.UUSD,
           amount: '1000',
@@ -568,9 +566,7 @@ describe('Money Market', () => {
             addressProvider.liquidation(),
             {
               submit_bid: {
-                collateral_token: addressProvider.bAssetToken(
-                  COLLATERAL_DENOMS.UBLUNA,
-                ),
+                collateral_token: bLUNA.token(),
                 premium_rate: '0.3',
               },
             },
@@ -593,9 +589,7 @@ describe('Money Market', () => {
         [
           new MsgExecuteContract('address', addressProvider.liquidation(), {
             retract_bid: {
-              collateral_token: addressProvider.bAssetToken(
-                COLLATERAL_DENOMS.UBLUNA,
-              ),
+              collateral_token: bLUNA.token(),
               amount: new Int(new Dec('1000').mul(1000000)).toString(),
             },
           }),

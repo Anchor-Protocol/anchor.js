@@ -1,28 +1,10 @@
-import { AddressProvider, COLLATERAL_DENOMS, MARKET_DENOMS } from './provider';
+import { AddressProvider } from './provider';
 
 export interface AddressMap {
   bLunaHub: string;
   bLunaAirdrop: string;
   bLunaValidatorsRegistry: string;
   bLunaToken: string;
-  bLunaReward: string;
-  bLunaConverter: string;
-  bLunaCustody: string;
-  bEthToken: string;
-  bEthReward: string;
-  bEthConverter: string;
-  bEthCustody: string;
-  bEthWormhole: string;
-  bAtomToken: string;
-  bAtomReward: string;
-  bAtomConverter: string;
-  bAtomCustody: string;
-  bAtomWormhole: string;
-  bSolToken: string;
-  bSolReward: string;
-  bSolConverter: string;
-  bSolCustody: string;
-  bSolWormhole: string;
   mmInterestModel: string;
   mmOracle: string;
   mmMarket: string;
@@ -59,111 +41,8 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.bLunaValidatorsRegistry;
   }
 
-  bAssetToken(collateral: COLLATERAL_DENOMS): string {
-    let address = '';
-    switch (collateral) {
-      case COLLATERAL_DENOMS.UBLUNA:
-        address = this.data.bLunaToken;
-        break;
-      case COLLATERAL_DENOMS.UBETH:
-        address = this.data.bEthToken;
-        break;
-      case COLLATERAL_DENOMS.UBATOM:
-        address = this.data.bAtomToken;
-        break;
-      case COLLATERAL_DENOMS.UBSOL:
-        address = this.data.bSolToken;
-        break;
-    }
-    if (address.trim().length === 0) {
-      throw Error(`The collateral ${collateral} is not currently supported.`);
-    }
-    return address;
-  }
-
-  bAssetReward(collateral: COLLATERAL_DENOMS): string {
-    let address = '';
-    switch (collateral) {
-      case COLLATERAL_DENOMS.UBLUNA:
-        address = this.data.bLunaReward;
-        break;
-      case COLLATERAL_DENOMS.UBETH:
-        address = this.data.bEthReward;
-        break;
-      case COLLATERAL_DENOMS.UBATOM:
-        address = this.data.bAtomReward;
-        break;
-      case COLLATERAL_DENOMS.UBSOL:
-        address = this.data.bSolReward;
-        break;
-    }
-    if (address.trim().length === 0) {
-      throw Error(`The collateral ${collateral} is not currently supported.`);
-    }
-    return address;
-  }
-
-  bAssetConverter(collateral: COLLATERAL_DENOMS): string {
-    let address = '';
-    switch (collateral) {
-      case COLLATERAL_DENOMS.UBLUNA:
-        address = this.data.bLunaConverter;
-        break;
-      case COLLATERAL_DENOMS.UBETH:
-        address = this.data.bEthConverter;
-        break;
-      case COLLATERAL_DENOMS.UBATOM:
-        address = this.data.bAtomConverter;
-        break;
-      case COLLATERAL_DENOMS.UBSOL:
-        address = this.data.bSolConverter;
-        break;
-    }
-    if (address.trim().length === 0) {
-      throw Error(`The collateral ${collateral} is not currently supported.`);
-    }
-    return address;
-  }
-
-  bAssetCustody(_denom: MARKET_DENOMS, collateral: COLLATERAL_DENOMS): string {
-    let address = '';
-    switch (collateral) {
-      case COLLATERAL_DENOMS.UBLUNA:
-        address = this.data.bLunaCustody;
-        break;
-      case COLLATERAL_DENOMS.UBETH:
-        address = this.data.bEthCustody;
-        break;
-      case COLLATERAL_DENOMS.UBATOM:
-        address = this.data.bAtomConverter;
-        break;
-      case COLLATERAL_DENOMS.UBSOL:
-        address = this.data.bSolCustody;
-        break;
-    }
-    if (address.trim().length === 0) {
-      throw Error(`The collateral ${collateral} is not currently supported.`);
-    }
-    return address;
-  }
-
-  bAssetWormhole(collateral: COLLATERAL_DENOMS): string {
-    let address = '';
-    switch (collateral) {
-      case COLLATERAL_DENOMS.UBETH:
-        address = this.data.bEthWormhole;
-        break;
-      case COLLATERAL_DENOMS.UBATOM:
-        address = this.data.bAtomWormhole;
-        break;
-      case COLLATERAL_DENOMS.UBSOL:
-        address = this.data.bSolWormhole;
-        break;
-    }
-    if (address.trim().length === 0) {
-      throw Error(`The collateral ${collateral} is not currently supported.`);
-    }
-    return address;
+  bLunaToken(): string {
+    return this.data.bLunaToken;
   }
 
   market(): string {
