@@ -57,6 +57,37 @@ const gasParameters: OperationGasParameters = {
 const txResult = await anchor.earn.depositStable(MARKET_DENOMS.UUSD, "100.5000").execute(wallet, gasParameters)
 ```
 
+When working with bAsset's, they can be loaded in one of two ways.
+```ts
+import { LCDClient, MnemonicKey, Fee, Wallet } from '@terra-money/terra.js'
+import { Anchor, columbus5, bAssetColumbus5, AddressProviderFromJson, MARKET_DENOMS } from '@anchor-protocol/anchor.js'
+
+const addressProvider = new AddressProviderFromJson(columbus5)
+const lcd = new LCDClient({ URL: 'https://lcd.terra.dev', chainID: 'columbus-5' })
+const key = new MnemonicKey({
+  mnemonic: 'your key'
+})
+const wallet = new Wallet(lcd, key)
+const anchor = new Anchor(lcd, addressProvider)
+
+// load the bAsset from the available whitelisted collateral
+const collaterals = await anchor.moneyMarket.getCollateralWhitelist({
+  market: MARKET_DENOMS.UUSD,
+});
+
+const [collateral] = collaterals.filter(
+  (collateral) => collateral.symbol === 'BETH',
+);
+
+const bAsset = await anchor.bAsset(collateral);
+
+// alternatively, the bAsset can be loaded with the well known contract addresses
+const bAsset = await anchor.bAsset(bAssetColumbus5['bETH']);
+
+// once you have the bAsset, you can then perform operations
+const operation = bAsset.claim({ recipient: 'terra1...' });
+```
+
 
 ### Using Message Fabricators
 
