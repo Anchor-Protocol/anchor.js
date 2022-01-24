@@ -5,12 +5,8 @@ import {
   BAssetAddressMap,
   BAssetAddressProviderImpl,
 } from '../address-provider';
-import {
-  querybAssetConverterConfig,
-  queryCustodyConfig,
-  queryTokenMinter,
-  WhitelistResponseElem,
-} from '../queries';
+import { WhitelistResponseElem } from '../queries';
+import { querybAsset } from '../queries/basset/address-map';
 import { AnchorToken } from './anchor-token/anchor-token';
 import { BLuna } from './bluna/bluna';
 import { Borrow } from './borrow/borrow';
@@ -41,7 +37,7 @@ export class Anchor {
 
   async bAsset(
     collateral: BAssetAddressMap | WhitelistResponseElem,
-  ): Promise<BAsset> {
+  ): Promise<BAsset | undefined> {
     // we are using an address map so can return just this
     if ('token' in collateral) {
       return new BAsset(
@@ -50,35 +46,8 @@ export class Anchor {
         new BAssetAddressProviderImpl(collateral),
       );
     }
-
-    // dynamically discover the contract addresses for the bAsset collateral
-    const { collateral_token, custody_contract } = collateral;
-
-    const { minter } = await queryTokenMinter({
-      lcd: this._lcd,
-      token_address: collateral_token,
-    })(this._addressProvider);
-
-    const { reward_contract } = await queryCustodyConfig({
-      lcd: this._lcd,
-      custody_contract_address: custody_contract,
-    })(this._addressProvider);
-
-    const { wormhole_token_address } = await querybAssetConverterConfig({
-      lcd: this._lcd,
-      converter_contract_address: minter,
-    })(this._addressProvider);
-
-    return new BAsset(
-      this._lcd,
+    return await querybAsset({ lcd: this._lcd, asset: collateral })(
       this._addressProvider,
-      new BAssetAddressProviderImpl({
-        token: collateral_token,
-        custody: custody_contract,
-        reward: reward_contract,
-        converter: minter,
-        wormhole: wormhole_token_address,
-      }),
     );
   }
 }
