@@ -1,8 +1,8 @@
 import { testFabricator } from '../utils/test-fabricators/test-fabricator';
 import {
   Expire,
-  fabricatebEthBurn,
-  fabricatebEthBurnFrom,
+  // fabricatebEthBurn,
+  // fabricatebEthBurnFrom,
   fabricatebEthDecreaseAllowance,
   fabricatebEthIncreaseAllowance,
   fabricatebEthSend,
@@ -100,45 +100,45 @@ describe('bEth', () => {
     );
   });
 
-  it('burn', async () => {
-    testFabricator(
-      expect,
-      fabricatebEthBurn,
-      {
-        address: 'address',
-        amount: '1000',
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract('address', addressProvider.bEthToken(), {
-          burn: {
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
-          },
-        }),
-      ],
-    );
-  });
+  // it('burn', async () => {
+  //   testFabricator(
+  //     expect,
+  //     fabricatebEthBurn,
+  //     {
+  //       address: 'address',
+  //       amount: '1000',
+  //     },
+  //     addressProvider,
+  //     [
+  //       new MsgExecuteContract('address', addressProvider.bEthToken(), {
+  //         burn: {
+  //           amount: new Int(new Dec('1000').mul(1000000)).toString(),
+  //         },
+  //       }),
+  //     ],
+  //   );
+  // });
 
-  it('burn-from', async () => {
-    testFabricator(
-      expect,
-      fabricatebEthBurnFrom,
-      {
-        address: 'address',
-        owner: 'owner',
-        amount: '1000',
-      },
-      addressProvider,
-      [
-        new MsgExecuteContract('address', addressProvider.bEthToken(), {
-          burn_from: {
-            owner: 'owner',
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
-          },
-        }),
-      ],
-    );
-  });
+  // it('burn-from', async () => {
+  //   testFabricator(
+  //     expect,
+  //     fabricatebEthBurnFrom,
+  //     {
+  //       address: 'address',
+  //       owner: 'owner',
+  //       amount: '1000',
+  //     },
+  //     addressProvider,
+  //     [
+  //       new MsgExecuteContract('address', addressProvider.bEthToken(), {
+  //         burn_from: {
+  //           owner: 'owner',
+  //           amount: new Int(new Dec('1000').mul(1000000)).toString(),
+  //         },
+  //       }),
+  //     ],
+  //   );
+  // });
 
   it('send', async () => {
     testFabricator(
