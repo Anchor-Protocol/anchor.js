@@ -8,5 +8,5 @@ export * from './beth-send';
 export * from './beth-send-from';
 export * from './beth-transfer-from';
 export * from './beth-transfer';
-export * from './beth-burn';
-export * from './beth-burn-from';
+// export * from './beth-burn';
+// export * from './beth-burn-from';
