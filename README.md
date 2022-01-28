@@ -81,8 +81,8 @@ const [collateral] = collaterals.filter(
 
 const bAsset = await anchor.bAsset(collateral);
 
-// alternatively, the bAsset can be loaded with the well known contract addresses
-const bAsset = await anchor.bAsset(bAssetColumbus5['bETH']);
+// alternatively, the bAsset can be loaded with the symbol and market demons
+const bAsset = await anchor.bAsset({ symbol: 'BETH', market: MARKET_DENOMS.UUSD });
 
 // once you have the bAsset, you can then perform operations
 const operation = bAsset.claim({ recipient: 'terra1...' });

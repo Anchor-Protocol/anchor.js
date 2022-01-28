@@ -10,8 +10,8 @@ import {
   fabricatebAssetBurnFrom,
   fabricatebAssetSendFrom,
   Expire,
-  fabricatebAssetConvertFromWormhole,
-  fabricatebAssetConvertToWormhole,
+  fabricatebAssetConvertWormholeToAnchor,
+  fabricatebAssetConvertAnchorToWormhole,
 } from '../fabricators';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
@@ -227,11 +227,12 @@ describe('bAsset', () => {
   it('convert-from-wormhole', async () => {
     testFabricator(
       expect,
-      fabricatebAssetConvertFromWormhole,
+      fabricatebAssetConvertWormholeToAnchor,
       {
         address: 'address',
         bAsset,
         amount: '1000',
+        wormholeTokenDecimals: 8,
         msg: { msg: {} },
       },
       addressProvider,
@@ -239,8 +240,8 @@ describe('bAsset', () => {
         new MsgExecuteContract('address', bAsset.token(), {
           send: {
             contract: bAsset.converter(),
-            amount: new Int(new Dec('1000').mul(1000000)).toString(),
-            msg: createHookMsg({ convertWormholeToAnchor: {} }),
+            amount: new Int(new Dec('1000').mul(100000000)).toString(),
+            msg: createHookMsg({ convert_wormhole_to_anchor: {} }),
           },
         }),
       ],
@@ -250,7 +251,7 @@ describe('bAsset', () => {
   it('convert-to-wormhole', async () => {
     testFabricator(
       expect,
-      fabricatebAssetConvertToWormhole,
+      fabricatebAssetConvertAnchorToWormhole,
       {
         address: 'address',
         bAsset,
@@ -263,7 +264,7 @@ describe('bAsset', () => {
           send: {
             contract: bAsset.converter(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
-            msg: createHookMsg({ convertAnchorToWormhole: {} }),
+            msg: createHookMsg({ convert_anchor_to_wormhole: {} }),
           },
         }),
       ],

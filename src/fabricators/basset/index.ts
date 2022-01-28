@@ -7,5 +7,5 @@ export * from './basset-decrease-allowance';
 export * from './basset-transfer-from';
 export * from './basset-burn-from';
 export * from './basset-send-from';
-export * from './basset-convert-to-wormhole';
-export * from './basset-convert-from-wormhole';
+export * from './basset-convert-anchor-to-wormhole';
+export * from './basset-convert-wormhole-to-anchor';

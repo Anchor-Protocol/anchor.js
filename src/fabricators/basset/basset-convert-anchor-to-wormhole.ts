@@ -17,7 +17,7 @@ interface Option {
   amount: string;
 }
 
-export const fabricatebAssetConvertFromWormhole =
+export const fabricatebAssetConvertAnchorToWormhole =
   ({ address, bAsset, amount }: Option) =>
   (_: AddressProvider): MsgExecuteContract[] => {
     validateInput([
@@ -30,7 +30,7 @@ export const fabricatebAssetConvertFromWormhole =
           contract: bAsset.converter(),
           amount: new Int(new Dec(amount).mul(1000000)).toString(),
           msg: createHookMsg({
-            convertWormholeToAnchor: {},
+            convert_anchor_to_wormhole: {},
           }),
         },
       }),

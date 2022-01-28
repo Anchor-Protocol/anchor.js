@@ -2,8 +2,8 @@ import { Dec, Int, LCDClient } from '@terra-money/terra.js';
 import { BAssetAddressProvider, AddressProvider } from '../../address-provider';
 import {
   fabricatebAssetClaimRewards,
-  fabricatebAssetConvertToWormhole,
-  fabricatebAssetConvertFromWormhole,
+  fabricatebAssetConvertAnchorToWormhole,
+  fabricatebAssetConvertWormholeToAnchor,
   OmitAddress,
   OptionType,
 } from '../../fabricators';
@@ -16,31 +16,38 @@ export type BAssetClaimRewardsOption = OmitbAsset<
   OptionType<typeof fabricatebAssetClaimRewards>
 >;
 
-export type BAssetConvertToWormholeOption = OmitbAsset<
-  OptionType<typeof fabricatebAssetConvertToWormhole>
+export type BAssetConvertAnchorToWormholeOption = OmitbAsset<
+  OptionType<typeof fabricatebAssetConvertAnchorToWormhole>
 >;
 
-export type BAssetConvertFromWormholeOption = OmitbAsset<
-  OptionType<typeof fabricatebAssetConvertFromWormhole>
+export type BAssetConvertWormholeToAnchorOption = OmitbAsset<
+  OptionType<typeof fabricatebAssetConvertWormholeToAnchor>
 >;
 
 export interface BAssetQueriesOption {
   address: string;
 }
 
+interface BAssetOptions {
+  lcd: LCDClient;
+  addressProvider: AddressProvider;
+  bAssetAddressProvider: BAssetAddressProvider;
+  wormhole?: {
+    decimals: number;
+  };
+}
+
 export class BAsset {
   private readonly _lcd!: LCDClient;
   private readonly _addressProvider!: AddressProvider;
+  private readonly _wormholeDecimals?: number;
   private readonly _bAssetAddressProvider!: BAssetAddressProvider;
 
-  constructor(
-    lcd: LCDClient,
-    addressProvider: AddressProvider,
-    bAssetAddressProvider: BAssetAddressProvider,
-  ) {
-    this._lcd = lcd;
-    this._addressProvider = addressProvider;
-    this._bAssetAddressProvider = bAssetAddressProvider;
+  constructor(options: BAssetOptions) {
+    this._lcd = options.lcd;
+    this._addressProvider = options.addressProvider;
+    this._bAssetAddressProvider = options.bAssetAddressProvider;
+    this._wormholeDecimals = options.wormhole?.decimals;
   }
 
   addresses(): BAssetAddressProvider {
@@ -48,21 +55,31 @@ export class BAsset {
   }
 
   convertToWormhole(
-    convertOptions: OmitAddress<BAssetConvertToWormholeOption>,
+    convertOptions: OmitAddress<BAssetConvertAnchorToWormholeOption>,
   ): Operation {
     return new OperationImpl(
-      fabricatebAssetConvertToWormhole,
+      fabricatebAssetConvertAnchorToWormhole,
       { ...convertOptions, bAsset: this._bAssetAddressProvider },
       this._addressProvider,
     );
   }
 
   convertFromWormhole(
-    convertOptions: OmitAddress<BAssetConvertFromWormholeOption>,
+    convertOptions: Omit<
+      OmitAddress<BAssetConvertWormholeToAnchorOption>,
+      'wormholeTokenDecimals'
+    >,
   ): Operation {
+    if (this._wormholeDecimals === undefined) {
+      throw new Error('The required Wormhole information was not present.');
+    }
     return new OperationImpl(
-      fabricatebAssetConvertFromWormhole,
-      { ...convertOptions, bAsset: this._bAssetAddressProvider },
+      fabricatebAssetConvertWormholeToAnchor,
+      {
+        ...convertOptions,
+        wormholeTokenDecimals: this._wormholeDecimals,
+        bAsset: this._bAssetAddressProvider,
+      },
       this._addressProvider,
     );
   }

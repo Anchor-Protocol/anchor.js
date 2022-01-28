@@ -7,7 +7,7 @@ import { BAssetAddressProvider, AddressProvider } from '../../address-provider';
 
 /**
  * @param address Client’s Terra address (address of the message sender).
- * @param asset to convert.
+ * @param bAsset to convert.
  * @param Client’s Terra address (address of reward recipient).
  */
 
@@ -15,10 +15,11 @@ interface Option {
   address: string;
   bAsset: BAssetAddressProvider;
   amount: string;
+  wormholeTokenDecimals: number;
 }
 
-export const fabricatebAssetConvertToWormhole =
-  ({ address, bAsset, amount }: Option) =>
+export const fabricatebAssetConvertWormholeToAnchor =
+  ({ address, bAsset, amount, wormholeTokenDecimals }: Option) =>
   (_: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
@@ -28,9 +29,11 @@ export const fabricatebAssetConvertToWormhole =
       new MsgExecuteContract(address, bAsset.token(), {
         send: {
           contract: bAsset.converter(),
-          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          amount: new Int(
+            new Dec(amount).mul(Math.pow(10, wormholeTokenDecimals)),
+          ).toString(),
           msg: createHookMsg({
-            convertAnchorToWormhole: {},
+            convert_wormhole_to_anchor: {},
           }),
         },
       }),

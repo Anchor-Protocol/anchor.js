@@ -1,12 +1,16 @@
 import {
   AddressProviderFromJson,
   BAssetAddressProviderImpl,
-  bAssetBombay12,
+  bAssetAddressesBombay12,
   bombay12,
 } from '../address-provider';
 
 export const addressProvider = new AddressProviderFromJson(bombay12);
 
-export const bLUNA = new BAssetAddressProviderImpl(bAssetBombay12['bLUNA']);
+export const bLUNA = new BAssetAddressProviderImpl(
+  bAssetAddressesBombay12['bLUNA'],
+);
 
-export const bETH = new BAssetAddressProviderImpl(bAssetBombay12['bETH']);
+export const bETH = new BAssetAddressProviderImpl(
+  bAssetAddressesBombay12['bETH'],
+);

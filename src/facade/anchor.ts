@@ -1,12 +1,8 @@
 import { LCDClient } from '@terra-money/terra.js';
 import { BAsset } from '.';
-import {
-  AddressProvider,
-  BAssetAddressMap,
-  BAssetAddressProviderImpl,
-} from '../address-provider';
+import { AddressProvider, MARKET_DENOMS } from '../address-provider';
 import { WhitelistResponseElem } from '../queries';
-import { querybAsset } from '../queries/basset/address-map';
+import { querybAsset } from '../queries/basset/query-basset';
 import { AnchorToken } from './anchor-token/anchor-token';
 import { BLuna } from './bluna/bluna';
 import { Borrow } from './borrow/borrow';
@@ -36,16 +32,10 @@ export class Anchor {
   }
 
   async bAsset(
-    collateral: BAssetAddressMap | WhitelistResponseElem,
+    collateral:
+      | WhitelistResponseElem
+      | { symbol: string; market: MARKET_DENOMS },
   ): Promise<BAsset | undefined> {
-    // we are using an address map so can return just this
-    if ('token' in collateral) {
-      return new BAsset(
-        this._lcd,
-        this._addressProvider,
-        new BAssetAddressProviderImpl(collateral),
-      );
-    }
     return await querybAsset({ lcd: this._lcd, asset: collateral })(
       this._addressProvider,
     );
