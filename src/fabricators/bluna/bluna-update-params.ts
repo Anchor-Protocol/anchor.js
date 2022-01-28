@@ -13,7 +13,7 @@ interface Option {
   er_threshold?: string;
 }
 
-export const fabricatebAssetUpdateParams =
+export const fabricatebLunaUpdateParams =
   ({
     address,
     epoch_period,

@@ -1,16 +1,17 @@
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateAddress } from '../../utils/validation/address';
 import { validateInput } from '../../utils/validate-input';
-
 import { validateTrue } from '../../utils/validation/true';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
+  BAssetAddressProvider,
   MARKET_DENOMS,
-} from '../../address-provider/provider';
+} from '../../address-provider';
 
 interface Option {
   address: string;
+  bAsset: BAssetAddressProvider;
   market: MARKET_DENOMS;
   amount: string;
 }
@@ -22,8 +23,8 @@ interface Option {
  * @param symbol Symbol of collateral to redeem.
  * @param amount Amount of collateral to redeem.
  */
-export const fabricateOverseerUnlockBETHCollateral =
-  ({ address, market, amount }: Option) =>
+export const fabricateOverseerUnlockbAssetCollateral =
+  ({ address, bAsset, market, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
@@ -31,7 +32,6 @@ export const fabricateOverseerUnlockBETHCollateral =
     ]);
 
     const mmOverseerContract = addressProvider.overseer(market);
-    const bAssetTokenContract = addressProvider.bEthToken();
 
     return [
       // unlock collateral
@@ -39,10 +39,7 @@ export const fabricateOverseerUnlockBETHCollateral =
         // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L78
         unlock_collateral: {
           collaterals: [
-            [
-              bAssetTokenContract,
-              new Int(new Dec(amount).mul(1000000)).toString(),
-            ],
+            [bAsset.token(), new Int(new Dec(amount).mul(1000000)).toString()],
           ],
         },
       }),

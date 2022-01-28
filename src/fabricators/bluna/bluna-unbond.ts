@@ -5,37 +5,38 @@ import {
   validateIsGreaterThanZero,
   validateIsNumber,
 } from '../../utils/validation/number';
-import { AddressProvider } from '../../address-provider/provider';
-
-/**
- * @param address Client’s Terra address (address of the message sender).
- * @param amount to send.
- * @param recipient Client's Terra address (address of recipient).
- */
+import { createHookMsg } from '../../utils/cw20/create-hook-msg';
+import {
+  AddressProvider,
+  COLLATERAL_DENOMS,
+} from '../../address-provider/provider';
 
 interface Option {
   address: string;
   amount: string;
-  recipient: string;
 }
 
-export const fabricatebEthTransfer =
-  ({ address, amount, recipient }: Option) =>
+export const fabricatebLunaUnbond =
+  ({ address, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
       validateIsNumber(amount),
       validateIsGreaterThanZero(amount),
-      validateAddress(recipient),
     ]);
 
-    const bAssetTokenAddress = addressProvider.bEthToken();
+    const bAssetTokenAddress = addressProvider.bLunaToken();
+    const bAssetHubAddress = addressProvider.bLunaHub();
 
     return [
       new MsgExecuteContract(address, bAssetTokenAddress, {
-        transfer: {
-          recipient: recipient,
+        // @see https://github.com/Anchor-Protocol/anchor-bAsset-contracts/blob/cce41e707c67ee2852c4929e17fb1472dbd2aa35/contracts/anchor_basset_token/src/handler.rs#L101
+        send: {
+          contract: bAssetHubAddress,
           amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          msg: createHookMsg({
+            unbond: {},
+          }),
         },
       }),
     ];

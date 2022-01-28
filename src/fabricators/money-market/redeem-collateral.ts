@@ -1,39 +1,33 @@
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateAddress } from '../../utils/validation/address';
 import { validateInput } from '../../utils/validate-input';
-
 import { validateTrue } from '../../utils/validation/true';
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
-  COLLATERAL_DENOMS,
+  BAssetAddressProvider,
   MARKET_DENOMS,
-} from '../../address-provider/provider';
+} from '../../address-provider';
 import { isAmountSet } from '../../utils/validation/amount';
 
 interface Option {
   address: string;
   market: MARKET_DENOMS;
-  collateral: COLLATERAL_DENOMS;
+  bAsset: BAssetAddressProvider;
   amount?: string;
 }
 
 export const fabricateRedeemCollateral =
-  ({ address, market, collateral, amount }: Option) =>
+  ({ address, market, bAsset, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
       amount ? validateIsGreaterThanZero(amount) : validateTrue,
     ]);
 
-    let bAssetTokenContract = addressProvider.bLunaToken();
-
-    if (collateral == COLLATERAL_DENOMS.UBETH) {
-      bAssetTokenContract = addressProvider.bEthToken();
-    }
-
+    const bAssetTokenContract = bAsset.token();
     const mmOverseerContract = addressProvider.overseer(market);
-    const custodyContract = addressProvider.custody(market, collateral);
+    const custodyContract = bAsset.custody();
 
     return [
       // unlock collateral

@@ -1,20 +1,14 @@
-import { AddressProvider, COLLATERAL_DENOMS, MARKET_DENOMS } from './provider';
+import { AddressProvider } from './provider';
 
 export interface AddressMap {
   bLunaHub: string;
-  bLunaToken: string;
-  bLunaReward: string;
   bLunaAirdrop: string;
   bLunaValidatorsRegistry: string;
-  bEthReward: string;
-  bEthToken: string;
+  bLunaToken: string;
   mmInterestModel: string;
   mmOracle: string;
   mmMarket: string;
   mmOverseer: string;
-  // mmCustody is bluna custody
-  mmCustody: string;
-  mmCustodyBEth: string;
   mmLiquidation: string;
   mmLiquidationQueue: string;
   mmDistributionModel: string;
@@ -39,43 +33,20 @@ export type AllowedAddressKeys = keyof AddressMap;
 export class AddressProviderFromJson implements AddressProvider {
   constructor(private data: AddressMap) {}
 
-  bLunaReward(): string {
-    return this.data.bLunaReward;
-  }
-
   bLunaHub(): string {
     return this.data.bLunaHub;
-  }
-
-  bLunaToken(): string {
-    return this.data.bLunaToken;
-  }
-
-  bEthReward(): string {
-    return this.data.bEthReward;
   }
 
   bLunaValidatorsRegistry(): string {
     return this.data.bLunaValidatorsRegistry;
   }
 
-  bEthToken(): string {
-    return this.data.bEthToken;
+  bLunaToken(): string {
+    return this.data.bLunaToken;
   }
 
   market(): string {
     return this.data.mmMarket;
-  }
-
-  custody(_denom: MARKET_DENOMS, collateral: COLLATERAL_DENOMS): string {
-    switch (collateral) {
-      case COLLATERAL_DENOMS.UBLUNA: {
-        return this.data.mmCustody;
-      }
-      case COLLATERAL_DENOMS.UBETH: {
-        return this.data.mmCustodyBEth;
-      }
-    }
   }
 
   overseer(): string {

@@ -1,5 +1,5 @@
-import { AddressProvider } from '../../address-provider/provider';
 import { Msg } from '@terra-money/terra.js';
+import { AddressProvider } from '../../address-provider';
 
 export function testFabricator<
   T,
