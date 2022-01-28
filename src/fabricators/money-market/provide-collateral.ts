@@ -2,18 +2,17 @@ import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../../utils/cw20/create-hook-msg';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
-
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
-  COLLATERAL_DENOMS,
+  BAssetAddressProvider,
   MARKET_DENOMS,
-} from '../../address-provider/provider';
+} from '../../address-provider';
 
 interface Option {
   address: string;
   market: MARKET_DENOMS;
-  collateral: COLLATERAL_DENOMS;
+  bAsset: BAssetAddressProvider;
   amount: string;
 }
 
@@ -27,7 +26,7 @@ interface Option {
  * @param amount Amount of collateral to deposit.
  */
 export const fabricateProvideCollateral =
-  ({ address, market, collateral, amount }: Option) =>
+  ({ address, market, bAsset, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
@@ -35,14 +34,9 @@ export const fabricateProvideCollateral =
       validateIsGreaterThanZero(amount),
     ]);
 
-    let bAssetTokenContract = addressProvider.bLunaToken();
-
-    if (collateral == COLLATERAL_DENOMS.UBETH) {
-      bAssetTokenContract = addressProvider.bEthToken();
-    }
-
+    const bAssetTokenContract = bAsset.token();
     const mmOverseerContract = addressProvider.overseer(market);
-    const custodyContract = addressProvider.custody(market, collateral);
+    const custodyContract = bAsset.custody();
 
     // cw20 send + provide_collateral hook
     /* eslint-disable */

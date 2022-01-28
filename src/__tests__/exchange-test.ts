@@ -9,7 +9,7 @@ import {
   fabricateExchangeWithdrawLiquidityANC,
   fabricateExchangeWithdrawLiquiditybLuna,
 } from '../fabricators';
-import { addressProvider } from './common';
+import { addressProvider, bLUNA } from './common';
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../utils/cw20/create-hook-msg';
 import { MARKET_DENOMS } from '..';
@@ -83,7 +83,7 @@ describe('exchange<>anchor', () => {
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
+        new MsgExecuteContract('address', bLUNA.token(), {
           increase_allowance: {
             spender: addressProvider.bLunaLunaPair(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -99,7 +99,7 @@ describe('exchange<>anchor', () => {
                 {
                   info: {
                     token: {
-                      contract_addr: addressProvider.bLunaToken(),
+                      contract_addr: bLUNA.token(),
                     },
                   },
                   amount: new Int(new Dec('1000').mul(1000000)).toString(),
@@ -165,7 +165,7 @@ describe('exchange<>anchor', () => {
       },
       addressProvider,
       [
-        new MsgExecuteContract('address', addressProvider.bLunaToken(), {
+        new MsgExecuteContract('address', bLUNA.token(), {
           send: {
             contract: addressProvider.bLunaLunaPair(),
             amount: new Int(new Dec('1000').mul(1000000)).toString(),

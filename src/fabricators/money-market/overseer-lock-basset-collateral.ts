@@ -1,15 +1,16 @@
 import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
-
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
+  BAssetAddressProvider,
   MARKET_DENOMS,
-} from '../../address-provider/provider';
+} from '../../address-provider';
 
 interface Option {
   address: string;
+  bAsset: BAssetAddressProvider;
   market: MARKET_DENOMS;
   amount: string;
 }
@@ -17,12 +18,11 @@ interface Option {
 /**
  *
  * @param address Client’s Terra address.
- * @param market Type of stablecoin money market to deposit collateral. Currently only supports UST and KRT.
- //  * @param borrower (optional) — Terra address of the entity that created the loan position. If null, adds collateral to address‘s loan position.
+ * @param market Type of stablecoin money market to deposit collateral. Currently only supports UST.
  * @param amount Amount of collateral to deposit.
  */
-export const fabricateOverseerLockCollateral =
-  ({ address, market, amount }: Option) =>
+export const fabricateOverseerLockbAssetCollateral =
+  ({ address, bAsset, market, amount }: Option) =>
   (addressProvider: AddressProvider): MsgExecuteContract[] => {
     validateInput([
       validateAddress(address),
@@ -30,7 +30,6 @@ export const fabricateOverseerLockCollateral =
     ]);
 
     const mmOverseerContract = addressProvider.overseer(market);
-    const bAssetTokenContract = addressProvider.bLunaToken();
 
     return [
       // lock_collateral call
@@ -38,10 +37,7 @@ export const fabricateOverseerLockCollateral =
         // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L75
         lock_collateral: {
           collaterals: [
-            [
-              bAssetTokenContract,
-              new Int(new Dec(amount).mul(1000000)).toString(),
-            ],
+            [bAsset.token(), new Int(new Dec(amount).mul(1000000)).toString()],
           ],
         },
       }),

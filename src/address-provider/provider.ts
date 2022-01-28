@@ -1,19 +1,11 @@
 export interface AddressProvider {
-  bLunaReward(): string;
-
   bLunaHub(): string;
-
-  bLunaToken(): string;
 
   bLunaValidatorsRegistry(): string;
 
-  bEthReward(): string;
-
-  bEthToken(): string;
+  bLunaToken(): string;
 
   market(denom: MARKET_DENOMS): string;
-
-  custody(denom: MARKET_DENOMS, collateral: COLLATERAL_DENOMS): string;
 
   overseer(denom: MARKET_DENOMS): string;
 

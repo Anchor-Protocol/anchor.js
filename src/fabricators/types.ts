@@ -10,8 +10,11 @@ export type Expire =
 export type OptionType<T> = T extends Fabricator<infer Option>
   ? OmitAddress<Option>
   : null;
+
 export type Fabricator<T> = (
   option: T,
 ) => (addressProvider: AddressProvider) => Msg[];
+
 export type OmitAddress<T> = Omit<T, 'address'>;
+
 export type OmitLCD<T> = Omit<T, 'lcd'>;

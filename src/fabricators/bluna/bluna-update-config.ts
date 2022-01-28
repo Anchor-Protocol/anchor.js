@@ -12,7 +12,7 @@ interface Option {
   airdrop_registry_contract: string;
 }
 
-export const fabricatebAssetUpdateConfig =
+export const fabricatebLunaUpdateConfig =
   ({
     address,
     owner,
