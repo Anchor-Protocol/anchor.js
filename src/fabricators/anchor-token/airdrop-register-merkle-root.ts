@@ -8,19 +8,18 @@ interface Option {
   merkle_root: string;
 }
 
-export const fabricateAirdropRegisterMerkleRoot = ({
-  address,
-  merkle_root,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricateAirdropRegisterMerkleRoot =
+  ({ address, merkle_root }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const airdrop = addressProvider.airdrop();
+    const airdrop = addressProvider.airdrop();
 
-  return [
-    new MsgExecuteContract(address, airdrop, {
-      register_merkle_root: {
-        merkle_root,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, airdrop, {
+        register_merkle_root: {
+          merkle_root,
+        },
+      }),
+    ];
+  };

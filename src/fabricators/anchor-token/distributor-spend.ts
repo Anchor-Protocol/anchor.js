@@ -9,21 +9,19 @@ interface Option {
   amount: string;
 }
 
-export const fabricateDistributorSpend = ({
-  address,
-  recipient,
-  amount,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricateDistributorSpend =
+  ({ address, recipient, amount }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const distributor = addressProvider.distributor();
+    const distributor = addressProvider.distributor();
 
-  return [
-    new MsgExecuteContract(address, distributor, {
-      spend: {
-        recipient,
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, distributor, {
+        spend: {
+          recipient,
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+        },
+      }),
+    ];
+  };

@@ -11,12 +11,12 @@ interface ConfigResponse {
   distribution_schedule: Array<[number, number, string]>;
 }
 
-export const queryStakingConfig = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const staking = addressProvider.staking();
-  const response: ConfigResponse = await lcd.wasm.contractQuery(staking, {
-    config: {},
-  });
-  return response;
-};
+export const queryStakingConfig =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const staking = addressProvider.staking();
+    const response: ConfigResponse = await lcd.wasm.contractQuery(staking, {
+      config: {},
+    });
+    return response;
+  };

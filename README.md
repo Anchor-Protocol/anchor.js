@@ -27,11 +27,11 @@ $ npm install -S @terra-money/terra.js @anchor-protocol/anchor.js
 Anchor.js provides class wrapper facade for the usual operations available on [webapp](https://app.anchorprotocol.com).
 
 ```ts
-import { LCDClient, MnemonicKey, StdFee, Wallet } from '@terra-money/terra.js'
-import { Anchor, columbus4, AddressProviderFromJson, MARKET_DENOMS, OperationGasParameters } from '@anchor-protocol/anchor.js'
+import { LCDClient, MnemonicKey, Fee, Wallet } from '@terra-money/terra.js'
+import { Anchor, columbus5, AddressProviderFromJson, MARKET_DENOMS, OperationGasParameters } from '@anchor-protocol/anchor.js'
 
-const addressProvider = new AddressProviderFromJson(columbus4)
-const lcd = new LCDClient({ URL: 'https://lcd.terra.dev', chainID: 'columbus-4' })
+const addressProvider = new AddressProviderFromJson(columbus5)
+const lcd = new LCDClient({ URL: 'https://lcd.terra.dev', chainID: 'columbus-5' })
 const key = new MnemonicKey({
   mnemonic: 'your key'
 })
@@ -52,9 +52,40 @@ const gasParameters: OperationGasParameters = {
   gasPrices: "0.15uusd",
 
   // or if you want to fixate gas, you can use `fee`
-  fee: new StdFee(gasToSpend, "100000uusd")
+  fee: new Fee(gasToSpend, "100000uusd")
 }
 const txResult = await anchor.earn.depositStable(MARKET_DENOMS.UUSD, "100.5000").execute(wallet, gasParameters)
+```
+
+When working with bAsset's, they can be loaded in one of two ways.
+```ts
+import { LCDClient, MnemonicKey, Fee, Wallet } from '@terra-money/terra.js'
+import { Anchor, columbus5, bAssetColumbus5, AddressProviderFromJson, MARKET_DENOMS } from '@anchor-protocol/anchor.js'
+
+const addressProvider = new AddressProviderFromJson(columbus5)
+const lcd = new LCDClient({ URL: 'https://lcd.terra.dev', chainID: 'columbus-5' })
+const key = new MnemonicKey({
+  mnemonic: 'your key'
+})
+const wallet = new Wallet(lcd, key)
+const anchor = new Anchor(lcd, addressProvider)
+
+// load the bAsset from the available whitelisted collateral
+const collaterals = await anchor.moneyMarket.getCollateralWhitelist({
+  market: MARKET_DENOMS.UUSD,
+});
+
+const [collateral] = collaterals.filter(
+  (collateral) => collateral.symbol === 'BETH',
+);
+
+const bAsset = await anchor.bAsset(collateral);
+
+// alternatively, the bAsset can be loaded with the symbol and market demons
+const bAsset = await anchor.bAsset({ symbol: 'BETH', market: MARKET_DENOMS.UUSD });
+
+// once you have the bAsset, you can then perform operations
+const operation = bAsset.claim({ recipient: 'terra1...' });
 ```
 
 
@@ -74,7 +105,7 @@ To Use the message fabricators:
 import {fabricateRedeemStable, fabricateDepositStableCoin} from '@anchor-protocol/anchor.js';
 import {AddressProviderFromJson} from "@anchor-protocol/anchor.js"; 
 
-// default -- uses tequila core contract addresses
+// default -- uses bombay core contract addresses
 const addressMap = somehowGetAddresses();
 const addressProvider = new AddressProviderFromJson(addressMap);
     const redeemMsg = fabricateRedeemStable({
@@ -94,17 +125,16 @@ const addressProvider = new AddressProviderFromJson(addressMap);
 A message fabricator contains functions for generating proper `MsgExecuteContract` messages to be included in a transaction and broadcasted.
 
 ```ts
-import { LCDClient, Wallet, MnemonicKey, StdFee} from '@terra-money/terra.js';
+import { LCDClient, Wallet, MnemonicKey, Fee} from '@terra-money/terra.js';
 
-const anchor = new LCDClient({ URL: 'https://tequila-lcd.terra.dev', chainID:'tequila-0004' });
+const anchor = new LCDClient({ URL: 'https://bombay-lcd.terra.dev', chainID:'bombay-12' });
 const owner = new MnemonicKey({ mnemonic: "...."});
 const wallet = new Wallet(anchor, owner);
-
 
 async function depositStable() {
     const tx = await wallet.createAndSignTx({
         msgs: depositMsg,
-        fee: new StdFee(2_000_000, { uluna: 2_000_000 })
+        fee: new Fee(2_000_000, { uluna: 2_000_000 })
     });
     return await anchor.tx.broadcast(tx);
 }
@@ -122,7 +152,7 @@ main();
 
 ## List of contract addresses deployed to networks
 
-- `columbus-4`:
+- `columbus-5`:
   ```js
   {
     bLunaHub: 'terra1mtwph2juhj0rvjz7dy92gvl6xvukaxu8rfv8ts',
@@ -156,7 +186,7 @@ main();
   }
   ```
 
-- `tequila-0004`:
+- `bombay-12`:
    ```js
   {
     bLunaHub: 'terra1fflas6wv4snv8lsda9knvq2w0cyt493r8puh2e',

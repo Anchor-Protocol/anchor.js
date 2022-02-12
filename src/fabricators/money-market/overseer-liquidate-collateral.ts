@@ -12,20 +12,18 @@ interface Option {
   borrower: string;
 }
 
-export const fabricateOverseerLiquidateCollateral = ({
-  address,
-  overseer,
-  borrower,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address), validateAddress(borrower)]);
+export const fabricateOverseerLiquidateCollateral =
+  ({ address, overseer, borrower }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address), validateAddress(borrower)]);
 
-  const mmOverseer = addressProvider.overseer(overseer);
+    const mmOverseer = addressProvider.overseer(overseer);
 
-  return [
-    new MsgExecuteContract(address, mmOverseer, {
-      liquidate_collateral: {
-        borrower: borrower,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmOverseer, {
+        liquidate_collateral: {
+          borrower: borrower,
+        },
+      }),
+    ];
+  };

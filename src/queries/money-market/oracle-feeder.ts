@@ -10,17 +10,17 @@ interface FeederResponse {
   feeder: string;
 }
 
-export const queryOracleFeeder = ({ lcd, asset }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<FeederResponse> => {
-  const oracleContractAddress = addressProvider.oracle();
-  const response: FeederResponse = await lcd.wasm.contractQuery(
-    oracleContractAddress,
-    {
-      feeder: {
-        asset: asset,
+export const queryOracleFeeder =
+  ({ lcd, asset }: Option) =>
+  async (addressProvider: AddressProvider): Promise<FeederResponse> => {
+    const oracleContractAddress = addressProvider.oracle();
+    const response: FeederResponse = await lcd.wasm.contractQuery(
+      oracleContractAddress,
+      {
+        feeder: {
+          asset: asset,
+        },
       },
-    },
-  );
-  return response;
-};
+    );
+    return response;
+  };

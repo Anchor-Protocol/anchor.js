@@ -14,18 +14,17 @@ interface DistributionParamsResponse {
   distribution_threshold_rate: string;
 }
 
-export const queryOverseerDistributionParams = ({
-  lcd,
-  overseer,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<DistributionParamsResponse> => {
-  const overseerContractAddress = addressProvider.overseer(overseer);
-  const response: DistributionParamsResponse = await lcd.wasm.contractQuery(
-    overseerContractAddress,
-    {
-      distribution_params: {},
-    },
-  );
-  return response;
-};
+export const queryOverseerDistributionParams =
+  ({ lcd, overseer }: Option) =>
+  async (
+    addressProvider: AddressProvider,
+  ): Promise<DistributionParamsResponse> => {
+    const overseerContractAddress = addressProvider.overseer(overseer);
+    const response: DistributionParamsResponse = await lcd.wasm.contractQuery(
+      overseerContractAddress,
+      {
+        distribution_params: {},
+      },
+    );
+    return response;
+  };

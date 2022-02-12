@@ -9,15 +9,15 @@ interface ConfigResponse {
   base_asset: string;
 }
 
-export const queryOracleConfig = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const oracleContractAddress = addressProvider.oracle();
-  const response: ConfigResponse = await lcd.wasm.contractQuery(
-    oracleContractAddress,
-    {
-      config: {},
-    },
-  );
-  return response;
-};
+export const queryOracleConfig =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const oracleContractAddress = addressProvider.oracle();
+    const response: ConfigResponse = await lcd.wasm.contractQuery(
+      oracleContractAddress,
+      {
+        config: {},
+      },
+    );
+    return response;
+  };

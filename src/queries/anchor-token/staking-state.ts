@@ -12,14 +12,14 @@ interface StateResponse {
   global_reward_index: string;
 }
 
-export const queryStakingState = ({ lcd, block_height }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<StateResponse> => {
-  const staking = addressProvider.staking();
-  const response: StateResponse = await lcd.wasm.contractQuery(staking, {
-    state: {
-      block_height,
-    },
-  });
-  return response;
-};
+export const queryStakingState =
+  ({ lcd, block_height }: Option) =>
+  async (addressProvider: AddressProvider): Promise<StateResponse> => {
+    const staking = addressProvider.staking();
+    const response: StateResponse = await lcd.wasm.contractQuery(staking, {
+      state: {
+        block_height,
+      },
+    });
+    return response;
+  };

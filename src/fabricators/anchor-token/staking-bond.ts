@@ -9,22 +9,22 @@ interface Option {
   amount: string;
 }
 
-export const fabricateStakingBond = ({ address, amount }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricateStakingBond =
+  ({ address, amount }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const lpToken = addressProvider.terraswapAncUstLPToken();
+    const lpToken = addressProvider.ancUstLPToken();
 
-  return [
-    new MsgExecuteContract(address, lpToken, {
-      send: {
-        contract: addressProvider.staking(),
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-        msg: createHookMsg({
-          bond: {},
-        }),
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, lpToken, {
+        send: {
+          contract: addressProvider.staking(),
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          msg: createHookMsg({
+            bond: {},
+          }),
+        },
+      }),
+    ];
+  };

@@ -15,37 +15,39 @@ interface Option {
   snapshot_period?: number;
 }
 
-export const fabricateGovUpdateConfig = ({
-  address,
-  owner,
-  quorum,
-  threshold,
-  voting_period,
-  timelock_period,
-  expiration_period,
-  proposal_deposit,
-  snapshot_period,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  if (owner) {
-    validateInput([validateAddress(owner), validateAddress(address)]);
-  } else {
-    validateInput([validateAddress(address)]);
-  }
+export const fabricateGovUpdateConfig =
+  ({
+    address,
+    owner,
+    quorum,
+    threshold,
+    voting_period,
+    timelock_period,
+    expiration_period,
+    proposal_deposit,
+    snapshot_period,
+  }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    if (owner) {
+      validateInput([validateAddress(owner), validateAddress(address)]);
+    } else {
+      validateInput([validateAddress(address)]);
+    }
 
-  const gov = addressProvider.gov();
+    const gov = addressProvider.gov();
 
-  return [
-    new MsgExecuteContract(address, gov, {
-      update_config: {
-        owner,
-        quorum,
-        threshold,
-        voting_period,
-        timelock_period,
-        expiration_period,
-        proposal_deposit,
-        snapshot_period,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, gov, {
+        update_config: {
+          owner,
+          quorum,
+          threshold,
+          voting_period,
+          timelock_period,
+          expiration_period,
+          proposal_deposit,
+          snapshot_period,
+        },
+      }),
+    ];
+  };

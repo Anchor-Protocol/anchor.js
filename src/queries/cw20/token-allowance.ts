@@ -14,16 +14,13 @@ interface Allowance {
   expires: Expire;
 }
 
-export const queryTokenAllowance = ({
-  lcd,
-  token_address,
-  owner,
-  spender,
-}: Option) => async (_: AddressProvider): Promise<Allowance> => {
-  return lcd.wasm.contractQuery<Allowance>(token_address, {
-    allowance: {
-      owner: owner,
-      spender: spender,
-    },
-  });
-};
+export const queryTokenAllowance =
+  ({ lcd, token_address, owner, spender }: Option) =>
+  async (_: AddressProvider): Promise<Allowance> => {
+    return lcd.wasm.contractQuery<Allowance>(token_address, {
+      allowance: {
+        owner: owner,
+        spender: spender,
+      },
+    });
+  };

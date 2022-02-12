@@ -1,29 +1,20 @@
-import { Dec, Int, LCDClient } from '@terra-money/terra.js';
+import { LCDClient } from '@terra-money/terra.js';
 import { AddressProvider } from '../../address-provider';
 import {
-  fabricatebAssetBond,
-  fabricatebAssetClaimRewards,
-  fabricatebAssetUnbond,
-  fabricatebAssetWithdrawUnbonded,
-  fabricateTerraswapSwapbLuna,
+  fabricateExchangeSwapbLuna,
+  fabricatebLunaBond,
+  fabricatebLunaUnbond,
+  fabricatebLunaWithdrawUnbonded,
   OmitAddress,
   OptionType,
 } from '../../fabricators';
-import {
-  queryHubUnbond,
-  queryRewardHolder,
-  queryRewardState,
-  UnbondResponse,
-} from '../../queries';
+import { queryHubUnbond, UnbondResponse } from '../../queries';
 import { Operation, OperationImpl } from '../operation';
 
-export type BlunaMintOption = OptionType<typeof fabricatebAssetBond>;
-export type BlunaBurnOption = OptionType<typeof fabricatebAssetUnbond>;
+export type BlunaMintOption = OptionType<typeof fabricatebLunaBond>;
+export type BlunaBurnOption = OptionType<typeof fabricatebLunaUnbond>;
 export type BlunaInstantBurnOption = OptionType<
-  typeof fabricateTerraswapSwapbLuna
->;
-export type BlunaClaimRewardsOption = OptionType<
-  typeof fabricatebAssetClaimRewards
+  typeof fabricateExchangeSwapbLuna
 >;
 
 export interface BlunaQueriesOption {
@@ -41,7 +32,7 @@ export class BLuna {
 
   mint(mintOption: OmitAddress<BlunaMintOption>): Operation {
     return new OperationImpl(
-      fabricatebAssetBond,
+      fabricatebLunaBond,
       mintOption,
       this._addressProvider,
     );
@@ -49,7 +40,7 @@ export class BLuna {
 
   burn(burnOption: OmitAddress<BlunaBurnOption>): Operation {
     return new OperationImpl(
-      fabricatebAssetUnbond,
+      fabricatebLunaUnbond,
       burnOption,
       this._addressProvider,
     );
@@ -59,7 +50,7 @@ export class BLuna {
     instantiateBurnOption: OmitAddress<BlunaInstantBurnOption>,
   ): Operation {
     return new OperationImpl(
-      fabricateTerraswapSwapbLuna,
+      fabricateExchangeSwapbLuna,
       instantiateBurnOption,
       this._addressProvider,
     );
@@ -67,16 +58,8 @@ export class BLuna {
 
   withdraw(): Operation {
     return new OperationImpl(
-      fabricatebAssetWithdrawUnbonded,
+      fabricatebLunaWithdrawUnbonded,
       {},
-      this._addressProvider,
-    );
-  }
-
-  claim(claimOptions: OmitAddress<BlunaClaimRewardsOption>): Operation {
-    return new OperationImpl(
-      fabricatebAssetClaimRewards,
-      claimOptions,
       this._addressProvider,
     );
   }
@@ -87,26 +70,5 @@ export class BLuna {
     return queryHubUnbond({ lcd: this._lcd, ...getUnbondRequestsOption })(
       this._addressProvider,
     );
-  }
-
-  async getClaimableRewards(
-    getClaimableRewardsOption: BlunaQueriesOption,
-  ): Promise<string> {
-    const holder = await queryRewardHolder({
-      lcd: this._lcd,
-      ...getClaimableRewardsOption,
-    })(this._addressProvider);
-    const rewardState = await queryRewardState({ lcd: this._lcd })(
-      this._addressProvider,
-    );
-
-    return new Int(
-      new Int(holder.balance).mul(
-        new Dec(rewardState.global_index).sub(new Dec(holder.index)),
-      ),
-    )
-      .add(new Int(holder.pending_rewards))
-      .div(1000000)
-      .toString();
   }
 }

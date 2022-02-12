@@ -487,19 +487,15 @@ describe('Anchor Token', () => {
         },
         addressProvider,
         [
-          new MsgExecuteContract(
-            'address',
-            addressProvider.terraswapAncUstLPToken(),
-            {
-              send: {
-                contract: addressProvider.staking(),
-                amount: new Int(new Dec('1000').mul(1000000)).toString(),
-                msg: createHookMsg({
-                  bond: {},
-                }),
-              },
+          new MsgExecuteContract('address', addressProvider.ancUstLPToken(), {
+            send: {
+              contract: addressProvider.staking(),
+              amount: new Int(new Dec('1000').mul(1000000)).toString(),
+              msg: createHookMsg({
+                bond: {},
+              }),
             },
-          ),
+          }),
         ],
       );
     });
@@ -603,59 +599,59 @@ describe('Anchor Token', () => {
   describe('team-vesting', () => {
     it('update-config', async () => {
       testFabricator(
-          expect,
-          fabricateTeamVestingUpdateConfig,
-          {
-            address: 'address',
-            owner: 'new-owner',
-            anchor_token: 'token',
-            genesis_time: '100000',
-          },
-          addressProvider,
-          [
-            new MsgExecuteContract('address', addressProvider.teamLock(), {
-              update_config: {
-                owner: 'new-owner',
-                anchor_token: 'token',
-                genesis_time: '100000',
-              },
-            }),
-          ],
+        expect,
+        fabricateTeamVestingUpdateConfig,
+        {
+          address: 'address',
+          owner: 'new-owner',
+          anchor_token: 'token',
+          genesis_time: '100000',
+        },
+        addressProvider,
+        [
+          new MsgExecuteContract('address', addressProvider.teamLock(), {
+            update_config: {
+              owner: 'new-owner',
+              anchor_token: 'token',
+              genesis_time: '100000',
+            },
+          }),
+        ],
       );
     });
 
     it('register-vesting-accounts', async () => {
       testFabricator(
-          expect,
-          fabricateTeamVestingRegisterAccounts,
-          {
-            address: 'address',
-            vesting_accounts: ['address1', 'address2'],
-          },
-          addressProvider,
-          [
-            new MsgExecuteContract('address', addressProvider.teamLock(), {
-              register_vesting_accounts: {
-                vesting_accounts: ['address1', 'address2'],
-              },
-            }),
-          ],
+        expect,
+        fabricateTeamVestingRegisterAccounts,
+        {
+          address: 'address',
+          vesting_accounts: ['address1', 'address2'],
+        },
+        addressProvider,
+        [
+          new MsgExecuteContract('address', addressProvider.teamLock(), {
+            register_vesting_accounts: {
+              vesting_accounts: ['address1', 'address2'],
+            },
+          }),
+        ],
       );
     });
 
     it('claim', async () => {
       testFabricator(
-          expect,
-          fabricateTeamVestingClaim,
-          {
-            address: 'address',
-          },
-          addressProvider,
-          [
-            new MsgExecuteContract('address', addressProvider.teamLock(), {
-              claim: {},
-            }),
-          ],
+        expect,
+        fabricateTeamVestingClaim,
+        {
+          address: 'address',
+        },
+        addressProvider,
+        [
+          new MsgExecuteContract('address', addressProvider.teamLock(), {
+            claim: {},
+          }),
+        ],
       );
     });
   });

@@ -10,15 +10,15 @@ interface ConfigResponse {
   interest_multiplier: string;
 }
 
-export const queryInterestModelConfig = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const interestModelContractAddress = addressProvider.interest();
-  const response: ConfigResponse = await lcd.wasm.contractQuery(
-    interestModelContractAddress,
-    {
-      config: {},
-    },
-  );
-  return response;
-};
+export const queryInterestModelConfig =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const interestModelContractAddress = addressProvider.interest();
+    const response: ConfigResponse = await lcd.wasm.contractQuery(
+      interestModelContractAddress,
+      {
+        config: {},
+      },
+    );
+    return response;
+  };

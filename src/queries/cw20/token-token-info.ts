@@ -13,11 +13,13 @@ interface TokenInfoResponse {
   total_supply: number;
 }
 
-export const queryTokenInfo = ({ lcd, token_address }: Option) => async (
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _: AddressProvider,
-): Promise<TokenInfoResponse> => {
-  return lcd.wasm.contractQuery<TokenInfoResponse>(token_address, {
-    token_info: {},
-  });
-};
+export const queryTokenInfo =
+  ({ lcd, token_address }: Option) =>
+  async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _: AddressProvider,
+  ): Promise<TokenInfoResponse> => {
+    return lcd.wasm.contractQuery<TokenInfoResponse>(token_address, {
+      token_info: {},
+    });
+  };

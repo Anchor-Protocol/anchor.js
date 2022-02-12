@@ -1,17 +1,11 @@
 export interface AddressProvider {
-  bLunaReward(): string;
-
   bLunaHub(): string;
+
+  bLunaValidatorsRegistry(): string;
 
   bLunaToken(): string;
 
-  bEthReward(): string;
-
-  bEthToken(): string;
-
   market(denom: MARKET_DENOMS): string;
-
-  custody(denom: MARKET_DENOMS, collateral: COLLATERAL_DENOMS): string;
 
   overseer(denom: MARKET_DENOMS): string;
 
@@ -21,17 +15,21 @@ export interface AddressProvider {
 
   interest(): string;
 
+  distribution(): string;
+
   liquidation(): string;
 
-  terraswapblunaLunaPair(): string;
+  liquidationQueue(): string;
 
-  terraswapblunaLunaLPToken(): string;
+  bLunaLunaPair(): string;
+
+  bLunaLunaLPToken(): string;
 
   gov(): string;
 
-  terraswapAncUstPair(): string;
+  ancUstPair(): string;
 
-  terraswapAncUstLPToken(): string;
+  ancUstLPToken(): string;
 
   ANC(): string;
 
@@ -52,11 +50,10 @@ export interface AddressProvider {
 
 export enum MARKET_DENOMS {
   UUSD = 'uusd',
-  UKRW = 'ukrw'
+  UKRW = 'ukrw',
 }
 
 export enum COLLATERAL_DENOMS {
   UBLUNA = 'ubluna',
-  UBETH = 'ubeth'
+  UBETH = 'ubeth',
 }
-

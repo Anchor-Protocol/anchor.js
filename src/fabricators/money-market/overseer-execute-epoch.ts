@@ -11,17 +11,16 @@ interface Option {
   overseer: MARKET_DENOMS;
 }
 
-export const fabricateOverseerEpochOperations = ({
-  address,
-  overseer,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricateOverseerEpochOperations =
+  ({ address, overseer }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const mmOverseer = addressProvider.overseer(overseer);
+    const mmOverseer = addressProvider.overseer(overseer);
 
-  return [
-    new MsgExecuteContract(address, mmOverseer, {
-      execute_epoch_operations: {},
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmOverseer, {
+        execute_epoch_operations: {},
+      }),
+    ];
+  };

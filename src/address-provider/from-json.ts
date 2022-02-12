@@ -1,26 +1,22 @@
-import {AddressProvider, COLLATERAL_DENOMS, MARKET_DENOMS} from './provider';
+import { AddressProvider } from './provider';
 
 export interface AddressMap {
   bLunaHub: string;
-  bLunaToken: string;
-  bLunaReward: string;
   bLunaAirdrop: string;
-  bEthReward: string;
-  bEthToken: string;
+  bLunaValidatorsRegistry: string;
+  bLunaToken: string;
   mmInterestModel: string;
   mmOracle: string;
   mmMarket: string;
   mmOverseer: string;
-  // mmCustody is bluna custody
-  mmCustody: string;
-  mmCustodyBEth: string;
   mmLiquidation: string;
+  mmLiquidationQueue: string;
   mmDistributionModel: string;
   aTerra: string;
-  terraswapblunaLunaPair: string;
-  terraswapblunaLunaLPToken: string;
-  terraswapAncUstPair: string;
-  terraswapAncUstLPToken: string;
+  bLunaLunaPair: string;
+  bLunaLunaLPToken: string;
+  ancUstPair: string;
+  ancUstLPToken: string;
   gov: string;
   distributor: string;
   collector: string;
@@ -37,39 +33,20 @@ export type AllowedAddressKeys = keyof AddressMap;
 export class AddressProviderFromJson implements AddressProvider {
   constructor(private data: AddressMap) {}
 
-  bLunaReward(): string {
-    return this.data.bLunaReward;
-  }
-
   bLunaHub(): string {
     return this.data.bLunaHub;
+  }
+
+  bLunaValidatorsRegistry(): string {
+    return this.data.bLunaValidatorsRegistry;
   }
 
   bLunaToken(): string {
     return this.data.bLunaToken;
   }
 
-  bEthReward(): string {
-    return this.data.bEthReward;
-  }
-
-  bEthToken(): string {
-    return this.data.bEthToken;
-  }
-
   market(): string {
     return this.data.mmMarket;
-  }
-
-  custody(_denom: MARKET_DENOMS, collateral: COLLATERAL_DENOMS): string {
-    switch (collateral) {
-      case COLLATERAL_DENOMS.UBLUNA: {
-        return this.data.mmCustody
-      }
-      case COLLATERAL_DENOMS.UBETH: {
-        return this.data.mmCustodyBEth
-      }
-    }
   }
 
   overseer(): string {
@@ -88,28 +65,36 @@ export class AddressProviderFromJson implements AddressProvider {
     return this.data.mmInterestModel;
   }
 
+  distribution(): string {
+    return this.data.mmDistributionModel;
+  }
+
   liquidation(): string {
     return this.data.mmLiquidation;
   }
 
-  terraswapblunaLunaPair(): string {
-    return this.data.terraswapblunaLunaPair;
+  liquidationQueue(): string {
+    return this.data.mmLiquidationQueue;
   }
 
-  terraswapblunaLunaLPToken(): string {
-    return this.data.terraswapblunaLunaLPToken;
+  bLunaLunaPair(): string {
+    return this.data.bLunaLunaPair;
+  }
+
+  bLunaLunaLPToken(): string {
+    return this.data.bLunaLunaLPToken;
   }
 
   gov(): string {
     return this.data.gov;
   }
 
-  terraswapAncUstPair(): string {
-    return this.data.terraswapAncUstPair;
+  ancUstPair(): string {
+    return this.data.ancUstPair;
   }
 
-  terraswapAncUstLPToken(): string {
-    return this.data.terraswapAncUstLPToken;
+  ancUstLPToken(): string {
+    return this.data.ancUstLPToken;
   }
 
   collector(): string {

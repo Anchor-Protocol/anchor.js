@@ -13,30 +13,32 @@ interface Option {
   decrement_multiplier?: string;
 }
 
-export const fabricateDistributionUpdateConfig = ({
-  address,
-  owner,
-  emission_cap,
-  emission_floor,
-  increment_multiplier,
-  decrement_multiplier,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    owner ? validateAddress(owner) : validateTrue,
-  ]);
+export const fabricateDistributionUpdateConfig =
+  ({
+    address,
+    owner,
+    emission_cap,
+    emission_floor,
+    increment_multiplier,
+    decrement_multiplier,
+  }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      owner ? validateAddress(owner) : validateTrue,
+    ]);
 
-  const mmInterest = addressProvider.interest();
+    const mmInterest = addressProvider.interest();
 
-  return [
-    new MsgExecuteContract(address, mmInterest, {
-      update_config: {
-        owner,
-        emission_cap,
-        emission_floor,
-        increment_multiplier,
-        decrement_multiplier,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmInterest, {
+        update_config: {
+          owner,
+          emission_cap,
+          emission_floor,
+          increment_multiplier,
+          decrement_multiplier,
+        },
+      }),
+    ];
+  };

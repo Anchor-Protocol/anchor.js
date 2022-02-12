@@ -13,21 +13,16 @@ interface PollsResponse {
   polls: PollResponse[];
 }
 
-export const queryGovPolls = ({
-  lcd,
-  filter,
-  start_after,
-  limit,
-}: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<PollsResponse> => {
-  const gov = addressProvider.gov();
-  const response: PollsResponse = await lcd.wasm.contractQuery(gov, {
-    polls: {
-      filter,
-      start_after,
-      limit,
-    },
-  });
-  return response;
-};
+export const queryGovPolls =
+  ({ lcd, filter, start_after, limit }: Option) =>
+  async (addressProvider: AddressProvider): Promise<PollsResponse> => {
+    const gov = addressProvider.gov();
+    const response: PollsResponse = await lcd.wasm.contractQuery(gov, {
+      polls: {
+        filter,
+        start_after,
+        limit,
+      },
+    });
+    return response;
+  };

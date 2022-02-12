@@ -2,18 +2,17 @@ import { Dec, Int, MsgExecuteContract } from '@terra-money/terra.js';
 import { createHookMsg } from '../../utils/cw20/create-hook-msg';
 import { validateInput } from '../../utils/validate-input';
 import { validateAddress } from '../../utils/validation/address';
-
 import { validateIsGreaterThanZero } from '../../utils/validation/number';
 import {
   AddressProvider,
-  COLLATERAL_DENOMS,
+  BAssetAddressProvider,
   MARKET_DENOMS,
-} from '../../address-provider/provider';
+} from '../../address-provider';
 
 interface Option {
   address: string;
   market: MARKET_DENOMS;
-  collateral: COLLATERAL_DENOMS;
+  bAsset: BAssetAddressProvider;
   amount: string;
 }
 
@@ -26,51 +25,43 @@ interface Option {
  * @param symbol Symbol of collateral to deposit.
  * @param amount Amount of collateral to deposit.
  */
-export const fabricateProvideCollateral = ({
-  address,
-  market,
-  collateral,
-  amount,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    // borrower ? validateAddress(borrower) : validateTrue,
-    validateIsGreaterThanZero(amount),
-  ]);
+export const fabricateProvideCollateral =
+  ({ address, market, bAsset, amount }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      // borrower ? validateAddress(borrower) : validateTrue,
+      validateIsGreaterThanZero(amount),
+    ]);
 
-  let bAssetTokenContract = addressProvider.bLunaToken();
+    const bAssetTokenContract = bAsset.token();
+    const mmOverseerContract = addressProvider.overseer(market);
+    const custodyContract = bAsset.custody();
 
-  if (collateral == COLLATERAL_DENOMS.UBETH) {
-    bAssetTokenContract = addressProvider.bEthToken();
-  }
-
-  const mmOverseerContract = addressProvider.overseer(market);
-  const custodyContract = addressProvider.custody(market, collateral);
-
-  // cw20 send + provide_collateral hook
-  /* eslint-disable */
-  return [
-    // provide_collateral call
-    new MsgExecuteContract(address, bAssetTokenContract, {
-      send: {
-        contract: custodyContract,
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-        msg: createHookMsg({
-          deposit_collateral: {},
-        }),
-      },
-    }),
-    // lock_collateral call
-    new MsgExecuteContract(address, mmOverseerContract, {
-      // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L75
-      lock_collateral: {
-        collaterals: [
-          [
-            bAssetTokenContract,
-            new Int(new Dec(amount).mul(1000000)).toString(),
+    // cw20 send + provide_collateral hook
+    /* eslint-disable */
+    return [
+      // provide_collateral call
+      new MsgExecuteContract(address, bAssetTokenContract, {
+        send: {
+          contract: custodyContract,
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          msg: createHookMsg({
+            deposit_collateral: {},
+          }),
+        },
+      }),
+      // lock_collateral call
+      new MsgExecuteContract(address, mmOverseerContract, {
+        // @see https://github.com/Anchor-Protocol/money-market-contracts/blob/master/contracts/overseer/src/msg.rs#L75
+        lock_collateral: {
+          collaterals: [
+            [
+              bAssetTokenContract,
+              new Int(new Dec(amount).mul(1000000)).toString(),
+            ],
           ],
-        ],
-      },
-    }),
-  ];
-};
+        },
+      }),
+    ];
+  };

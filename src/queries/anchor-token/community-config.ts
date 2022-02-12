@@ -11,12 +11,12 @@ interface ConfigResponse {
   spend_limit: string;
 }
 
-export const queryCommunityConfig = ({ lcd }: Option) => async (
-  addressProvider: AddressProvider,
-): Promise<ConfigResponse> => {
-  const community = addressProvider.community();
-  const response: ConfigResponse = await lcd.wasm.contractQuery(community, {
-    config: {},
-  });
-  return response;
-};
+export const queryCommunityConfig =
+  ({ lcd }: Option) =>
+  async (addressProvider: AddressProvider): Promise<ConfigResponse> => {
+    const community = addressProvider.community();
+    const response: ConfigResponse = await lcd.wasm.contractQuery(community, {
+      config: {},
+    });
+    return response;
+  };

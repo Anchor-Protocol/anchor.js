@@ -10,18 +10,18 @@ interface Option {
   prices: Pair[];
 }
 
-export const fabricateOracleFeedPrice = ({ address, prices }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricateOracleFeedPrice =
+  ({ address, prices }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const mmOracle = addressProvider.oracle();
+    const mmOracle = addressProvider.oracle();
 
-  return [
-    new MsgExecuteContract(address, mmOracle, {
-      feed_price: {
-        prices: prices,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmOracle, {
+        feed_price: {
+          prices: prices,
+        },
+      }),
+    ];
+  };

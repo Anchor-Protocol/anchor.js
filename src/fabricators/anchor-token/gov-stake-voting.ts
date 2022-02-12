@@ -9,22 +9,22 @@ interface Option {
   amount: string;
 }
 
-export const fabricateGovStakeVoting = ({ address, amount }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricateGovStakeVoting =
+  ({ address, amount }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const anchorToken = addressProvider.ANC();
+    const anchorToken = addressProvider.ANC();
 
-  return [
-    new MsgExecuteContract(address, anchorToken, {
-      send: {
-        contract: addressProvider.gov(),
-        amount: new Int(new Dec(amount).mul(1000000)).toString(),
-        msg: createHookMsg({
-          stake_voting_tokens: {},
-        }),
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, anchorToken, {
+        send: {
+          contract: addressProvider.gov(),
+          amount: new Int(new Dec(amount).mul(1000000)).toString(),
+          msg: createHookMsg({
+            stake_voting_tokens: {},
+          }),
+        },
+      }),
+    ];
+  };

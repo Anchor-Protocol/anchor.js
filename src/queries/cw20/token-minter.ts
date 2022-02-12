@@ -11,11 +11,13 @@ interface MinterResponse {
   cap?: string;
 }
 
-export const queryTokenMinter = ({ lcd, token_address }: Option) => async (
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _: AddressProvider,
-): Promise<MinterResponse> => {
-  return lcd.wasm.contractQuery<MinterResponse>(token_address, {
-    minter: {},
-  });
-};
+export const queryTokenMinter =
+  ({ lcd, token_address }: Option) =>
+  async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _: AddressProvider,
+  ): Promise<MinterResponse> => {
+    return lcd.wasm.contractQuery<MinterResponse>(token_address, {
+      minter: {},
+    });
+  };

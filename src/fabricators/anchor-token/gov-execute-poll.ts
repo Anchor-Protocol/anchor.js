@@ -8,18 +8,18 @@ interface Option {
   poll_id: number;
 }
 
-export const fabricateGovExecutePoll = ({ address, poll_id }: Option) => (
-  addressProvider: AddressProvider,
-): MsgExecuteContract[] => {
-  validateInput([validateAddress(address)]);
+export const fabricateGovExecutePoll =
+  ({ address, poll_id }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([validateAddress(address)]);
 
-  const gov = addressProvider.gov();
+    const gov = addressProvider.gov();
 
-  return [
-    new MsgExecuteContract(address, gov, {
-      execute_poll: {
-        poll_id,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, gov, {
+        execute_poll: {
+          poll_id,
+        },
+      }),
+    ];
+  };

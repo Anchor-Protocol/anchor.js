@@ -17,23 +17,21 @@ interface Option {
  * @param market Type of stablecoin money market to borrow.
  * @param to (optional) Terra address to withdraw rewards. If null, withdraws to address
  */
-export const fabricateMarketClaimRewards = ({
-  address,
-  market,
-  to,
-}: Option) => (addressProvider: AddressProvider): MsgExecuteContract[] => {
-  validateInput([
-    validateAddress(address),
-    to ? validateAddress(to) : validateTrue,
-  ]);
+export const fabricateMarketClaimRewards =
+  ({ address, market, to }: Option) =>
+  (addressProvider: AddressProvider): MsgExecuteContract[] => {
+    validateInput([
+      validateAddress(address),
+      to ? validateAddress(to) : validateTrue,
+    ]);
 
-  const mmContractAddress = addressProvider.market(market);
+    const mmContractAddress = addressProvider.market(market);
 
-  return [
-    new MsgExecuteContract(address, mmContractAddress, {
-      claim_rewards: {
-        to: to,
-      },
-    }),
-  ];
-};
+    return [
+      new MsgExecuteContract(address, mmContractAddress, {
+        claim_rewards: {
+          to: to,
+        },
+      }),
+    ];
+  };
