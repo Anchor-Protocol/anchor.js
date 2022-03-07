@@ -17,7 +17,7 @@ import {
 } from '../../queries';
 import { Operation, OperationImpl } from '../operation';
 
-interface UserCollateral {
+export interface UserCollateral {
   collateral: string;
   balance: string;
 }
