@@ -9,11 +9,17 @@ interface Option {
   limit: number | undefined;
 }
 
+export interface BidPoolsByCollateralResponse {
+  bid_pools: BidPoolResponse[];
+}
+
 export const queryLiquidationQueueBidPoolsByCollateral =
   ({ lcd, collateral_token, start_after, limit }: Option) =>
-  async (addressProvider: AddressProvider): Promise<BidPoolResponse[]> => {
+  async (
+    addressProvider: AddressProvider,
+  ): Promise<BidPoolsByCollateralResponse> => {
     const liquidationContractAddress = addressProvider.liquidationQueue();
-    const response: BidPoolResponse[] = await lcd.wasm.contractQuery(
+    const response: BidPoolsByCollateralResponse = await lcd.wasm.contractQuery(
       liquidationContractAddress,
       {
         bid_pools_by_collateral: {
