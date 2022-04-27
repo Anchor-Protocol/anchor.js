@@ -9,7 +9,7 @@ export * from './liquidation-submit-bid';
 export * from './liquidation-retract-bid';
 export * from './liquidation-queue-retract-bid';
 export * from './liquidation-queue-submit-bid';
-export * from './liquidation-queue-active-bids';
+export * from './liquidation-queue-activate-bids';
 export * from './liquidation-queue-claim-liquidation';
 export * from './custody-update-config';
 export * from './custody-withdraw-collateral';
