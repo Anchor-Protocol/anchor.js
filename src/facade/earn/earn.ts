@@ -8,6 +8,7 @@ import {
 } from '../../fabricators';
 import {
   queryMarketEpochState,
+  queryOverseerConfig,
   queryOverseerEpochState,
   queryTokenBalance,
 } from '../../queries';
@@ -80,6 +81,23 @@ export class Earn {
       lcd: this._lcd,
       ...getAPYOption,
     })(this._addressProvider);
-    return new Dec(epochState.deposit_rate).mul(BLOCKS_PER_YEAR).toNumber();
+    const epochConfig = await queryOverseerConfig({
+      lcd: this._lcd,
+      overseer: getAPYOption.market
+    })(this._addressProvider);
+
+    const depositRate = new Dec(epochState.deposit_rate);
+
+    const compoundTimes = BLOCKS_PER_YEAR / epochConfig.epoch_period;
+    const perCompound = depositRate.mul(epochConfig.epoch_period);
+
+    const apy = perCompound.add(1).pow(compoundTimes).sub(1);
+
+    if (apy.greaterThan(0.19)) {
+      // compute APR
+      return depositRate.mul(BLOCKS_PER_YEAR).toNumber();
+    }
+
+    return apy.toNumber();
   }
 }
